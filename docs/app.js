@@ -245,9 +245,19 @@ function tryEvalFormula(formula, rowNum) {
   const rowMatch = upper.match(/^ROW\(\)([+-])(\d+)$/);
   if (rowMatch) return rowMatch[1] === "+" ? rowNum + Number(rowMatch[2]) : rowNum - Number(rowMatch[2]);
 
+  // COUNTIF(range, "criterion")
+  const countIfMatch = f.match(/^COUNTIF\((?:'([^']+)'|([A-Za-z_][A-Za-z0-9_ ]*))?!?([A-Z]+(?:\d+)?):([A-Z]+(?:\d+)?),"([^"]*)"\)$/i);
+  if (countIfMatch) {
+    const sheetName = countIfMatch[1] || countIfMatch[2] || activeSheetName;
+    const values = collectRangeValues(sheetName, countIfMatch[3], countIfMatch[4]);
+    if (values === null) return null;
+    const target = countIfMatch[5];
+    return values.filter((v) => stringifyValue(v) === target).length;
+  }
+
   // Aggregations over a range, optionally on another sheet:
-  //   FUNC(SheetName!A1:A1000) | FUNC('Sheet Name'!A1:A1000) | FUNC(A1:A10)
-  const aggMatch = f.match(/^(COUNTA|COUNT|SUM|MAX|MIN|AVERAGE)\((?:'([^']+)'|([A-Za-z_][A-Za-z0-9_ ]*))?!?([A-Z]+\d+):([A-Z]+\d+)\)$/i);
+  //   FUNC(SheetName!A1:A1000) | FUNC('Sheet Name'!A1:A1000) | FUNC(A1:A10) | FUNC(H:H)
+  const aggMatch = f.match(/^(COUNTA|COUNT|SUM|MAX|MIN|AVERAGE)\((?:'([^']+)'|([A-Za-z_][A-Za-z0-9_ ]*))?!?([A-Z]+(?:\d+)?):([A-Z]+(?:\d+)?)\)$/i);
   if (aggMatch) {
     const fn = aggMatch[1].toUpperCase();
     const sheetName = aggMatch[2] || aggMatch[3] || activeSheetName;
@@ -258,15 +268,29 @@ function tryEvalFormula(formula, rowNum) {
   return null;
 }
 
+function stringifyValue(v) {
+  if (v === null || v === undefined) return "";
+  if (typeof v === "object") {
+    if (v.richText) return v.richText.map((p) => p.text).join("");
+    if (v.text) return v.text;
+    if (v.result !== undefined) return String(v.result);
+    return "";
+  }
+  return String(v);
+}
+
 function collectRangeValues(sheetName, startRef, endRef) {
   const ws = workbook.getWorksheet(sheetName);
   if (!ws) return null;
   const start = parseRef(startRef);
   const end = parseRef(endRef);
   if (!start || !end) return null;
+  const sheetLastRow = lastNonEmptyRow(ws, ws.columnCount) || 0;
+  const startRow = start.row || 1;
+  const endRow = end.row || sheetLastRow;
+  const lastRow = Math.min(endRow, sheetLastRow || endRow);
   const out = [];
-  const lastRow = Math.min(end.row, lastNonEmptyRow(ws, ws.columnCount) || end.row);
-  for (let r = start.row; r <= lastRow; r++) {
+  for (let r = startRow; r <= lastRow; r++) {
     for (let c = start.col; c <= end.col; c++) {
       const v = ws.getRow(r).getCell(c).value;
       if (v !== null && v !== undefined && v !== "") out.push(v);
@@ -276,12 +300,13 @@ function collectRangeValues(sheetName, startRef, endRef) {
 }
 
 function parseRef(ref) {
-  const m = ref.match(/^([A-Z]+)(\d+)$/i);
+  // Match either "A1" (with row) or "A" (column-only, for H:H ranges)
+  const m = ref.match(/^([A-Z]+)(\d*)$/i);
   if (!m) return null;
   let col = 0;
   const letters = m[1].toUpperCase();
   for (let i = 0; i < letters.length; i++) col = col * 26 + (letters.charCodeAt(i) - 64);
-  return { col, row: Number(m[2]) };
+  return { col, row: m[2] ? Number(m[2]) : 0 };
 }
 
 function aggregate(fn, values) {
