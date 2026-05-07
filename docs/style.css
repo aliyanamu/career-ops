@@ -92,6 +92,28 @@ th.sortable { cursor: pointer; }
 th.sortable:hover { background: #2a5f8e; }
 th.sort-asc .th-label::after { content: ' ▲'; opacity: 0.85; }
 th.sort-desc .th-label::after { content: ' ▼'; opacity: 0.85; }
+
+td.path-cell { position: relative; padding-right: 24px; }
+td.path-cell .cell-text {
+  display: inline-block;
+  min-height: 1em;
+  outline: none;
+  word-break: break-all;
+}
+td.path-cell .cell-link {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  text-decoration: none;
+  color: #1F4E78;
+  font-size: 0.95em;
+  font-weight: 700;
+  padding: 0 4px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.85);
+  user-select: none;
+}
+td.path-cell .cell-link:hover { background: #cce5ff; }
 td.formula {
   background: #f0f4f8 !important;
   color: #1F4E78;

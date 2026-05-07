@@ -179,9 +179,14 @@ function renderSheet() {
         if (validation && validation.type === "list") {
           td.appendChild(makeDropdown(validation, renderCell(cell, r), r, c));
         } else {
-          td.textContent = renderCell(cell, r);
-          td.contentEditable = "true";
-          td.addEventListener("blur", onCellEdit);
+          const text = renderCell(cell, r);
+          if (REPO_PATH_RE.test(text)) {
+            makePathCell(td, text, r, c);
+          } else {
+            td.textContent = text;
+            td.contentEditable = "true";
+            td.addEventListener("blur", onCellEdit);
+          }
         }
       }
       if (c === 1) td.appendChild(makeRowResizer(tr, r));
@@ -715,6 +720,66 @@ function aggregate(fn, values) {
 }
 
 // ---------- Editing ----------
+// ---------- Repo-relative path cells: render with a "↗" GitHub link ----------
+const REPO_PATH_RE = /^(prep|output|reports)\/[^\s]+\.(md|pdf|html|tex|txt)$/i;
+
+function blobUrl(path) {
+  return `https://github.com/${REPO_OWNER}/${REPO_NAME}/blob/${BRANCH}/${encodeURI(path)}`;
+}
+
+function makePathCell(td, text, r, c) {
+  td.classList.add("path-cell");
+
+  const span = document.createElement("span");
+  span.className = "cell-text";
+  span.textContent = text;
+  span.contentEditable = "true";
+  span.dataset.row = r;
+  span.dataset.col = c;
+  span.addEventListener("blur", onPathCellEdit);
+  td.appendChild(span);
+
+  const link = document.createElement("a");
+  link.className = "cell-link";
+  link.href = blobUrl(text);
+  link.target = "_blank";
+  link.rel = "noopener";
+  link.textContent = "↗";
+  link.contentEditable = "false";
+  link.title = `Open ${text} on GitHub`;
+  // Don't bubble click into the span (avoids spurious focus)
+  link.addEventListener("mousedown", (e) => e.stopPropagation());
+  td.appendChild(link);
+}
+
+function onPathCellEdit(e) {
+  const span = e.target;
+  const td = span.parentElement;
+  const r = parseInt(span.dataset.row, 10);
+  const c = parseInt(span.dataset.col, 10);
+  const newText = span.textContent;
+  const ws = workbook.getWorksheet(activeSheetName);
+  const cell = ws.getRow(r).getCell(c);
+  const oldText = cellToString(cell.value);
+  if (newText !== oldText) {
+    cell.value = newText;
+    td.classList.add("dirty");
+    dirtyCells.add(`${activeSheetName}!${r},${c}`);
+    setStatus(`${dirtyCells.size} unsaved change(s)`);
+  }
+  // Refresh the link href if the value changed (or hide if no longer a path)
+  const link = td.querySelector("a.cell-link");
+  if (link) {
+    if (REPO_PATH_RE.test(newText)) {
+      link.href = blobUrl(newText);
+      link.style.display = "";
+      link.title = `Open ${newText} on GitHub`;
+    } else {
+      link.style.display = "none";
+    }
+  }
+}
+
 function onCellEdit(e) {
   const td = e.target;
   const r = parseInt(td.dataset.row, 10);
