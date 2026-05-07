@@ -361,11 +361,52 @@ function onDropdownChange(e) {
   dirtyCells.add(`${activeSheetName}!${r},${c}`);
   setStatus(`${dirtyCells.size} unsaved change(s)`);
 
-  // Auto-promote: when Preparations Submission status (col 18) -> Submitted,
-  // record an entry in the Applications sheet.
-  if (activeSheetName === "Preparations" && c === 18 && sel.value === "Submitted") {
-    promoteToApplications(r);
+  // Auto-promote / un-promote when Preparations Submission status (col 18) changes
+  if (activeSheetName === "Preparations" && c === 18) {
+    if (sel.value === "Submitted") {
+      if (!confirm("Promote this to Applications with Status = Applied?\n\nA new row will be added to the Applications tab.\n\n(Cancel = leave Submission status alone.)")) {
+        // Revert the dropdown
+        sel.value = "Not submitted";
+        cell.value = "Not submitted";
+        applyDropdownStyle(sel);
+        return;
+      }
+      promoteToApplications(r);
+    } else {
+      // Submitted -> something else; offer to remove the promoted Applications row
+      unpromoteFromApplications(r);
+    }
   }
+}
+
+function unpromoteFromApplications(prepRow) {
+  const apps = workbook.getWorksheet("Applications");
+  const prep = workbook.getWorksheet("Preparations");
+  if (!apps || !prep) return;
+
+  const company = (prep.getRow(prepRow).getCell(3).value || "").toString().trim();
+  const role = (prep.getRow(prepRow).getCell(4).value || "").toString().trim();
+  if (!company || !role) return;
+
+  let match = null;
+  for (let r = 2; r <= apps.rowCount; r++) {
+    const aco = (apps.getRow(r).getCell(3).value || "").toString().trim();
+    const arole = (apps.getRow(r).getCell(4).value || "").toString().trim();
+    if (aco === company && arole === role) { match = r; break; }
+  }
+  if (!match) return;
+
+  if (!confirm(`Found a matching row in Applications (row ${match}: ${company} — ${role}).\n\nClear that row too?\n\n(OK = clear it. Cancel = leave it alone.)`)) return;
+
+  // Clear all data fields on the matched Applications row (preserve the =ROW()-1 formula in col 1)
+  const row = apps.getRow(match);
+  for (let c = 2; c <= apps.columnCount; c++) {
+    row.getCell(c).value = null;
+  }
+  row.commit();
+  dirtyCells.add(`Applications!${match},unpromote`);
+  setStatus(`Cleared Applications row ${match}. Save to commit.`);
+  if (activeSheetName === "Applications") renderSheet();
 }
 
 function promoteToApplications(prepRow) {
