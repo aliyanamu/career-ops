@@ -88,6 +88,10 @@ th {
   top: 0;
   user-select: none;
 }
+th.sortable { cursor: pointer; }
+th.sortable:hover { background: #2a5f8e; }
+th.sort-asc .th-label::after { content: ' ▲'; opacity: 0.85; }
+th.sort-desc .th-label::after { content: ' ▼'; opacity: 0.85; }
 td.formula {
   background: #f0f4f8 !important;
   color: #1F4E78;

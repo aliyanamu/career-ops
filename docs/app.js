@@ -117,7 +117,16 @@ function renderSheet() {
   const headerTr = document.createElement("tr");
   for (let c = 1; c <= maxCol; c++) {
     const th = document.createElement("th");
-    th.textContent = renderCell(ws.getRow(1).getCell(c), 1);
+    th.dataset.col = c;
+    const labelSpan = document.createElement("span");
+    labelSpan.className = "th-label";
+    labelSpan.textContent = renderCell(ws.getRow(1).getCell(c), 1);
+    th.appendChild(labelSpan);
+    th.classList.add("sortable");
+    th.addEventListener("click", (e) => {
+      if (e.target.classList.contains("col-resize")) return;
+      handleHeaderClick(c);
+    });
     th.appendChild(makeColResizer(colgroup.children[c - 1], c));
     headerTr.appendChild(th);
   }
@@ -157,6 +166,104 @@ function renderSheet() {
   }
   table.appendChild(tbody);
   container.appendChild(table);
+
+  applySort();
+}
+
+// ---------- Column sort (DOM-only; workbook untouched) ----------
+const sortState = {}; // { sheetName: { col, dir: 'asc'|'desc' } }
+
+function getSortValue(cell) {
+  if (cell == null) return "";
+  const v = cell.value;
+  if (v == null) return "";
+  if (v instanceof Date) return v.getTime();
+  if (typeof v === "object") {
+    if ("result" in v && v.result != null) return v.result;
+    if ("text" in v) return v.text;
+    if ("richText" in v) return v.richText.map((r) => r.text).join("");
+    return "";
+  }
+  return v;
+}
+
+function compareSortValues(a, b, dir) {
+  const aEmpty = a === "" || a == null;
+  const bEmpty = b === "" || b == null;
+  // Empties always last regardless of direction
+  if (aEmpty && bEmpty) return 0;
+  if (aEmpty) return 1;
+  if (bEmpty) return -1;
+  let cmp;
+  if (typeof a === "number" && typeof b === "number") cmp = a - b;
+  else cmp = String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: "base" });
+  return dir === "desc" ? -cmp : cmp;
+}
+
+function sortByColumn(colIdx, dir) {
+  const sheetEl = $("sheet");
+  const tbody = sheetEl.querySelector("tbody");
+  if (!tbody) return;
+  const ws = workbook.getWorksheet(activeSheetName);
+  if (!ws) return;
+  const rows = Array.from(tbody.children);
+  rows.sort((a, b) => {
+    const ar = parseInt(a.children[0].dataset.row, 10);
+    const br = parseInt(b.children[0].dataset.row, 10);
+    const av = getSortValue(ws.getRow(ar).getCell(colIdx));
+    const bv = getSortValue(ws.getRow(br).getCell(colIdx));
+    return compareSortValues(av, bv, dir);
+  });
+  rows.forEach((r) => tbody.appendChild(r));
+  updateSortIndicators();
+}
+
+function handleHeaderClick(colIdx) {
+  const cur = sortState[activeSheetName] || {};
+  let dir;
+  if (cur.col === colIdx) {
+    if (cur.dir === "asc") dir = "desc";
+    else if (cur.dir === "desc") { delete sortState[activeSheetName]; clearSortIndicators(); restoreOriginalOrder(); return; }
+    else dir = "asc";
+  } else {
+    dir = "asc";
+  }
+  sortState[activeSheetName] = { col: colIdx, dir };
+  sortByColumn(colIdx, dir);
+}
+
+function restoreOriginalOrder() {
+  const tbody = $("sheet").querySelector("tbody");
+  if (!tbody) return;
+  const rows = Array.from(tbody.children);
+  rows.sort((a, b) =>
+    parseInt(a.children[0].dataset.row, 10) - parseInt(b.children[0].dataset.row, 10)
+  );
+  rows.forEach((r) => tbody.appendChild(r));
+}
+
+function applySort() {
+  const s = sortState[activeSheetName];
+  if (!s) { clearSortIndicators(); return; }
+  sortByColumn(s.col, s.dir);
+}
+
+function clearSortIndicators() {
+  $("sheet").querySelectorAll("thead th").forEach((th) => {
+    th.classList.remove("sort-asc", "sort-desc");
+  });
+}
+
+function updateSortIndicators() {
+  clearSortIndicators();
+  const s = sortState[activeSheetName];
+  if (!s) return;
+  const ths = $("sheet").querySelectorAll("thead th");
+  ths.forEach((th) => {
+    if (parseInt(th.dataset.col, 10) === s.col) {
+      th.classList.add(s.dir === "asc" ? "sort-asc" : "sort-desc");
+    }
+  });
 }
 
 function makeColResizer(colEl, colIdx) {
