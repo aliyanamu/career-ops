@@ -414,7 +414,7 @@ function parseListOptions(formulae) {
 
 // [bg, text] color map per known option value
 const DROPDOWN_COLORS = {
-  // Wishlist Decision
+  // Jobs Decision
   "1. Apply":        ["#c6efce", "#006100"],
   "2. Easy Apply":   ["#80cbc4", "#004d40"],
   "3. Recommended":  ["#ffe082", "#7f5d00"],
@@ -815,28 +815,28 @@ function addRow() {
 }
 
 // ---------- Save back to GitHub ----------
-// Wishlist Decision col index (1-based): # | Date | Company | Role | URL | Source | WorkElig | Why | Fit | Deadline | Decision | Notes
-const WISHLIST_DECISION_COL = 11;
-const WISHLIST_DELETE_ON_SAVE = new Set(["6. Skip"]);
+// Jobs (formerly Wishlist) Decision col index (1-based): # | Date | Company | Role | URL | Source | WorkElig | Why | Fit | Deadline | Decision | Notes
+const JOBS_DECISION_COL = 11;
+const JOBS_DELETE_ON_SAVE = new Set(["6. Skip"]);
 
-// Wishlist Decision values that propagate to other sheets on save (dirty cells only).
-const WISHLIST_PROMOTIONS = {
+// Jobs Decision values that propagate to other sheets on save (dirty cells only).
+const JOBS_PROMOTIONS = {
   "1. Apply":      { sheet: "Preparations", desc: "Preparations row (full prep flow)" },
   "2. Easy Apply": { sheet: "Applications", desc: "Applications row (Status=Applied)" },
 };
 
-function findWishlistPromotions() {
-  const ws = workbook.getWorksheet("Wishlist");
+function findJobsPromotions() {
+  const ws = workbook.getWorksheet("Jobs");
   if (!ws) return [];
   const out = [];
   for (const key of dirtyCells) {
-    const m = key.match(/^Wishlist!(\d+),(\d+)$/);
+    const m = key.match(/^Jobs!(\d+),(\d+)$/);
     if (!m) continue;
     const c = parseInt(m[2], 10);
-    if (c !== WISHLIST_DECISION_COL) continue;
+    if (c !== JOBS_DECISION_COL) continue;
     const r = parseInt(m[1], 10);
     const dec = readCellAsString(ws.getRow(r).getCell(c)).trim();
-    const cfg = WISHLIST_PROMOTIONS[dec];
+    const cfg = JOBS_PROMOTIONS[dec];
     if (!cfg) continue;
     const co = readCellAsString(ws.getRow(r).getCell(3)).trim();
     const role = readCellAsString(ws.getRow(r).getCell(4)).trim();
@@ -893,8 +893,8 @@ function readCellAsUrl(cell) {
   return readCellAsString(cell);
 }
 
-function getWishlistMeta(company, role) {
-  const ws = workbook.getWorksheet("Wishlist");
+function getJobsMeta(company, role) {
+  const ws = workbook.getWorksheet("Jobs");
   for (let r = 2; r <= ws.rowCount; r++) {
     const co = readCellAsString(ws.getRow(r).getCell(3)).trim();
     const rl = readCellAsString(ws.getRow(r).getCell(4)).trim();
@@ -944,7 +944,7 @@ function createPreparationsRow(company, role) {
   const target = workbook.getWorksheet("Preparations");
   if (!target) return null;
   const r = findFirstEmptyDataRow(target, 2);
-  const meta = getWishlistMeta(company, role);
+  const meta = getJobsMeta(company, role);
   const date = todayISO();
   const qaPath = `prep/${slugifyForPath(company)}-${slugifyForPath(role)}-${date}.md`;
   setRowIndexFormula(target, r);
@@ -963,7 +963,7 @@ function createApplicationsRow(company, role) {
   const target = workbook.getWorksheet("Applications");
   if (!target) return null;
   const r = findFirstEmptyDataRow(target, 2);
-  const meta = getWishlistMeta(company, role);
+  const meta = getJobsMeta(company, role);
   setRowIndexFormula(target, r);
   setCellDirty(target, r, 2, todayISO());         // Date Applied
   setCellDirty(target, r, 3, company);
@@ -980,14 +980,14 @@ function createApplicationsRow(company, role) {
   return r;
 }
 
-function findWishlistRowsToDelete() {
-  const ws = workbook.getWorksheet("Wishlist");
+function findJobsRowsToDelete() {
+  const ws = workbook.getWorksheet("Jobs");
   if (!ws) return [];
   const hits = [];
   for (let r = 2; r <= ws.rowCount; r++) {
     const row = ws.getRow(r);
-    const dec = (row.getCell(WISHLIST_DECISION_COL).value || "").toString().trim();
-    if (!WISHLIST_DELETE_ON_SAVE.has(dec)) continue;
+    const dec = (row.getCell(JOBS_DECISION_COL).value || "").toString().trim();
+    if (!JOBS_DELETE_ON_SAVE.has(dec)) continue;
     const co = (row.getCell(3).value || "").toString().trim();
     const role = (row.getCell(4).value || "").toString().trim();
     if (!co && !role) continue; // skip empty
@@ -999,8 +999,8 @@ function findWishlistRowsToDelete() {
 async function save() {
   if (!workbook) return;
 
-  // Pre-save: prompt to permanently delete Skip-marked Wishlist rows
-  const toDelete = findWishlistRowsToDelete();
+  // Pre-save: prompt to permanently delete Skip-marked Jobs rows
+  const toDelete = findJobsRowsToDelete();
 
   if (dirtyCells.size === 0 && toDelete.length === 0 && !confirm("No edits detected. Save anyway?")) return;
 
@@ -1011,13 +1011,13 @@ async function save() {
       .join("\n");
     const more = toDelete.length > 15 ? `\n  …and ${toDelete.length - 15} more` : "";
     const ok = confirm(
-      `${toDelete.length} Wishlist row(s) marked Skip will be PERMANENTLY DELETED on save:\n\n${preview}${more}\n\nProceed?`
+      `${toDelete.length} Jobs row(s) marked Skip will be PERMANENTLY DELETED on save:\n\n${preview}${more}\n\nProceed?`
     );
     if (!ok) {
       setStatus("Save cancelled.");
       return;
     }
-    const ws = workbook.getWorksheet("Wishlist");
+    const ws = workbook.getWorksheet("Jobs");
     // Delete bottom-up to keep row indices stable
     for (const hit of toDelete.sort((a, b) => b.row - a.row)) {
       ws.spliceRows(hit.row, 1);
@@ -1025,7 +1025,7 @@ async function save() {
   }
 
   // Pre-save: propagate Decision = Apply / Easy Apply to Preparations / Applications
-  const promotions = findWishlistPromotions();
+  const promotions = findJobsPromotions();
   let promoted = 0;
   if (promotions.length > 0) {
     const byTarget = promotions.reduce((acc, p) => {
@@ -1037,7 +1037,7 @@ async function save() {
       const preview = list.slice(0, 10).map((h) => `  • [${h.decision}] ${h.company} — ${h.role}`).join("\n");
       const more = list.length > 10 ? `\n  …and ${list.length - 10} more` : "";
       const ok = confirm(
-        `${list.length} Wishlist row(s) marked "${list[0].decision}" — create matching ${verb}?\n\n${preview}${more}\n\n` +
+        `${list.length} Jobs row(s) marked "${list[0].decision}" — create matching ${verb}?\n\n${preview}${more}\n\n` +
         `OK = create now. Cancel = skip and save without propagating.`
       );
       if (!ok) continue;
@@ -1102,7 +1102,7 @@ async function save() {
 }
 
 // ---------- 409 conflict: rebase pending edits onto fresh remote ----------
-const ANCHORED_SHEETS = new Set(["Wishlist", "Applications", "Preparations"]);
+const ANCHORED_SHEETS = new Set(["Jobs", "Applications", "Preparations"]);
 
 function snapshotDirtyEdits() {
   const edits = [];

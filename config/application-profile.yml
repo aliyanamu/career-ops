@@ -1,0 +1,101 @@
+# Career-Ops Application Profile (autofill source)
+#
+# Distinct from config/profile.yml (identity + targeting):
+# this file holds the answers that go into application FORM FIELDS.
+# Used by the Easy-Apply autofill flow when the agent prepares
+# Greenhouse / Lever / Ashby / LinkedIn forms for one-click submission.
+#
+# Fill the TODO placeholders once. Update as life changes.
+# When a value is missing, the agent will STOP and ask rather than
+# fabricate (per AGENTS.md ethical-use rule).
+
+# -- Identity (mirrors profile.yml so this file stands alone) --
+identity:
+  legal_first_name: "Hana"
+  legal_last_name: "Aliyah Mufidah"  # TODO: verify exactly as on government ID
+  preferred_first_name: "Hana"
+  preferred_last_name: "Aliyah"
+  email: "aliyanamu@gmail.com"
+  phone: "+62 858-1099-4772"
+  pronouns: ""                 # TODO: "she/her" or your preference, blank to skip
+  pronunciation: ""            # TODO: e.g. "HAH-nah ah-LEE-ah" or blank
+
+# -- Online presence --
+links:
+  linkedin: "https://linkedin.com/in/hana-aliyah-mufidah"
+  github: ""                   # TODO: your github URL or blank
+  portfolio: ""                # TODO: optional
+  twitter: ""                  # TODO: optional
+
+# -- Location & work auth --
+location:
+  city: "Yogyakarta"
+  country: "Indonesia"
+  timezone: "GMT+7"
+  citizenship: "Indonesian"
+  work_authorization_text: "I am authorized to work in the country due to my nationality."
+  visa_sponsorship_needed: false       # in current location
+  open_to_relocation: true
+  permitted_remote_countries: []       # TODO: empty list = anywhere; or list of countries you're confirmed permitted
+
+# -- Compensation (Indonesian rupiah, net per month) --
+# All fields TODO: fill with your real numbers. Agent will not invent.
+compensation:
+  current_salary_currency: "IDR"
+  current_salary_period: "monthly"     # monthly | annual
+  current_salary_gross: null           # TODO: e.g. 30000000 (= 30M IDR/mo gross)
+  current_salary_net: null             # TODO: e.g. 27000000
+  expected_salary_min: null            # TODO: e.g. 35000000
+  expected_salary_max: null            # TODO: e.g. 45000000
+  expected_salary_negotiable: true
+  # USD-paying companies — separate band
+  usd_expected_min_annual: null        # TODO: e.g. 80000
+  usd_expected_max_annual: null        # TODO: e.g. 120000
+
+# -- Logistics --
+logistics:
+  notice_period: "1 month"             # TODO: confirm — most Indonesian contracts default to 1 month
+  earliest_start: ""                   # blank = "as agreed"
+  current_employer: "Nespay"
+  current_employer_visible_to_recruiters: true   # if false, agent will use "Confidential"
+
+# -- Languages --
+languages:
+  english_proficiency_level: "C1/C2"
+  english_dropdown_preferred_choice: "Fluent"  # for forms with dropdowns; falls back to "Professional working proficiency" / "Native or bilingual"
+  other_languages:
+    - { name: "Indonesian", level: "Native" }
+    - { name: "Korean", level: "Conversational" }
+
+# -- Education --
+education:
+  highest_degree: "Bachelor's"
+  field_of_study: "Geological/Geophysical Engineering"
+  institution: "Institut Teknologi Bandung"
+  graduation_year: 2015
+
+# -- Common form prompts (when a JD asks the same question, use this) --
+common_prompts:
+  how_did_you_hear_about_role: "Online Job Ad or Job Board"
+  how_did_you_hear_specifics: "Through my own job-search workflow that scans Ashby/Greenhouse/Lever public APIs."
+  why_are_you_looking: "Looking for the next step in Web3 / fullstack engineering — production stablecoin and wallet infrastructure aligns with what I've been shipping at Nespay."
+
+# -- AI policy stance (Zapier-style "do you use AI?" forms) --
+ai_policy:
+  use_ai_in_workflow: true
+  use_ai_in_application: true
+  disclosure_default: "Yes — I use AI tools (Claude, ChatGPT) responsibly and transparently in my engineering workflow and during application preparation."
+
+# -- Demographic (your standing answers; OPTIONAL for forms that ask) --
+# Leave any field as null to skip. Agent will not check defaults.
+demographic:
+  ethnicity: null              # e.g. "Asian"
+  gender_identity: null        # e.g. "Woman"
+  sexual_orientation: null     # e.g. "Prefer not to disclose"
+  veteran_status: null         # e.g. "I do not identify as a veteran"
+  disability_status: null      # e.g. "I do not identify as a person with a disability"
+
+# -- Default attachments --
+attachments:
+  default_cv: "cv-default.pdf"
+  default_cover_letter: null   # null = no default; per-application drafts in prep/
