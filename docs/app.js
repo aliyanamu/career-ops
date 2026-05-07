@@ -411,10 +411,11 @@ function parseListOptions(formulae) {
 const DROPDOWN_COLORS = {
   // Wishlist Decision
   "1. Apply":        ["#c6efce", "#006100"],
-  "2. Recommended":  ["#ffe082", "#7f5d00"],
-  "3. Saved":        ["#cce5ff", "#1f4e78"],
-  "4. Pending":      ["#eeeeee", "#555555"],
-  "5. Skip":         ["#ffc7ce", "#9c0006"],
+  "2. Easy Apply":   ["#80cbc4", "#004d40"],
+  "3. Recommended":  ["#ffe082", "#7f5d00"],
+  "4. Saved":        ["#cce5ff", "#1f4e78"],
+  "5. Pending":      ["#eeeeee", "#555555"],
+  "6. Skip":         ["#ffc7ce", "#9c0006"],
   // Fit Score 1-5
   "1": ["#ffc7ce", "#9c0006"],
   "2": ["#ffe0b2", "#b45309"],
@@ -749,7 +750,119 @@ function addRow() {
 // ---------- Save back to GitHub ----------
 // Wishlist Decision col index (1-based): # | Date | Company | Role | URL | Source | WorkElig | Why | Fit | Deadline | Decision | Notes
 const WISHLIST_DECISION_COL = 11;
-const WISHLIST_DELETE_ON_SAVE = new Set(["5. Skip"]);
+const WISHLIST_DELETE_ON_SAVE = new Set(["6. Skip"]);
+
+// Wishlist Decision values that propagate to other sheets on save (dirty cells only).
+const WISHLIST_PROMOTIONS = {
+  "1. Apply":      { sheet: "Preparations", desc: "Preparations row (full prep flow)" },
+  "2. Easy Apply": { sheet: "Applications", desc: "Applications row (Status=Applied)" },
+};
+
+function findWishlistPromotions() {
+  const ws = workbook.getWorksheet("Wishlist");
+  if (!ws) return [];
+  const out = [];
+  for (const key of dirtyCells) {
+    const m = key.match(/^Wishlist!(\d+),(\d+)$/);
+    if (!m) continue;
+    const c = parseInt(m[2], 10);
+    if (c !== WISHLIST_DECISION_COL) continue;
+    const r = parseInt(m[1], 10);
+    const dec = (ws.getRow(r).getCell(c).value || "").toString().trim();
+    const cfg = WISHLIST_PROMOTIONS[dec];
+    if (!cfg) continue;
+    const co = (ws.getRow(r).getCell(3).value || "").toString().trim();
+    const role = (ws.getRow(r).getCell(4).value || "").toString().trim();
+    if (!co || !role) continue;
+    if (rowExistsInSheet(cfg.sheet, co, role)) continue;
+    out.push({ row: r, decision: dec, sheet: cfg.sheet, desc: cfg.desc, company: co, role });
+  }
+  return out;
+}
+
+function rowExistsInSheet(sheetName, company, role) {
+  const ws = workbook.getWorksheet(sheetName);
+  if (!ws) return false;
+  for (let r = 2; r <= ws.rowCount; r++) {
+    const co = (ws.getRow(r).getCell(3).value || "").toString().trim();
+    const rl = (ws.getRow(r).getCell(4).value || "").toString().trim();
+    if (co === company && rl === role) return true;
+  }
+  return false;
+}
+
+function findFirstEmptyDataRow(ws, dataCol) {
+  for (let r = 2; r <= ws.rowCount; r++) {
+    if (!ws.getRow(r).getCell(dataCol).value) return r;
+  }
+  return ws.rowCount + 1;
+}
+
+function getWishlistMeta(company, role) {
+  const ws = workbook.getWorksheet("Wishlist");
+  for (let r = 2; r <= ws.rowCount; r++) {
+    const co = (ws.getRow(r).getCell(3).value || "").toString().trim();
+    const rl = (ws.getRow(r).getCell(4).value || "").toString().trim();
+    if (co === company && rl === role) {
+      return {
+        url: (ws.getRow(r).getCell(5).value || "").toString(),
+        source: (ws.getRow(r).getCell(6).value || "").toString(),
+        elig: (ws.getRow(r).getCell(7).value || "").toString(),
+        why: (ws.getRow(r).getCell(8).value || "").toString(),
+        notes: (ws.getRow(r).getCell(12).value || "").toString(),
+      };
+    }
+  }
+  return { url: "", source: "", elig: "", why: "", notes: "" };
+}
+
+function setCellDirty(ws, r, c, value) {
+  ws.getRow(r).getCell(c).value = value;
+  dirtyCells.add(`${ws.name}!${r},${c}`);
+}
+
+function todayISO() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function isoDaysFromNow(days) {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
+function createPreparationsRow(company, role) {
+  const target = workbook.getWorksheet("Preparations");
+  if (!target) return null;
+  const r = findFirstEmptyDataRow(target, 2);
+  const meta = getWishlistMeta(company, role);
+  setCellDirty(target, r, 2, todayISO());        // Date
+  setCellDirty(target, r, 3, company);            // Company
+  setCellDirty(target, r, 4, role);               // Role
+  setCellDirty(target, r, 5, meta.url);           // Job URL
+  setCellDirty(target, r, 18, "Not submitted");   // Submission status
+  return r;
+}
+
+function createApplicationsRow(company, role) {
+  const target = workbook.getWorksheet("Applications");
+  if (!target) return null;
+  const r = findFirstEmptyDataRow(target, 2);
+  const meta = getWishlistMeta(company, role);
+  setCellDirty(target, r, 2, todayISO());         // Date Applied
+  setCellDirty(target, r, 3, company);
+  setCellDirty(target, r, 4, role);
+  setCellDirty(target, r, 5, meta.elig);          // Location / Remote (use Work Eligibility hint)
+  setCellDirty(target, r, 6, meta.source);        // Source / Portal
+  setCellDirty(target, r, 7, meta.url);           // Job URL
+  setCellDirty(target, r, 8, "Applied");          // Status
+  setCellDirty(target, r, 9, todayISO());         // Last Update
+  setCellDirty(target, r, 10, "cv-default.pdf"); // CV Used
+  setCellDirty(target, r, 15, "Wait for recruiter response"); // Next Action
+  setCellDirty(target, r, 16, isoDaysFromNow(14)); // Follow-up Date
+  if (meta.notes) setCellDirty(target, r, 17, meta.notes);
+  return r;
+}
 
 function findWishlistRowsToDelete() {
   const ws = workbook.getWorksheet("Wishlist");
@@ -795,6 +908,32 @@ async function save() {
     }
   }
 
+  // Pre-save: propagate Decision = Apply / Easy Apply to Preparations / Applications
+  const promotions = findWishlistPromotions();
+  let promoted = 0;
+  if (promotions.length > 0) {
+    const byTarget = promotions.reduce((acc, p) => {
+      (acc[p.sheet] = acc[p.sheet] || []).push(p);
+      return acc;
+    }, {});
+    for (const [sheet, list] of Object.entries(byTarget)) {
+      const verb = list[0].desc;
+      const preview = list.slice(0, 10).map((h) => `  • [${h.decision}] ${h.company} — ${h.role}`).join("\n");
+      const more = list.length > 10 ? `\n  …and ${list.length - 10} more` : "";
+      const ok = confirm(
+        `${list.length} Wishlist row(s) marked "${list[0].decision}" — create matching ${verb}?\n\n${preview}${more}\n\n` +
+        `OK = create now. Cancel = skip and save without propagating.`
+      );
+      if (!ok) continue;
+      for (const h of list) {
+        if (sheet === "Preparations") createPreparationsRow(h.company, h.role);
+        else if (sheet === "Applications") createApplicationsRow(h.company, h.role);
+        promoted++;
+      }
+    }
+    if (promoted > 0) renderSheet();
+  }
+
   const pat = getPat();
   if (!pat) return;
   setStatus("Saving…");
@@ -812,9 +951,12 @@ async function save() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message: toDelete.length > 0
-          ? `Update tracker via web editor (${dirtyCells.size} edits, ${toDelete.length} Skip rows deleted)`
-          : `Update tracker via web editor (${dirtyCells.size} edits)`,
+        message: (() => {
+          const parts = [`${dirtyCells.size} edits`];
+          if (toDelete.length > 0) parts.push(`${toDelete.length} Skip rows deleted`);
+          if (promoted > 0) parts.push(`${promoted} Apply/Easy-Apply propagated`);
+          return `Update tracker via web editor (${parts.join(", ")})`;
+        })(),
         content: base64,
         sha: currentSha,
         branch: BRANCH,
