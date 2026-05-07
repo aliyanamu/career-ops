@@ -30,6 +30,7 @@ let workbook = null;
 let currentSha = null;
 let activeSheetName = null;
 const dirtyCells = new Set();
+let showHiddenJobs = false; // toggle for Jobs sheet "Hide" column filter
 
 // ---------- Load xlsx from GitHub ----------
 async function loadWorkbook() {
@@ -92,6 +93,19 @@ window.addEventListener("hashchange", () => {
 });
 
 // ---------- Rendering ----------
+const JOBS_HIDE_COL = 12; // Jobs sheet: "Hide" column
+
+function countHiddenJobs() {
+  const ws = workbook?.getWorksheet("Jobs");
+  if (!ws) return 0;
+  let n = 0;
+  for (let r = 2; r <= ws.rowCount; r++) {
+    const v = readCellAsString(ws.getRow(r).getCell(JOBS_HIDE_COL)).trim().toLowerCase();
+    if (v === "hidden") n++;
+  }
+  return n;
+}
+
 function renderTabs() {
   const tabs = $("tabs");
   tabs.innerHTML = "";
@@ -107,6 +121,25 @@ function renderTabs() {
     };
     tabs.appendChild(btn);
   });
+
+  // "Show hidden" toggle — only on Jobs sheet
+  if (activeSheetName === "Jobs") {
+    const hiddenCount = countHiddenJobs();
+    if (hiddenCount > 0) {
+      const toggle = document.createElement("button");
+      toggle.className = "tabs-toggle";
+      toggle.textContent = showHiddenJobs
+        ? `Hide hidden (${hiddenCount})`
+        : `Show hidden (${hiddenCount})`;
+      toggle.title = "Toggle visibility of Jobs rows marked Hidden";
+      toggle.onclick = () => {
+        showHiddenJobs = !showHiddenJobs;
+        renderTabs();
+        renderSheet();
+      };
+      tabs.appendChild(toggle);
+    }
+  }
 }
 
 function renderSheet() {
@@ -159,9 +192,14 @@ function renderSheet() {
   table.appendChild(thead);
 
   const tbody = document.createElement("tbody");
+  const hideJobsFilter = activeSheetName === "Jobs" && !showHiddenJobs;
   for (let r = 2; r <= lastRow; r++) {
-    const tr = document.createElement("tr");
     const xlsxRow = ws.getRow(r);
+    if (hideJobsFilter) {
+      const hideVal = readCellAsString(xlsxRow.getCell(JOBS_HIDE_COL)).trim().toLowerCase();
+      if (hideVal === "hidden") continue;
+    }
+    const tr = document.createElement("tr");
     if (xlsxRow.height) tr.style.height = `${Math.round(xlsxRow.height * 1.33)}px`;
 
     for (let c = 1; c <= maxCol; c++) {
@@ -1046,8 +1084,26 @@ async function save() {
         else if (sheet === "Applications") createApplicationsRow(h.company, h.role);
         promoted++;
       }
+
+      // Offer to also hide the source Jobs rows
+      const hideOk = confirm(
+        `Propagated ${list.length} row(s) to ${sheet}. Also mark them Hidden in Jobs?\n\n` +
+        `Hidden rows are removed from the default Jobs view but preserved in the file. ` +
+        `Toggle "Show hidden" to bring them back.\n\n` +
+        `OK = hide. Cancel = leave visible.`
+      );
+      if (hideOk) {
+        const jobsWs = workbook.getWorksheet("Jobs");
+        for (const h of list) {
+          jobsWs.getRow(h.row).getCell(JOBS_HIDE_COL).value = "Hidden";
+          dirtyCells.add(`Jobs!${h.row},${JOBS_HIDE_COL}`);
+        }
+      }
     }
-    if (promoted > 0) renderSheet();
+    if (promoted > 0) {
+      renderTabs();
+      renderSheet();
+    }
   }
 
   const pat = getPat();

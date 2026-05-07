@@ -53,6 +53,16 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   color: #1F4E78;
   font-weight: 600;
 }
+.tabs button.tabs-toggle {
+  margin-left: auto;
+  color: #555;
+  font-size: 0.9em;
+  border-bottom-color: transparent;
+}
+.tabs button.tabs-toggle:hover {
+  color: #1F4E78;
+  background: #eef3f9;
+}
 
 .sheet {
   overflow-x: auto;
