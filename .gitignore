@@ -6,8 +6,10 @@ data/scan-history.tsv
 data/verify-remote-report.md
 reports/*.md
 !reports/.gitkeep
+!reports/[0-9][0-9][0-9]-*.md
 output/*
 !output/.gitkeep
+!output/cv-*.pdf
 batch/logs/*
 !batch/logs/.gitkeep
 batch/batch-state.tsv

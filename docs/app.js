@@ -721,7 +721,9 @@ function aggregate(fn, values) {
 
 // ---------- Editing ----------
 // ---------- Repo-relative path cells: render with a "↗" GitHub link ----------
-const REPO_PATH_RE = /^(prep|output|reports)\/[^\s]+\.(md|pdf|html|tex|txt)$/i;
+// Matches relative paths like "prep/foo.md", "output/cv-bar.pdf", "cv-default.pdf"
+// at the repo root. Excludes anything containing :// (URLs) or whitespace.
+const REPO_PATH_RE = /^[\w./-]+\.(md|pdf|html|tex|txt)$/i;
 
 function blobUrl(path) {
   return `https://github.com/${REPO_OWNER}/${REPO_NAME}/blob/${BRANCH}/${encodeURI(path)}`;
