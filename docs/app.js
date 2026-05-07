@@ -294,12 +294,18 @@ const DROPDOWN_COLORS = {
   "Recording":    ["#ffeb9c", "#7f6000"],
   "Recorded":     ["#cce5ff", "#1f4e78"],
   "Submitted":    ["#c6efce", "#006100"],
-  // Submission status (most overlap with above; explicit listing keeps it self-documenting)
+  // Submission status
   "Not submitted": ["#ffc7ce", "#9c0006"],
-  "Acknowledged":  ["#cce5ff", "#1f4e78"],
-  "Interview":     ["#b7e1cd", "#1f4e78"],
-  "Rejected":      ["#eeeeee", "#555555"],
-  "Withdrawn":     ["#eeeeee", "#555555"],
+  // Applications Status
+  "Wishlist":   ["#eeeeee", "#555555"],
+  "Evaluated":  ["#cce5ff", "#1f4e78"],
+  "Applied":    ["#c6efce", "#006100"],
+  "Responded":  ["#b7e1cd", "#1f4e78"],
+  "Interview":  ["#fff2cc", "#7f6000"],
+  "Offer":      ["#ffd966", "#7f6000"],
+  "Rejected":   ["#ffc7ce", "#9c0006"],
+  "Discarded":  ["#eeeeee", "#555555"],
+  "SKIP":       ["#ffc7ce", "#9c0006"],
 };
 
 function applyDropdownStyle(select) {
@@ -354,6 +360,76 @@ function onDropdownChange(e) {
   sel.parentElement.classList.add("dirty");
   dirtyCells.add(`${activeSheetName}!${r},${c}`);
   setStatus(`${dirtyCells.size} unsaved change(s)`);
+
+  // Auto-promote: when Preparations Submission status (col 18) -> Submitted,
+  // record an entry in the Applications sheet.
+  if (activeSheetName === "Preparations" && c === 18 && sel.value === "Submitted") {
+    promoteToApplications(r);
+  }
+}
+
+function promoteToApplications(prepRow) {
+  const prep = workbook.getWorksheet("Preparations");
+  const apps = workbook.getWorksheet("Applications");
+  if (!prep || !apps) return;
+
+  const get = (col) => {
+    const v = prep.getRow(prepRow).getCell(col).value;
+    if (v === null || v === undefined) return "";
+    if (typeof v === "object") {
+      if (v.text) return v.text;
+      if (v.richText) return v.richText.map((p) => p.text).join("");
+      if (v.result !== undefined) return String(v.result);
+      if (v.formula) return "";
+      return "";
+    }
+    return String(v);
+  };
+  const company = get(3).trim();
+  const role = get(4).trim();
+  const url = get(5).trim();
+  const cvPath = get(6).trim();
+  const today = new Date().toISOString().slice(0, 10);
+
+  // Look for an existing Applications row with the same Company+Role
+  let existingRow = null;
+  const lastRow = apps.rowCount;
+  for (let r = 2; r <= lastRow; r++) {
+    const aco = (apps.getRow(r).getCell(3).value || "").toString().trim();
+    const arole = (apps.getRow(r).getCell(4).value || "").toString().trim();
+    if (aco === company && arole === role) { existingRow = r; break; }
+  }
+
+  if (existingRow) {
+    setStatus(`Already in Applications row ${existingRow}; not duplicated.`);
+    return;
+  }
+
+  // Find first empty data row (Date Applied / Company / Role all empty)
+  let target = 2;
+  while (target <= 1001) {
+    const row = apps.getRow(target);
+    const empty = !row.getCell(2).value && !row.getCell(3).value && !row.getCell(4).value;
+    if (empty) break;
+    target++;
+  }
+
+  const row = apps.getRow(target);
+  row.getCell(2).value = today;          // Date Applied
+  row.getCell(3).value = company;        // Company
+  row.getCell(4).value = role;           // Role
+  row.getCell(7).value = url;            // Job URL
+  row.getCell(8).value = "Applied";      // Status
+  row.getCell(9).value = today;          // Last Update
+  row.getCell(10).value = cvPath;        // CV Used
+  row.getCell(17).value = `Promoted from Preparations row ${prepRow}`;  // Notes
+  row.commit();
+
+  dirtyCells.add(`Applications!${target},promote`);
+  setStatus(`Promoted to Applications row ${target} (Status=Applied). Save to commit.`);
+
+  // If the Applications tab is visible, re-render so the new row is shown
+  if (activeSheetName === "Applications") renderSheet();
 }
 
 function renderCell(cell, rowNum) {
