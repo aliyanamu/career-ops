@@ -118,7 +118,7 @@ function renderSheet() {
   for (let c = 1; c <= maxCol; c++) {
     const th = document.createElement("th");
     th.textContent = renderCell(ws.getRow(1).getCell(c), 1);
-    th.appendChild(makeColResizer(colgroup.children[c - 1]));
+    th.appendChild(makeColResizer(colgroup.children[c - 1], c));
     headerTr.appendChild(th);
   }
   thead.appendChild(headerTr);
@@ -144,7 +144,7 @@ function renderSheet() {
       }
       td.dataset.row = r;
       td.dataset.col = c;
-      if (c === 1) td.appendChild(makeRowResizer(tr));
+      if (c === 1) td.appendChild(makeRowResizer(tr, r));
       tr.appendChild(td);
     }
     tbody.appendChild(tr);
@@ -153,23 +153,25 @@ function renderSheet() {
   container.appendChild(table);
 }
 
-function makeColResizer(colEl) {
+function makeColResizer(colEl, colIdx) {
   const handle = document.createElement("div");
   handle.className = "col-resize";
-  handle.addEventListener("mousedown", (e) => startDrag(e, "col", colEl, handle));
-  handle.addEventListener("touchstart", (e) => startDrag(e, "col", colEl, handle), { passive: false });
+  const start = (e) => startDrag(e, "col", colEl, handle, colIdx);
+  handle.addEventListener("mousedown", start);
+  handle.addEventListener("touchstart", start, { passive: false });
   return handle;
 }
 
-function makeRowResizer(trEl) {
+function makeRowResizer(trEl, rowIdx) {
   const handle = document.createElement("div");
   handle.className = "row-resize";
-  handle.addEventListener("mousedown", (e) => startDrag(e, "row", trEl, handle));
-  handle.addEventListener("touchstart", (e) => startDrag(e, "row", trEl, handle), { passive: false });
+  const start = (e) => startDrag(e, "row", trEl, handle, rowIdx);
+  handle.addEventListener("mousedown", start);
+  handle.addEventListener("touchstart", start, { passive: false });
   return handle;
 }
 
-function startDrag(e, kind, target, handle) {
+function startDrag(e, kind, target, handle, idx) {
   e.preventDefault();
   e.stopPropagation();
   handle.classList.add("dragging");
@@ -178,12 +180,13 @@ function startDrag(e, kind, target, handle) {
     ? parseInt(target.style.width || "140", 10)
     : target.getBoundingClientRect().height;
 
+  let lastSize = startSize;
   const onMove = (ev) => {
     const pos = ev.touches ? (kind === "col" ? ev.touches[0].clientX : ev.touches[0].clientY) : (kind === "col" ? ev.clientX : ev.clientY);
     const delta = pos - startPos;
-    const next = Math.max(40, startSize + delta);
-    if (kind === "col") target.style.width = `${next}px`;
-    else target.style.height = `${next}px`;
+    lastSize = Math.max(40, startSize + delta);
+    if (kind === "col") target.style.width = `${lastSize}px`;
+    else target.style.height = `${lastSize}px`;
   };
   const onUp = () => {
     handle.classList.remove("dragging");
@@ -191,11 +194,28 @@ function startDrag(e, kind, target, handle) {
     document.removeEventListener("mouseup", onUp);
     document.removeEventListener("touchmove", onMove);
     document.removeEventListener("touchend", onUp);
+
+    if (lastSize !== startSize) persistResize(kind, idx, lastSize);
   };
   document.addEventListener("mousemove", onMove);
   document.addEventListener("mouseup", onUp);
   document.addEventListener("touchmove", onMove, { passive: false });
   document.addEventListener("touchend", onUp);
+}
+
+function persistResize(kind, idx, pixels) {
+  const ws = workbook.getWorksheet(activeSheetName);
+  if (!ws) return;
+  if (kind === "col") {
+    // Excel column width is in character units (~7px per unit)
+    ws.getColumn(idx).width = pixels / 7;
+    dirtyCells.add(`${activeSheetName}!col-width-${idx}`);
+  } else {
+    // Excel row height is in points (~0.75 of a px at 96dpi)
+    ws.getRow(idx).height = pixels * 0.75;
+    dirtyCells.add(`${activeSheetName}!row-height-${idx}`);
+  }
+  setStatus(`${dirtyCells.size} unsaved change(s)`);
 }
 
 function lastNonEmptyRow(ws, maxCol) {

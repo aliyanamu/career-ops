@@ -9,11 +9,11 @@ The user runs **two coexisting trackers** on top of what this repo ships:
 1. **The repo's built-in artifacts** (from `santifer/career-ops`): `cv.md`, `config/profile.yml`, `modes/_profile.md`, `data/applications.md`, `data/pipeline.md`, `reports/`, `output/`. These work as the upstream system intends — markdown + yml as source of truth.
 2. **`Job_Hunting_Progress.xlsx`** — the user's own spreadsheet, kept alongside the repo files (now committed inside the repo as the single source of truth, symlinked path removed). It existed before we connected career-ops, and the user wants to keep using it in addition to the markdown trackers, not instead of them. Treat it as a mandatory output, not optional.
 
-**Why both:** the user reads/edits the xlsx daily (Wishlist, Applications, Prep, Dashboard sheets); the markdown tracker is what career-ops scripts (`merge-tracker.mjs`, `dedup-tracker.mjs`, `verify-pipeline.mjs`) operate on. Every auto-pipeline run must update **both**.
+**Why both:** the user reads/edits the xlsx daily (Wishlist, Preparations, Applications, Dashboard sheets); the markdown tracker is what career-ops scripts (`merge-tracker.mjs`, `dedup-tracker.mjs`, `verify-pipeline.mjs`) operate on. Every auto-pipeline run must update **both**.
 
-### Custom `Prep` sheet (we added this)
+### Custom `Preparations` sheet (we added this)
 
-We extended the xlsx with a new `Prep` sheet because the user needs a per-application prep workspace that the upstream system doesn't provide. Columns:
+We extended the xlsx with a new `Preparations` sheet because the user needs a per-application prep workspace that the upstream system doesn't provide. Columns:
 
 `#`, `Date`, `Company`, `Role`, `Job URL`, `Tailored CV Path`, `Tailored CV Status`, `Q1: Why this role?`, `Q2: Why this company?`, `Q3: Relevant experience`, `Q4: Why a good fit?`, `Q5: How did you hear?`, `Other custom Qs`, `Video required?`, `Video script notes`, `Video status`, `AI disclaimer?`, `Submission status`, `Notes`.
 
@@ -21,7 +21,7 @@ Header style: solid fill `#1F4E78`, white bold, centered, wrap. Body: top-aligne
 
 ### Sessions so far
 
-- **2026-05-06** — Evaluated two Tether roles (Backend Wallets, Senior Frontend KYC). Both flagged with the "no AI tools" application disclaimer. Both committed to `reports/001-tether-2026-05-06.md` and `reports/002-tether-2026-05-06.md`. Tailored CVs in `output/`. Tracker rows in both `data/applications.md` and the `Prep` sheet.
+- **2026-05-06** — Evaluated two Tether roles (Backend Wallets, Senior Frontend KYC). Both flagged with the "no AI tools" application disclaimer. Both committed to `reports/001-tether-2026-05-06.md` and `reports/002-tether-2026-05-06.md`. Tailored CVs in `output/`. Tracker rows in both `data/applications.md` and the `Preparations` sheet.
 - Set up the private fork `aliyanamu/career-ops`, rewired remotes, committed `Job_Hunting_Progress.xlsx` into the repo, added this CLAUDE.md.
 
 ## Repo state
@@ -41,7 +41,7 @@ The user has completed onboarding. These files exist and are gitignored — do N
 - `data/applications.md` — application tracker (markdown)
 - `Job_Hunting_Progress.xlsx` — **the user's primary tracker** (committed to repo, single source of truth)
 
-`Job_Hunting_Progress.xlsx` lives in the repo root. Sheets: `CV Summary`, `Dashboard`, `Wishlist`, `Applications`, `Prep`, `Companies`, `Status Legend`. The `Prep` sheet is custom: Tailored CV path, form-question drafts (Q1–Q5), Other custom Qs, Video plan, AI-disclaimer flag, Submission status. After every auto-pipeline run, update both `data/applications.md` AND the `Prep` sheet.
+`Job_Hunting_Progress.xlsx` lives in the repo root. Sheets: `CV Summary`, `Dashboard`, `Wishlist`, `Preparations`, `Applications`, `Companies`, `Status Legend`. The `Preparations` sheet is custom: Tailored CV path, form-question drafts (Q1–Q5), Other custom Qs, Video plan, AI-disclaimer flag, Submission status. After every auto-pipeline run, update both `data/applications.md` AND the `Preparations` sheet.
 
 ## User preferences (also in Claude Code memory)
 
@@ -60,12 +60,12 @@ When the user pastes a JD URL:
 2. Run blocks A–G. Save report to `reports/{NNN}-{slug}-{YYYY-MM-DD}.md`.
 3. Generate tailored CV PDF to `output/cv-hana-aliyah-mufidah-{slug}-{YYYY-MM-DD}.pdf` (A4, `cv.output_format: html` in profile.yml).
 4. Update `data/applications.md` directly (not via TSV merge — `merge-tracker.mjs` mishandles `%` and em-dashes in role titles).
-5. Update the `Prep` sheet in `Job_Hunting_Progress.xlsx` via `openpyxl` — add a new row, fill all columns including AI-disclaimer flag.
-6. If JD bans AI tools: include block H drafts in the report under a clear "scaffold only" warning. Do NOT add them verbatim to the Prep sheet form-answer columns; instead write a one-line "Rewrite in own voice — see report H" note.
+5. Update the `Preparations` sheet in `Job_Hunting_Progress.xlsx` via `openpyxl` — add a new row, fill all columns including AI-disclaimer flag.
+6. If JD bans AI tools: include block H drafts in the report under a clear "scaffold only" warning. Do NOT add them verbatim to the Preparations sheet form-answer columns; instead write a one-line "Rewrite in own voice — see report H" note.
 
 ## Conventions specific to this repo
 
 - Reports start at `001`; check the highest existing number before writing a new one.
 - Slugs: lowercase, hyphenated company name. For multiple roles at the same company in one day, append a role qualifier (e.g. `tether-fe-kyc`).
-- The `Prep` sheet's row 1 column headers are styled (dark blue header, white bold). When adding rows via openpyxl, set `Alignment(vertical="top", wrap_text=True)` on every cell so the layout stays readable.
+- The `Preparations` sheet's row 1 column headers are styled (dark blue header, white bold). When adding rows via openpyxl, set `Alignment(vertical="top", wrap_text=True)` on every cell so the layout stays readable.
 - `cv-template.html` references `./fonts/...` relative paths. When generating ad-hoc HTML for a tailored CV, use absolute paths to `/Users/hana/Documents/personal/career-ops/fonts/` so Playwright can resolve them.
