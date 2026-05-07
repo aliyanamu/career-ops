@@ -55,7 +55,8 @@ async function loadWorkbook() {
     workbook = new ExcelJS.Workbook();
     await workbook.xlsx.load(bytes.buffer);
 
-    activeSheetName = workbook.worksheets[0].name;
+    activeSheetName = sheetFromHash() || workbook.worksheets[0].name;
+    writeHashFromSheet(activeSheetName);
     dirtyCells.clear();
     renderTabs();
     renderSheet();
@@ -67,6 +68,29 @@ async function loadWorkbook() {
   }
 }
 
+// ---------- URL hash <-> active sheet ----------
+function sheetFromHash() {
+  if (!workbook) return null;
+  const m = location.hash.match(/^#sheet=(.+)$/);
+  if (!m) return null;
+  const wanted = decodeURIComponent(m[1]);
+  return workbook.worksheets.find((ws) => ws.name === wanted)?.name || null;
+}
+
+function writeHashFromSheet(name) {
+  const next = `#sheet=${encodeURIComponent(name)}`;
+  if (location.hash !== next) history.replaceState(null, "", next);
+}
+
+window.addEventListener("hashchange", () => {
+  const wanted = sheetFromHash();
+  if (wanted && wanted !== activeSheetName) {
+    activeSheetName = wanted;
+    renderTabs();
+    renderSheet();
+  }
+});
+
 // ---------- Rendering ----------
 function renderTabs() {
   const tabs = $("tabs");
@@ -77,6 +101,7 @@ function renderTabs() {
     if (ws.name === activeSheetName) btn.classList.add("active");
     btn.onclick = () => {
       activeSheetName = ws.name;
+      writeHashFromSheet(ws.name);
       renderTabs();
       renderSheet();
     };
