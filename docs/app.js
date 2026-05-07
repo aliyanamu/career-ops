@@ -385,11 +385,11 @@ function parseListOptions(formulae) {
 // [bg, text] color map per known option value
 const DROPDOWN_COLORS = {
   // Wishlist Decision
-  "Pending":      ["#eeeeee", "#555555"],
-  "Recommended":  ["#ffe082", "#7f5d00"],
-  "Apply":        ["#c6efce", "#006100"],
-  "Skip":         ["#ffc7ce", "#9c0006"],
-  "Saved":        ["#cce5ff", "#1f4e78"],
+  "1. Apply":        ["#c6efce", "#006100"],
+  "2. Recommended":  ["#ffe082", "#7f5d00"],
+  "3. Saved":        ["#cce5ff", "#1f4e78"],
+  "4. Pending":      ["#eeeeee", "#555555"],
+  "5. Skip":         ["#ffc7ce", "#9c0006"],
   // Fit Score 1-5
   "1": ["#ffc7ce", "#9c0006"],
   "2": ["#ffe0b2", "#b45309"],
@@ -724,7 +724,7 @@ function addRow() {
 // ---------- Save back to GitHub ----------
 // Wishlist Decision col index (1-based): # | Date | Company | Role | URL | Source | WorkElig | Why | Fit | Deadline | Decision | Notes
 const WISHLIST_DECISION_COL = 11;
-const WISHLIST_DELETE_ON_SAVE = new Set(["Skip"]);
+const WISHLIST_DELETE_ON_SAVE = new Set(["5. Skip"]);
 
 function findWishlistRowsToDelete() {
   const ws = workbook.getWorksheet("Wishlist");
