@@ -493,8 +493,8 @@ function onDropdownChange(e) {
   dirtyCells.add(`${activeSheetName}!${r},${c}`);
   setStatus(`${dirtyCells.size} unsaved change(s)`);
 
-  // Auto-promote / un-promote when Preparations Submission status (col 18) changes
-  if (activeSheetName === "Preparations" && c === 18) {
+  // Auto-promote / un-promote when Preparations Submission status (col 13) changes
+  if (activeSheetName === "Preparations" && c === 13) {
     if (sel.value === "Submitted") {
       if (!confirm("Promote this to Applications with Status = Applied?\n\nA new row will be added to the Applications tab.\n\n(Cancel = leave Submission status alone.)")) {
         // Revert the dropdown
@@ -865,17 +865,28 @@ function setRowIndexFormula(target, r) {
   dirtyCells.add(`${target.name}!${r},1`);
 }
 
+function slugifyForPath(s) {
+  return (s || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 50);
+}
+
 function createPreparationsRow(company, role) {
   const target = workbook.getWorksheet("Preparations");
   if (!target) return null;
   const r = findFirstEmptyDataRow(target, 2);
   const meta = getWishlistMeta(company, role);
+  const date = todayISO();
+  const qaPath = `prep/${slugifyForPath(company)}-${slugifyForPath(role)}-${date}.md`;
   setRowIndexFormula(target, r);
-  setCellDirty(target, r, 2, todayISO());        // Date
+  setCellDirty(target, r, 2, date);               // Date
   setCellDirty(target, r, 3, company);            // Company
   setCellDirty(target, r, 4, role);               // Role
-  setCellDirty(target, r, 5, meta.url);           // Job URL (string, never object)
-  setCellDirty(target, r, 18, "Not submitted");   // Submission status
+  setCellDirty(target, r, 5, meta.url);           // Job URL
+  setCellDirty(target, r, 8, qaPath);             // Application Q&A — suggested path
+  setCellDirty(target, r, 13, "Not submitted");   // Submission status
   return r;
 }
 
