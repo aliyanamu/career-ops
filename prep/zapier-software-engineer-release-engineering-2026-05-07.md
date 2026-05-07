@@ -47,17 +47,21 @@ Happy to share the repo on request — it's private but I can grant view access.
 
 ### AI-2: Share a specific example where AI changed quality or stakeholder experience — not just speed — and explain what you did to get there.
 
-At Nespay, the most-asked operational question from finance was *"why did this user's payout fail?"* The legacy answer was "let me grep CloudWatch for the last hour and stitch the timeline." Slow, error-prone, and the on-call engineer became a permanent bottleneck.
+At Nespay, debugging production issues meant grepping CloudWatch logs that were inconsistent across services — some used `console.log`, some had structured JSON, some had no request context at all. The on-call engineer effectively *was* the debugging tool, because nobody else could stitch the picture together.
 
-I asked Claude to help me sketch a transaction post-mortem tool: given a transaction ID, scan the relevant log streams, line up Sumsub KYC events, RPC call attempts, and the final wallet provider response. The first AI draft was a single shell script — fragile and impossible to share. I iterated with the model on three rounds:
+I led a logging-enrichment project: standardize on **pino** across every Node.js service, with a shared log schema (request ID, user ID, trace ID, service name, event type), and pipe everything to **Grafana** instead of CloudWatch.
 
-1. Move the join logic into a Node service so it could be re-run idempotently.
-2. Emit a structured Markdown timeline that finance could copy directly into Slack.
-3. Add a "likely root cause" section that flags common failure modes (KYC declined, RPC timeout, insufficient gas, provider rate-limit).
+Where AI helped:
 
-The quality change wasn't speed. Finance went from *escalating every failure to engineering* to *triaging with the timeline themselves and only escalating ambiguous cases*. The cross-team relationship improved because we stopped looking like the bottleneck.
+1. **Schema design.** I drafted the log-field convention with Claude — what fields are mandatory, which are optional per service, what naming gives the best Grafana ergonomics. The model pushed back on a few choices ("don't make `userId` optional even on auth endpoints — you'll regret it") that I'd have gotten wrong otherwise.
 
-What I learned: the AI draft was valuable for *framing* the tool, not for the production code. I rewrote the actual service myself, but the AI got me to a working prototype faster than cold.
+2. **Migration plan.** Each service had its own logging quirks. I asked Claude to walk through each service file and generate a per-service migration checklist (what to replace, what new context fields to inject at which middleware layer). Saved me from missing edge cases — e.g., the queue-worker entry point that didn't have HTTP middleware and needed a different injection pattern.
+
+3. **Grafana query helpers.** I asked Claude to draft LogQL queries for the common debugging questions the team kept asking ("show me everything for transaction X", "show me failed RPC calls in the last hour grouped by provider"). Then I wrapped those into saved Grafana dashboards.
+
+The quality change wasn't speed of debugging. It was that **finance and product could now answer their own debugging questions** without filing a Slack thread to engineering. They'd open Grafana, paste a transaction ID, and see the full event timeline. The cross-team relationship improved because engineering stopped being a bottleneck for log spelunking.
+
+What I learned: AI was useful in two distinct phases. Up front for *getting the schema right* (a low-cost, high-leverage decision). Then again at the migration stage for *not missing services*. I rewrote every actual log line myself, but the AI made sure I didn't ship inconsistencies.
 
 ### AI-3: What's one way you've expanded your impact at work with AI — what problem were you trying to solve, why did you approach it that way, and how has your approach evolved?
 
