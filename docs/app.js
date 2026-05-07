@@ -386,6 +386,7 @@ function parseListOptions(formulae) {
 const DROPDOWN_COLORS = {
   // Wishlist Decision
   "Pending":      ["#eeeeee", "#555555"],
+  "Recommended":  ["#ffe082", "#7f5d00"],
   "Apply":        ["#c6efce", "#006100"],
   "Skip":         ["#ffc7ce", "#9c0006"],
   "Saved":        ["#cce5ff", "#1f4e78"],
