@@ -94,33 +94,57 @@ function renderSheet() {
     return;
   }
 
-  const table = document.createElement("table");
   const maxCol = ws.columnCount;
+  const lastRow = lastNonEmptyRow(ws, maxCol);
+  if (lastRow < 1) {
+    container.innerHTML = `<p class="loading">Empty sheet</p>`;
+    return;
+  }
 
-  // Header row (row 1)
+  const table = document.createElement("table");
+
+  const colgroup = document.createElement("colgroup");
+  for (let c = 1; c <= maxCol; c++) {
+    const col = document.createElement("col");
+    const xlsxCol = ws.getColumn(c);
+    const w = xlsxCol.width ? Math.round(xlsxCol.width * 7) : 140;
+    col.style.width = `${w}px`;
+    colgroup.appendChild(col);
+  }
+  table.appendChild(colgroup);
+
   const thead = document.createElement("thead");
   const headerTr = document.createElement("tr");
   for (let c = 1; c <= maxCol; c++) {
     const th = document.createElement("th");
-    const cell = ws.getRow(1).getCell(c);
-    th.textContent = cellToString(cell.value);
+    th.textContent = renderCell(ws.getRow(1).getCell(c), 1);
+    th.appendChild(makeColResizer(colgroup.children[c - 1]));
     headerTr.appendChild(th);
   }
   thead.appendChild(headerTr);
   table.appendChild(thead);
 
-  // Body rows (row 2+)
   const tbody = document.createElement("tbody");
-  for (let r = 2; r <= ws.rowCount; r++) {
+  for (let r = 2; r <= lastRow; r++) {
     const tr = document.createElement("tr");
+    const xlsxRow = ws.getRow(r);
+    if (xlsxRow.height) tr.style.height = `${Math.round(xlsxRow.height * 1.33)}px`;
+
     for (let c = 1; c <= maxCol; c++) {
       const td = document.createElement("td");
-      const cell = ws.getRow(r).getCell(c);
-      td.textContent = cellToString(cell.value);
-      td.contentEditable = "true";
+      const cell = xlsxRow.getCell(c);
+      td.textContent = renderCell(cell, r);
+
+      if (isFormulaCell(cell)) {
+        td.classList.add("formula");
+        td.title = `Formula: =${cell.value.formula} (read-only)`;
+      } else {
+        td.contentEditable = "true";
+        td.addEventListener("blur", onCellEdit);
+      }
       td.dataset.row = r;
       td.dataset.col = c;
-      td.addEventListener("blur", onCellEdit);
+      if (c === 1) td.appendChild(makeRowResizer(tr));
       tr.appendChild(td);
     }
     tbody.appendChild(tr);
@@ -129,17 +153,147 @@ function renderSheet() {
   container.appendChild(table);
 }
 
-function cellToString(v) {
-  if (v === null || v === undefined) return "";
-  if (typeof v === "object") {
-    if (v.richText) return v.richText.map((p) => p.text).join("");
-    if (v.text) return v.text;
-    if (v.result !== undefined) return String(v.result);
-    if (v instanceof Date) return v.toISOString().slice(0, 10);
-    if (v.formula) return `=${v.formula}`;
-    return JSON.stringify(v);
+function makeColResizer(colEl) {
+  const handle = document.createElement("div");
+  handle.className = "col-resize";
+  handle.addEventListener("mousedown", (e) => startDrag(e, "col", colEl, handle));
+  handle.addEventListener("touchstart", (e) => startDrag(e, "col", colEl, handle), { passive: false });
+  return handle;
+}
+
+function makeRowResizer(trEl) {
+  const handle = document.createElement("div");
+  handle.className = "row-resize";
+  handle.addEventListener("mousedown", (e) => startDrag(e, "row", trEl, handle));
+  handle.addEventListener("touchstart", (e) => startDrag(e, "row", trEl, handle), { passive: false });
+  return handle;
+}
+
+function startDrag(e, kind, target, handle) {
+  e.preventDefault();
+  e.stopPropagation();
+  handle.classList.add("dragging");
+  const startPos = e.touches ? (kind === "col" ? e.touches[0].clientX : e.touches[0].clientY) : (kind === "col" ? e.clientX : e.clientY);
+  const startSize = kind === "col"
+    ? parseInt(target.style.width || "140", 10)
+    : target.getBoundingClientRect().height;
+
+  const onMove = (ev) => {
+    const pos = ev.touches ? (kind === "col" ? ev.touches[0].clientX : ev.touches[0].clientY) : (kind === "col" ? ev.clientX : ev.clientY);
+    const delta = pos - startPos;
+    const next = Math.max(40, startSize + delta);
+    if (kind === "col") target.style.width = `${next}px`;
+    else target.style.height = `${next}px`;
+  };
+  const onUp = () => {
+    handle.classList.remove("dragging");
+    document.removeEventListener("mousemove", onMove);
+    document.removeEventListener("mouseup", onUp);
+    document.removeEventListener("touchmove", onMove);
+    document.removeEventListener("touchend", onUp);
+  };
+  document.addEventListener("mousemove", onMove);
+  document.addEventListener("mouseup", onUp);
+  document.addEventListener("touchmove", onMove, { passive: false });
+  document.addEventListener("touchend", onUp);
+}
+
+function lastNonEmptyRow(ws, maxCol) {
+  for (let r = ws.rowCount; r >= 1; r--) {
+    for (let c = 1; c <= maxCol; c++) {
+      const v = ws.getRow(r).getCell(c).value;
+      if (v !== null && v !== undefined && v !== "") return r;
+    }
   }
-  return String(v);
+  return 0;
+}
+
+function isFormulaCell(cell) {
+  return cell.value && typeof cell.value === "object" && "formula" in cell.value;
+}
+
+function renderCell(cell, rowNum) {
+  const v = cell.value;
+  if (v === null || v === undefined) return "";
+  if (typeof v !== "object") return String(v);
+
+  if (v.richText) return v.richText.map((p) => p.text).join("");
+  if (v.text) return v.text;
+  if (v instanceof Date) return v.toISOString().slice(0, 10);
+
+  // Formula cell — try to resolve
+  if ("formula" in v) {
+    if (v.result !== undefined && v.result !== null) {
+      if (typeof v.result === "object" && v.result.error) return `#${v.result.error}`;
+      return String(v.result);
+    }
+    // Best-effort evaluation of the simple formulas this tracker uses
+    const computed = tryEvalFormula(v.formula, rowNum);
+    if (computed !== null) return String(computed);
+    return `=${v.formula}`;
+  }
+
+  return JSON.stringify(v);
+}
+
+function tryEvalFormula(formula, rowNum) {
+  if (!formula) return null;
+  const f = formula.replace(/\s+/g, "");
+  const upper = f.toUpperCase();
+
+  if (upper === "ROW()") return rowNum;
+  const rowMatch = upper.match(/^ROW\(\)([+-])(\d+)$/);
+  if (rowMatch) return rowMatch[1] === "+" ? rowNum + Number(rowMatch[2]) : rowNum - Number(rowMatch[2]);
+
+  // Aggregations over a range, optionally on another sheet:
+  //   FUNC(SheetName!A1:A1000) | FUNC('Sheet Name'!A1:A1000) | FUNC(A1:A10)
+  const aggMatch = f.match(/^(COUNTA|COUNT|SUM|MAX|MIN|AVERAGE)\((?:'([^']+)'|([A-Za-z_][A-Za-z0-9_ ]*))?!?([A-Z]+\d+):([A-Z]+\d+)\)$/i);
+  if (aggMatch) {
+    const fn = aggMatch[1].toUpperCase();
+    const sheetName = aggMatch[2] || aggMatch[3] || activeSheetName;
+    const values = collectRangeValues(sheetName, aggMatch[4], aggMatch[5]);
+    if (values === null) return null;
+    return aggregate(fn, values);
+  }
+  return null;
+}
+
+function collectRangeValues(sheetName, startRef, endRef) {
+  const ws = workbook.getWorksheet(sheetName);
+  if (!ws) return null;
+  const start = parseRef(startRef);
+  const end = parseRef(endRef);
+  if (!start || !end) return null;
+  const out = [];
+  const lastRow = Math.min(end.row, lastNonEmptyRow(ws, ws.columnCount) || end.row);
+  for (let r = start.row; r <= lastRow; r++) {
+    for (let c = start.col; c <= end.col; c++) {
+      const v = ws.getRow(r).getCell(c).value;
+      if (v !== null && v !== undefined && v !== "") out.push(v);
+    }
+  }
+  return out;
+}
+
+function parseRef(ref) {
+  const m = ref.match(/^([A-Z]+)(\d+)$/i);
+  if (!m) return null;
+  let col = 0;
+  const letters = m[1].toUpperCase();
+  for (let i = 0; i < letters.length; i++) col = col * 26 + (letters.charCodeAt(i) - 64);
+  return { col, row: Number(m[2]) };
+}
+
+function aggregate(fn, values) {
+  if (fn === "COUNTA") return values.length;
+  const nums = values.map((v) => (typeof v === "object" && v && "result" in v ? v.result : v))
+    .map(Number).filter((n) => !isNaN(n));
+  if (fn === "COUNT") return nums.length;
+  if (fn === "SUM") return nums.reduce((a, b) => a + b, 0);
+  if (fn === "MAX") return nums.length ? Math.max(...nums) : 0;
+  if (fn === "MIN") return nums.length ? Math.min(...nums) : 0;
+  if (fn === "AVERAGE") return nums.length ? nums.reduce((a, b) => a + b, 0) / nums.length : 0;
+  return null;
 }
 
 // ---------- Editing ----------
