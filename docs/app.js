@@ -768,11 +768,11 @@ function findWishlistPromotions() {
     const c = parseInt(m[2], 10);
     if (c !== WISHLIST_DECISION_COL) continue;
     const r = parseInt(m[1], 10);
-    const dec = (ws.getRow(r).getCell(c).value || "").toString().trim();
+    const dec = readCellAsString(ws.getRow(r).getCell(c)).trim();
     const cfg = WISHLIST_PROMOTIONS[dec];
     if (!cfg) continue;
-    const co = (ws.getRow(r).getCell(3).value || "").toString().trim();
-    const role = (ws.getRow(r).getCell(4).value || "").toString().trim();
+    const co = readCellAsString(ws.getRow(r).getCell(3)).trim();
+    const role = readCellAsString(ws.getRow(r).getCell(4)).trim();
     if (!co || !role) continue;
     if (rowExistsInSheet(cfg.sheet, co, role)) continue;
     out.push({ row: r, decision: dec, sheet: cfg.sheet, desc: cfg.desc, company: co, role });
@@ -784,8 +784,8 @@ function rowExistsInSheet(sheetName, company, role) {
   const ws = workbook.getWorksheet(sheetName);
   if (!ws) return false;
   for (let r = 2; r <= ws.rowCount; r++) {
-    const co = (ws.getRow(r).getCell(3).value || "").toString().trim();
-    const rl = (ws.getRow(r).getCell(4).value || "").toString().trim();
+    const co = readCellAsString(ws.getRow(r).getCell(3)).trim();
+    const rl = readCellAsString(ws.getRow(r).getCell(4)).trim();
     if (co === company && rl === role) return true;
   }
   return false;
@@ -798,18 +798,46 @@ function findFirstEmptyDataRow(ws, dataCol) {
   return ws.rowCount + 1;
 }
 
+// Robust extractors — cell.value can be string, number, Date, hyperlink object,
+// rich-text object, or formula object depending on how Excel stored it.
+function readCellAsString(cell) {
+  const v = cell?.value;
+  if (v == null) return "";
+  if (typeof v === "string") return v;
+  if (typeof v === "number" || typeof v === "boolean") return String(v);
+  if (v instanceof Date) return v.toISOString().slice(0, 10);
+  if (typeof v === "object") {
+    if (Array.isArray(v.richText)) return v.richText.map((p) => p.text || "").join("");
+    if (typeof v.text === "string") return v.text;
+    if (typeof v.hyperlink === "string") return v.hyperlink;
+    if (typeof v.result === "string" || typeof v.result === "number") return String(v.result);
+  }
+  return String(v);
+}
+
+function readCellAsUrl(cell) {
+  const v = cell?.value;
+  if (v == null) return "";
+  if (typeof v === "string") return v;
+  if (typeof v === "object") {
+    if (typeof v.hyperlink === "string") return v.hyperlink;
+    if (typeof v.text === "string") return v.text;
+  }
+  return readCellAsString(cell);
+}
+
 function getWishlistMeta(company, role) {
   const ws = workbook.getWorksheet("Wishlist");
   for (let r = 2; r <= ws.rowCount; r++) {
-    const co = (ws.getRow(r).getCell(3).value || "").toString().trim();
-    const rl = (ws.getRow(r).getCell(4).value || "").toString().trim();
+    const co = readCellAsString(ws.getRow(r).getCell(3)).trim();
+    const rl = readCellAsString(ws.getRow(r).getCell(4)).trim();
     if (co === company && rl === role) {
       return {
-        url: (ws.getRow(r).getCell(5).value || "").toString(),
-        source: (ws.getRow(r).getCell(6).value || "").toString(),
-        elig: (ws.getRow(r).getCell(7).value || "").toString(),
-        why: (ws.getRow(r).getCell(8).value || "").toString(),
-        notes: (ws.getRow(r).getCell(12).value || "").toString(),
+        url: readCellAsUrl(ws.getRow(r).getCell(5)),
+        source: readCellAsString(ws.getRow(r).getCell(6)),
+        elig: readCellAsString(ws.getRow(r).getCell(7)),
+        why: readCellAsString(ws.getRow(r).getCell(8)),
+        notes: readCellAsString(ws.getRow(r).getCell(12)),
       };
     }
   }
@@ -831,15 +859,22 @@ function isoDaysFromNow(days) {
   return d.toISOString().slice(0, 10);
 }
 
+function setRowIndexFormula(target, r) {
+  // Match existing rows that use =ROW()-1 in col 1
+  target.getRow(r).getCell(1).value = { formula: "ROW()-1" };
+  dirtyCells.add(`${target.name}!${r},1`);
+}
+
 function createPreparationsRow(company, role) {
   const target = workbook.getWorksheet("Preparations");
   if (!target) return null;
   const r = findFirstEmptyDataRow(target, 2);
   const meta = getWishlistMeta(company, role);
+  setRowIndexFormula(target, r);
   setCellDirty(target, r, 2, todayISO());        // Date
   setCellDirty(target, r, 3, company);            // Company
   setCellDirty(target, r, 4, role);               // Role
-  setCellDirty(target, r, 5, meta.url);           // Job URL
+  setCellDirty(target, r, 5, meta.url);           // Job URL (string, never object)
   setCellDirty(target, r, 18, "Not submitted");   // Submission status
   return r;
 }
@@ -849,6 +884,7 @@ function createApplicationsRow(company, role) {
   if (!target) return null;
   const r = findFirstEmptyDataRow(target, 2);
   const meta = getWishlistMeta(company, role);
+  setRowIndexFormula(target, r);
   setCellDirty(target, r, 2, todayISO());         // Date Applied
   setCellDirty(target, r, 3, company);
   setCellDirty(target, r, 4, role);
