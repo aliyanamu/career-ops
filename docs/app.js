@@ -688,6 +688,13 @@ async function save() {
       }),
     });
 
+    if (res.status === 409) {
+      $("save-btn").disabled = false;
+      const rebased = await rebaseAndRetrySave();
+      if (rebased) return save();
+      return;
+    }
+
     if (!res.ok) throw new Error(`GitHub API ${res.status}: ${await res.text()}`);
     const result = await res.json();
     currentSha = result.content.sha;
@@ -697,10 +704,94 @@ async function save() {
   } catch (err) {
     console.error(err);
     setStatus(`Save failed: ${err.message}`);
-    alert(`Save failed:\n${err.message}\n\nIf this says 409, someone else (or the auto-pipeline) edited the file. Click ↻ to reload.`);
+    alert(`Save failed:\n${err.message}\n\nClick ↻ to reload (will lose unsaved edits).`);
   } finally {
     $("save-btn").disabled = false;
   }
+}
+
+// ---------- 409 conflict: rebase pending edits onto fresh remote ----------
+const ANCHORED_SHEETS = new Set(["Wishlist", "Applications", "Preparations"]);
+
+function snapshotDirtyEdits() {
+  const edits = [];
+  for (const key of dirtyCells) {
+    const m = key.match(/^([^!]+)!(\d+),(\d+)$/);
+    if (!m) continue; // skip non-cell keys (col-width, row-height)
+    const sheet = m[1];
+    const r = parseInt(m[2], 10);
+    const c = parseInt(m[3], 10);
+    const ws = workbook.getWorksheet(sheet);
+    if (!ws) continue;
+    const value = ws.getRow(r).getCell(c).value;
+    let anchor = null;
+    if (ANCHORED_SHEETS.has(sheet)) {
+      anchor = {
+        company: (ws.getRow(r).getCell(3).value || "").toString().trim(),
+        role: (ws.getRow(r).getCell(4).value || "").toString().trim(),
+      };
+      if (!anchor.company && !anchor.role) anchor = null;
+    }
+    edits.push({ sheet, row: r, col: c, value, anchor });
+  }
+  return edits;
+}
+
+async function rebaseAndRetrySave() {
+  const edits = snapshotDirtyEdits();
+  if (edits.length === 0) {
+    alert("Save conflicted (409) but no cell edits to rebase. Reloading.");
+    await loadWorkbook();
+    return false;
+  }
+
+  const ok = confirm(
+    `Save conflicted (409) — the file changed on GitHub since you opened it.\n\n` +
+    `Auto-rebase ${edits.length} pending edit(s)?\n` +
+    `Reload latest, re-anchor edits by Company+Role, retry save.\n\n` +
+    `Cancel = leave editor as-is so you can copy your edits manually.`
+  );
+  if (!ok) return false;
+
+  setStatus("Rebasing…");
+  await loadWorkbook();
+
+  let applied = 0;
+  const failed = [];
+  for (const e of edits) {
+    const ws = workbook.getWorksheet(e.sheet);
+    if (!ws) { failed.push(e); continue; }
+    let targetRow = e.row;
+    if (e.anchor) {
+      let found = 0;
+      for (let r = 2; r <= ws.rowCount; r++) {
+        const co = (ws.getRow(r).getCell(3).value || "").toString().trim();
+        const rl = (ws.getRow(r).getCell(4).value || "").toString().trim();
+        if (co === e.anchor.company && rl === e.anchor.role) { found = r; break; }
+      }
+      if (!found) { failed.push(e); continue; }
+      targetRow = found;
+    }
+    ws.getRow(targetRow).getCell(e.col).value = e.value;
+    dirtyCells.add(`${e.sheet}!${targetRow},${e.col}`);
+    applied++;
+  }
+
+  renderSheet();
+  setStatus(`Rebased ${applied} edit(s)${failed.length ? `, ${failed.length} unanchored` : ""}`);
+
+  if (failed.length > 0) {
+    const detail = failed.slice(0, 5).map((e) =>
+      `  • ${e.sheet} r${e.row}c${e.col}: ${e.anchor?.company || "?"} | ${e.anchor?.role || "?"} → ${e.value}`
+    ).join("\n");
+    const more = failed.length > 5 ? `\n  …and ${failed.length - 5} more` : "";
+    alert(
+      `Could not re-anchor ${failed.length} edit(s) — the underlying row was likely deleted upstream:\n\n${detail}${more}\n\n` +
+      `Review and re-apply manually if needed. The other ${applied} edit(s) are queued; click Save to push.`
+    );
+    return false;
+  }
+  return true;
 }
 
 function bufferToBase64(buffer) {
