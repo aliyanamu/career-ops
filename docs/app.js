@@ -133,17 +133,23 @@ function renderSheet() {
     for (let c = 1; c <= maxCol; c++) {
       const td = document.createElement("td");
       const cell = xlsxRow.getCell(c);
-      td.textContent = renderCell(cell, r);
+      td.dataset.row = r;
+      td.dataset.col = c;
 
       if (isFormulaCell(cell)) {
+        td.textContent = renderCell(cell, r);
         td.classList.add("formula");
         td.title = `Formula: =${cell.value.formula} (read-only)`;
       } else {
-        td.contentEditable = "true";
-        td.addEventListener("blur", onCellEdit);
+        const validation = getCellValidation(ws, r, c);
+        if (validation && validation.type === "list") {
+          td.appendChild(makeDropdown(validation, renderCell(cell, r), r, c));
+        } else {
+          td.textContent = renderCell(cell, r);
+          td.contentEditable = "true";
+          td.addEventListener("blur", onCellEdit);
+        }
       }
-      td.dataset.row = r;
-      td.dataset.col = c;
       if (c === 1) td.appendChild(makeRowResizer(tr, r));
       tr.appendChild(td);
     }
@@ -230,6 +236,77 @@ function lastNonEmptyRow(ws, maxCol) {
 
 function isFormulaCell(cell) {
   return cell.value && typeof cell.value === "object" && "formula" in cell.value;
+}
+
+function getCellValidation(ws, row, col) {
+  const dvs = ws.dataValidations;
+  if (!dvs) return null;
+  const model = dvs.model || dvs;
+  for (const sqref of Object.keys(model)) {
+    if (cellInRanges(sqref, row, col)) return model[sqref];
+  }
+  return null;
+}
+
+function cellInRanges(sqref, row, col) {
+  for (const part of sqref.split(/\s+/)) {
+    const m = part.match(/^([A-Z]+)(\d+)(?::([A-Z]+)(\d+))?$/i);
+    if (!m) continue;
+    const startCol = colLetterToNum(m[1]);
+    const startRow = Number(m[2]);
+    const endCol = m[3] ? colLetterToNum(m[3]) : startCol;
+    const endRow = m[4] ? Number(m[4]) : startRow;
+    if (row >= startRow && row <= endRow && col >= startCol && col <= endCol) return true;
+  }
+  return false;
+}
+
+function colLetterToNum(letters) {
+  let n = 0;
+  for (let i = 0; i < letters.length; i++) n = n * 26 + (letters.toUpperCase().charCodeAt(i) - 64);
+  return n;
+}
+
+function parseListOptions(formulae) {
+  if (!formulae || !formulae[0]) return [];
+  let f = formulae[0];
+  if (f.startsWith("=")) f = f.slice(1);
+  if (f.startsWith('"') && f.endsWith('"')) f = f.slice(1, -1);
+  return f.split(",").map((s) => s.trim()).filter(Boolean);
+}
+
+function makeDropdown(validation, currentValue, r, c) {
+  const select = document.createElement("select");
+  select.className = "cell-dropdown";
+  const options = parseListOptions(validation.formulae);
+  // Always include a blank option so users can clear
+  const blank = document.createElement("option");
+  blank.value = "";
+  blank.textContent = "—";
+  select.appendChild(blank);
+  for (const opt of options) {
+    const o = document.createElement("option");
+    o.value = opt;
+    o.textContent = opt;
+    select.appendChild(o);
+  }
+  select.value = options.includes(currentValue) ? currentValue : "";
+  select.dataset.row = r;
+  select.dataset.col = c;
+  select.addEventListener("change", onDropdownChange);
+  return select;
+}
+
+function onDropdownChange(e) {
+  const sel = e.target;
+  const r = parseInt(sel.dataset.row, 10);
+  const c = parseInt(sel.dataset.col, 10);
+  const ws = workbook.getWorksheet(activeSheetName);
+  const cell = ws.getRow(r).getCell(c);
+  cell.value = sel.value || null;
+  sel.parentElement.classList.add("dirty");
+  dirtyCells.add(`${activeSheetName}!${r},${c}`);
+  setStatus(`${dirtyCells.size} unsaved change(s)`);
 }
 
 function renderCell(cell, rowNum) {

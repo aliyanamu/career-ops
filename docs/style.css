@@ -95,6 +95,17 @@ td.formula {
   cursor: not-allowed;
 }
 
+.cell-dropdown {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: inherit;
+  font-family: inherit;
+  padding: 0;
+  cursor: pointer;
+}
+.cell-dropdown:focus { outline: 2px solid #1F4E78; outline-offset: -2px; }
+
 .col-resize {
   position: absolute;
   top: 0;
