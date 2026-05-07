@@ -101,8 +101,12 @@ td.formula {
   background: transparent;
   font-size: inherit;
   font-family: inherit;
-  padding: 0;
+  padding: 2px 4px;
+  margin: -2px -4px;
   cursor: pointer;
+  border-radius: 3px;
+  appearance: none;
+  -webkit-appearance: none;
 }
 .cell-dropdown:focus { outline: 2px solid #1F4E78; outline-offset: -2px; }
 

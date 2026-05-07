@@ -275,11 +275,50 @@ function parseListOptions(formulae) {
   return f.split(",").map((s) => s.trim()).filter(Boolean);
 }
 
+// [bg, text] color map per known option value
+const DROPDOWN_COLORS = {
+  // Wishlist Decision
+  "Pending":      ["#eeeeee", "#555555"],
+  "Apply":        ["#c6efce", "#006100"],
+  "Skip":         ["#ffc7ce", "#9c0006"],
+  "Saved":        ["#cce5ff", "#1f4e78"],
+  // Fit Score 1-5
+  "1": ["#ffc7ce", "#9c0006"],
+  "2": ["#ffe0b2", "#b45309"],
+  "3": ["#ffeb9c", "#7f6000"],
+  "4": ["#d9ead3", "#38761d"],
+  "5": ["#c6efce", "#006100"],
+  // Video status
+  "Not required": ["#eeeeee", "#555555"],
+  "Not recorded": ["#ffc7ce", "#9c0006"],
+  "Recording":    ["#ffeb9c", "#7f6000"],
+  "Recorded":     ["#cce5ff", "#1f4e78"],
+  "Submitted":    ["#c6efce", "#006100"],
+  // Submission status (most overlap with above; explicit listing keeps it self-documenting)
+  "Not submitted": ["#ffc7ce", "#9c0006"],
+  "Acknowledged":  ["#cce5ff", "#1f4e78"],
+  "Interview":     ["#b7e1cd", "#1f4e78"],
+  "Rejected":      ["#eeeeee", "#555555"],
+  "Withdrawn":     ["#eeeeee", "#555555"],
+};
+
+function applyDropdownStyle(select) {
+  const colors = DROPDOWN_COLORS[select.value];
+  if (colors) {
+    select.style.backgroundColor = colors[0];
+    select.style.color = colors[1];
+    select.style.fontWeight = "600";
+  } else {
+    select.style.backgroundColor = "";
+    select.style.color = "";
+    select.style.fontWeight = "";
+  }
+}
+
 function makeDropdown(validation, currentValue, r, c) {
   const select = document.createElement("select");
   select.className = "cell-dropdown";
   const options = parseListOptions(validation.formulae);
-  // Always include a blank option so users can clear
   const blank = document.createElement("option");
   blank.value = "";
   blank.textContent = "—";
@@ -288,11 +327,18 @@ function makeDropdown(validation, currentValue, r, c) {
     const o = document.createElement("option");
     o.value = opt;
     o.textContent = opt;
+    const colors = DROPDOWN_COLORS[opt];
+    if (colors) {
+      o.style.backgroundColor = colors[0];
+      o.style.color = colors[1];
+    }
     select.appendChild(o);
   }
-  select.value = options.includes(currentValue) ? currentValue : "";
+  const initial = options.includes(currentValue) ? currentValue : "";
+  select.value = initial;
   select.dataset.row = r;
   select.dataset.col = c;
+  applyDropdownStyle(select);
   select.addEventListener("change", onDropdownChange);
   return select;
 }
@@ -304,6 +350,7 @@ function onDropdownChange(e) {
   const ws = workbook.getWorksheet(activeSheetName);
   const cell = ws.getRow(r).getCell(c);
   cell.value = sel.value || null;
+  applyDropdownStyle(sel);
   sel.parentElement.classList.add("dirty");
   dirtyCells.add(`${activeSheetName}!${r},${c}`);
   setStatus(`${dirtyCells.size} unsaved change(s)`);
