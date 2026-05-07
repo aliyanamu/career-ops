@@ -297,7 +297,6 @@ const DROPDOWN_COLORS = {
   // Submission status
   "Not submitted": ["#ffc7ce", "#9c0006"],
   // Applications Status
-  "Wishlist":   ["#eeeeee", "#555555"],
   "Evaluated":  ["#cce5ff", "#1f4e78"],
   "Applied":    ["#c6efce", "#006100"],
   "Responded":  ["#b7e1cd", "#1f4e78"],
@@ -305,7 +304,6 @@ const DROPDOWN_COLORS = {
   "Offer":      ["#ffd966", "#7f6000"],
   "Rejected":   ["#ffc7ce", "#9c0006"],
   "Discarded":  ["#eeeeee", "#555555"],
-  "SKIP":       ["#ffc7ce", "#9c0006"],
 };
 
 function applyDropdownStyle(select) {
