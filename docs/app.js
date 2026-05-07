@@ -952,6 +952,8 @@ function createPreparationsRow(company, role) {
   setCellDirty(target, r, 3, company);            // Company
   setCellDirty(target, r, 4, role);               // Role
   setCellDirty(target, r, 5, meta.url);           // Job URL
+  setCellDirty(target, r, 6, "cv-default.pdf");   // Tailored CV Path — defaults to cv-default.pdf; agent overwrites with output/... when tailored CV is generated
+  setCellDirty(target, r, 7, "Default CV (replace if tailoring)");  // Tailored CV Status
   setCellDirty(target, r, 8, qaPath);             // Application Q&A — suggested path
   setCellDirty(target, r, 13, "Not submitted");   // Submission status
   return r;
