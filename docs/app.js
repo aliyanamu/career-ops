@@ -614,9 +614,54 @@ function addRow() {
 }
 
 // ---------- Save back to GitHub ----------
+// Wishlist Decision col index (1-based): # | Date | Company | Role | URL | Source | WorkElig | Why | Fit | Deadline | Decision | Notes
+const WISHLIST_DECISION_COL = 11;
+const WISHLIST_DELETE_ON_SAVE = new Set(["Skip"]);
+
+function findWishlistRowsToDelete() {
+  const ws = workbook.getWorksheet("Wishlist");
+  if (!ws) return [];
+  const hits = [];
+  for (let r = 2; r <= ws.rowCount; r++) {
+    const row = ws.getRow(r);
+    const dec = (row.getCell(WISHLIST_DECISION_COL).value || "").toString().trim();
+    if (!WISHLIST_DELETE_ON_SAVE.has(dec)) continue;
+    const co = (row.getCell(3).value || "").toString().trim();
+    const role = (row.getCell(4).value || "").toString().trim();
+    if (!co && !role) continue; // skip empty
+    hits.push({ row: r, decision: dec, company: co, role });
+  }
+  return hits;
+}
+
 async function save() {
   if (!workbook) return;
-  if (dirtyCells.size === 0 && !confirm("No edits detected. Save anyway?")) return;
+
+  // Pre-save: prompt to permanently delete Skip-marked Wishlist rows
+  const toDelete = findWishlistRowsToDelete();
+
+  if (dirtyCells.size === 0 && toDelete.length === 0 && !confirm("No edits detected. Save anyway?")) return;
+
+  if (toDelete.length > 0) {
+    const preview = toDelete
+      .slice(0, 15)
+      .map((h) => `  • [${h.decision}] ${h.company} — ${h.role}`)
+      .join("\n");
+    const more = toDelete.length > 15 ? `\n  …and ${toDelete.length - 15} more` : "";
+    const ok = confirm(
+      `${toDelete.length} Wishlist row(s) marked Skip will be PERMANENTLY DELETED on save:\n\n${preview}${more}\n\nProceed?`
+    );
+    if (!ok) {
+      setStatus("Save cancelled.");
+      return;
+    }
+    const ws = workbook.getWorksheet("Wishlist");
+    // Delete bottom-up to keep row indices stable
+    for (const hit of toDelete.sort((a, b) => b.row - a.row)) {
+      ws.spliceRows(hit.row, 1);
+    }
+  }
+
   const pat = getPat();
   if (!pat) return;
   setStatus("Saving…");
@@ -634,7 +679,9 @@ async function save() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message: `Update tracker via web editor (${dirtyCells.size} edits)`,
+        message: toDelete.length > 0
+          ? `Update tracker via web editor (${dirtyCells.size} edits, ${toDelete.length} Skip rows deleted)`
+          : `Update tracker via web editor (${dirtyCells.size} edits)`,
         content: base64,
         sha: currentSha,
         branch: BRANCH,
