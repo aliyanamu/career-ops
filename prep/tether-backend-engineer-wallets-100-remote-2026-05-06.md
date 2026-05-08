@@ -47,11 +47,11 @@
 
 > **Rewrite in your own voice.**
 
-My P2P experience comes primarily through blockchain work rather than direct P2P protocol implementation. At Appreal (Nespay) I integrated multi-chain RPC services — connecting to blockchain nodes in a P2P network: broadcasting transactions, subscribing to on-chain events, and handling reorgs. I worked with Ethers.js and Viem on EVM chains and TronWeb on TRON, all of which operate over P2P infrastructure.
+My P2P experience is indirect — it comes through blockchain work rather than building P2P systems from scratch. At Appreal (Nespay) I integrated multi-chain RPC services: connecting to blockchain nodes, broadcasting transactions, subscribing to on-chain events, and handling reorgs. The underlying network is P2P, but my work was at the RPC and application layer, not the protocol layer.
 
-In my DeFi hackathon project (EDU Chain, 2025) I built smart contract interactions that are inherently P2P — trustless, no intermediaries. I understand wallet-to-wallet transfer flows, mempool mechanics, and transaction finality.
+I've also worked with smart contracts (EDU Chain hackathon, 2025), which eliminate intermediaries — but again, that's application-level, not protocol-level P2P.
 
-I have not built a P2P application layer (e.g. libp2p, Hypercore) directly, but the conceptual foundation is solid and I pick up new protocols quickly — as I did integrating non-custodial signing with AWS Nitro Enclave.
+I haven't built or maintained P2P layers like libp2p or Hypercore directly. I'm comfortable picking up new infrastructure quickly — our team integrated non-custodial signing with AWS Nitro Enclave and I worked across that codebase, so I understand the approach even though I didn't build it solo — but P2P at the protocol level would still be new territory for me.
 
 ---
 
