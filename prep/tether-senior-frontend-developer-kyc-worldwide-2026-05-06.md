@@ -89,7 +89,7 @@ For the past year at Nespay I have owned the KYC surface end-to-end. Sumsub and 
 
 The technical overlap is direct: React.js and Next.js are my primary frontend stack, I work in TypeScript strict mode daily, and I have integrated multiple compliance and third-party APIs in production environments. My backend familiarity (Node.js, NestJS, MongoDB) means I can run the full stack locally, read across the codebase, and debug integration issues without needing a separate backend engineer in the loop, which is what the JD describes.
 
-Before Nespay, I spent five years at ION on a large-scale enterprise work-management platform, where I learned to maintain complex UIs without regressions: debugging hidden state issues, input validation edge cases, condition-based rendering. That discipline carries directly into KYC flows, where correctness and failure handling matter more than most UI surfaces.
+Before Nespay, I spent five years at ION on a large-scale enterprise work-management platform, where I learned to maintain complex UIs with minimum regressions: debugging hidden state issues, input validation edge cases, condition-based rendering. That discipline carries directly into KYC flows, where correctness and failure handling matter more than most UI surfaces.
 
 I am fully remote from Yogyakarta, Indonesia (GMT+7). I am interested in the KYC problem specifically, not just the company, and this is one of the few roles where my current production experience maps directly to the scope.
 
