@@ -24,6 +24,16 @@ The JD's core ask — Node.js/TypeScript backend plus deep wallet integration �
 
 Through my own research process. I track companies building crypto infrastructure directly — Tether came up as the highest-fit role against my evaluation criteria.
 
+## Q6: Do you have experience with Peer-to-Peer technologies?
+
+My P2P experience comes primarily through blockchain work rather than direct P2P protocol implementation. At Appreal (Nespay) I integrated multi-chain RPC services — which means interacting with blockchain nodes in a P2P network: broadcasting transactions, subscribing to events, and handling reorgs. I worked with Ethers.js and Viem on the EVM side and TronWeb on TRON, all of which operate over underlying P2P infrastructure.
+
+In my DeFi hackathon project (EDU Chain, 2025) I built smart contract interactions that are inherently P2P — trustless, without intermediaries. I understand wallet-to-wallet transfer flows, mempool mechanics, and transaction finality at the protocol level.
+
+I have not built a P2P application layer (e.g. libp2p, Hypercore, WebRTC data channels) directly, but the conceptual foundation is solid and I pick up new protocols quickly — as I did when integrating non-custodial signing with AWS Nitro Enclave.
+
+> **Rewrite in your own voice — be specific about which RPC providers / chains you've touched and honest about the gap if the interviewer probes on Hypercore/KEET.**
+
 ---
 
 ## Cover Letter
