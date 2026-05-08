@@ -29,7 +29,7 @@
 
 > **Rewrite in your own voice. This is a short text field: 2–3 sentences max.**
 
-I've spent the past year integrating KYC providers (Sumsub, Kredibel) end-to-end at Nespay: user flow, admin dashboard, status tracking, rejection handling. Bitfinex KYC is the same problem at the scale and scrutiny level I want to work at next. Beyond the role itself, USDT's mission: giving dollar-denominated access to people in markets where that's otherwise impossible: is something I want to be part of building.
+I've spent the past year integrating KYC providers (Sumsub, Kredibel) end-to-end at Nespay: user flow, admin dashboard, status tracking, rejection handling. This role is the same problem at the scale and scrutiny level I want to work at next. Beyond the role itself, USDT's mission — giving dollar-denominated access to people in markets where that's otherwise impossible — is something I want to be part of building.
 
 ---
 
@@ -85,7 +85,7 @@ The second is what KYC actually does in context. USDT is widely adopted and popu
 
 Dear Tether Team,
 
-For the past year at Nespay I have owned the KYC surface end-to-end. Sumsub and Kredibel integration on both the customer-facing React/Next flow and the admin backoffice dashboard, plus NestJS webhook handling and KYC state management on the backend. When I came across this role, Bitfinex KYC is the same problem I have been solving, at the scale and scrutiny level I want to work at next.
+For the past year at Nespay I have owned the KYC surface end-to-end. Sumsub and Kredibel integration on both the customer-facing React/Next flow and the admin backoffice dashboard, plus NestJS webhook handling and KYC state management on the backend. This role is the same problem I have been solving, at the scale and scrutiny level I want to work at next.
 
 The technical overlap is direct: React.js and Next.js are my primary frontend stack, I work in TypeScript strict mode daily, and I have integrated multiple compliance and third-party APIs in production environments. My backend familiarity (Node.js, NestJS, MongoDB) means I can run the full stack locally, read across the codebase, and debug integration issues without needing a separate backend engineer in the loop, which is what the JD describes.
 
