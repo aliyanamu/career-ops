@@ -35,45 +35,59 @@
 
 ### AI-1: Pick one AI workflow you've built. Walk us through what triggers it, what it does, and what you had to iterate on.
 
-I built a private "career-ops" workflow on top of Claude Code that turns a job-listing URL into a complete evaluated application packet. Trigger: I paste a JD URL, or a scheduled scan crawls Ashby / Greenhouse / Lever public APIs. The workflow fetches the JD, scores it against my profile (stack, level, work-eligibility, timezone, comp band), generates a tailored CV PDF via a Playwright HTML→PDF pipeline, and writes a Markdown evaluation report. State lives in a single Excel tracker the agent reads and writes — Wishlist, Preparations, Applications — backed by a private GitHub repo for reproducibility.
+I extended an open-source job-search CLI called career-ops (by Santiago Ferreira) into a private workflow that fits my specific search. The base tool handles JD evaluation, scoring, and tailored CV generation; what I built on top is a stateful tracking layer the original doesn't have.
 
-What I iterated on:
+**Trigger:** A scheduled scanner crawls Ashby / Greenhouse / Lever public APIs nightly, or I paste a JD URL directly. The pipeline fetches the JD, scores it against my profile (stack fit, work eligibility, timezone, comp band), runs a Playwright liveness check to filter dead postings, generates a tailored CV PDF, and writes a Markdown evaluation report.
 
-1. **Source quality.** First version trusted any aggregator. After two batches where 8 of 10 listings were 2+ years old, I added a Playwright liveness check and a "sample posting dates before bulk-add" rule. Disabled two stale aggregators outright.
-2. **State sync.** The web editor wrote to xlsx; the scanner wrote to a separate markdown inbox. Drift accumulated. Fixed by making xlsx authoritative and adding a 409 conflict auto-rebase: snapshot dirty cells, reload latest, re-anchor by `Company + Role`, retry save.
-3. **Status semantics.** A single "Apply" status conflated "I want to prep this" with "I already easy-applied." Split into `1. Apply` (propagates to a Preparations row) and `2. Easy Apply` (propagates directly to Applications, status=Applied). Both gated by save-time confirm dialogs.
+**What I added:** The base tool is markdown-file-centric. I read and edit a spreadsheet daily, so I built a synchronisation layer: an openpyxl script writes evaluation results into an Excel tracker (Jobs, Preparations, Applications sheets), and a lightweight web editor (plain HTML + JS served from GitHub Pages) lets me update decisions without touching the CLI. Every save commits back to git so state is versioned and auditable.
+
+**What I iterated on:**
+
+1. **Source quality.** The initial setup trusted any aggregator. After two scan batches where most listings were 2+ years stale, I added a Playwright liveness check before ingesting and a rule to sample posting dates before bulk-adding. Disabled two aggregators outright.
+2. **State sync conflicts.** The web editor and the CLI scanner both wrote to the same xlsx. Concurrent edits caused silent overwrites. I built a resolution protocol: snapshot dirty cells on save, reload the latest xlsx from git, re-anchor by `(Company, Role)` as the composite key, re-apply only the changed cells. Effectively a two-way merge.
+3. **Status semantics.** A single "Apply" status conflated "I want to prep this" with "I already submitted." Split into `Apply` (creates a Preparations row for form-drafting) and `Easy Apply` (goes straight to Applications as submitted), gated by save-time confirmation dialogs so nothing is accidentally marked submitted.
 
 Happy to share the repo on request — it's private but I can grant view access.
 
 ### AI-2: Share a specific example where AI changed quality or stakeholder experience — not just speed — and explain what you did to get there.
 
-At Nespay, debugging production issues meant grepping CloudWatch logs that were inconsistent across services — some used `console.log`, some had structured JSON, some had no request context at all. The on-call engineer effectively *was* the debugging tool, because nobody else could stitch the picture together.
+At Nespay, when a customer raised a complaint about a failed transfer or a missing balance update, the ops team had to come to engineering first before they could say anything back. Not because they weren't capable — but because our logs were inconsistent across services: some used `console.log`, some structured JSON, some had no request context at all. Ops couldn't stitch together what actually happened to a transaction without an engineer doing it for them. Their first response to customers was always "let me check with the team," which eroded trust and slowed resolution.
 
-I led a logging-enrichment project: standardize on **pino** across every Node.js service, with a shared log schema (request ID, user ID, trace ID, service name, event type), and pipe everything to **Grafana** instead of CloudWatch.
+I led a logging-enrichment project: standardise on **pino** across every Node.js service with a shared schema (request ID, user ID, trace ID, service name, event type), and route everything into **Grafana** instead of CloudWatch.
 
 Where AI helped:
 
-1. **Schema design.** I drafted the log-field convention with Claude — what fields are mandatory, which are optional per service, what naming gives the best Grafana ergonomics. The model pushed back on a few choices ("don't make `userId` optional even on auth endpoints — you'll regret it") that I'd have gotten wrong otherwise.
+1. **Schema design.** I drafted the log-field convention with Claude — what fields are mandatory, which optional per service, what naming gives the best Grafana ergonomics. The model pushed back on a few choices ("don't make `userId` optional even on auth endpoints — you'll regret it") that I'd have gotten wrong, and the schema would have been inconsistent across services.
 
-2. **Migration plan.** Each service had its own logging quirks. I asked Claude to walk through each service file and generate a per-service migration checklist (what to replace, what new context fields to inject at which middleware layer). Saved me from missing edge cases — e.g., the queue-worker entry point that didn't have HTTP middleware and needed a different injection pattern.
+2. **Migration plan.** Each service had its own logging quirks. I asked Claude to walk through each service file and generate a per-service checklist (what to replace, what context fields to inject at which middleware layer). It caught edge cases I'd have missed — the queue-worker entry point had no HTTP middleware and needed a different injection pattern entirely.
 
-3. **Grafana query helpers.** I asked Claude to draft LogQL queries for the common debugging questions the team kept asking ("show me everything for transaction X", "show me failed RPC calls in the last hour grouped by provider"). Then I wrapped those into saved Grafana dashboards.
+3. **Grafana query helpers.** I asked Claude to draft LogQL queries for the questions ops kept asking: "show me everything for transaction X," "show me failed provider calls in the last hour." I turned those into saved dashboards so ops could run them without knowing LogQL.
 
-The quality change wasn't speed of debugging. It was that **finance and product could now answer their own debugging questions** without filing a Slack thread to engineering. They'd open Grafana, paste a transaction ID, and see the full event timeline. The cross-team relationship improved because engineering stopped being a bottleneck for log spelunking.
+The experience change wasn't speed. Ops could now open Grafana, paste a transaction ID, and see the full event timeline themselves — before reaching out to engineering. Customer complaints got a meaningful first response faster, and escalations to dev dropped to the cases that actually needed code context. Engineering stopped being a prerequisite for ops doing their job.
 
-What I learned: AI was useful in two distinct phases. Up front for *getting the schema right* (a low-cost, high-leverage decision). Then again at the migration stage for *not missing services*. I rewrote every actual log line myself, but the AI made sure I didn't ship inconsistencies.
+What I learned: AI was useful at two specific leverage points — getting the schema right upfront (a decision that would have been expensive to fix later) and not missing services during migration. I rewrote every log line myself, but the AI made sure the structure held across the whole codebase.
 
 ### AI-3: What's one way you've expanded your impact at work with AI — what problem were you trying to solve, why did you approach it that way, and how has your approach evolved?
 
-The problem: code review fatigue at Nespay. Small team, slow reviews because each reviewer had to load context fresh.
+The problem was that ad-hoc AI use was unreliable. I'd paste a problem, get an answer, move on — and the output quality varied widely. Sometimes it accelerated me; sometimes it confidently led me somewhere wrong. I had no systematic way to tell the difference before shipping, so I'd either over-trust it or distrust it entirely. Neither was useful.
 
-**Initial approach (mid-2025):** I asked Claude to summarize PR diffs into "what changed / why / risks to watch" before I reviewed. Worked OK, but the AI sometimes confidently *mis-described* code, which is worse than no summary.
+What changed was adopting a structured development cycle: **brainstorm → plan → work → review → compound**. Each phase has a defined role for AI — not as an answer machine, but as a structured challenge.
 
-**Refinement (late 2025):** I stopped using AI to *describe* the diff and started using it to *generate questions* about the diff: "What invariants might this break? What edge cases isn't covered by the test additions? Where does this assume something the caller might violate?" Those questions were useful even when the AI got specifics wrong, because I could answer them by reading the code.
+- **Brainstorm:** Before writing any code, use AI to surface edge cases and alternatives I haven't considered — to widen the option space, not pick the solution.
+- **Plan:** Draft the implementation plan, then ask AI to pressure-test it: "What would break this? What am I assuming?" Structural mismatches surface here, when they cost discussion rather than rewrite time.
+- **Work:** Write the code. AI is a pair, not the author.
+- **Review:** Use AI to interrogate my own thinking, not describe the code (more below).
+- **Compound:** After finishing, note what was non-obvious — the constraint I nearly missed, the tradeoff I made and why. Builds a reference that makes future AI interactions more grounded.
 
-**Current approach (2026):** I use AI as a "rubber duck for review" — I write my own review comment, then ask the model "play the role of the PR author and push back on this review, what would you say?" It surfaces my weak arguments before the human author does. My review comments became more specific and less hand-wavy. A few teammates noticed and adopted the same workflow.
+The review phase is where I iterated most. My first instinct was to ask Claude to summarise the diff — what changed, what the risks were. It saved reading time, but occasionally the model mis-described code and I'd nearly comment on a wrong premise. A confident wrong summary is worse than no summary: it stops you reading carefully.
 
-The evolution: from *AI does the review* (bad) to *AI describes the diff* (mediocre) to *AI questions my own thinking* (genuinely useful).
+I switched from asking AI to *describe* the diff to asking it to *generate questions* — "What invariants might this break? What edge cases aren't covered?" Those questions held up even when the AI got specifics wrong, because I answered them by reading the code myself. The model gave me a checklist, not a verdict.
+
+The approach I landed on: write my review comment first, then ask the model to push back as the PR author. It surfaces the weakest parts of my argument before the human author does. More than once I rewrote a comment after this step.
+
+**The impact:** Rework rate dropped because structural problems surface in the plan phase rather than during review. My review comments became more specific. A few teammates picked up the rubber-duck approach. The compound step means non-obvious insights accumulate somewhere a teammate can use, rather than staying locked in my head.
+
+The through-line across all of it: each phase needs a different kind of AI engagement. The mistake I started with was treating them the same — asking for outputs everywhere, when most phases needed challenges instead.
 
 ### CI/CD-1 (200-400w): 5+ yrs SWE incl. meaningful CI/CD work? Describe systems and ownership.
 
