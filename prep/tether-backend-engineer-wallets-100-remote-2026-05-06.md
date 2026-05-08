@@ -26,12 +26,12 @@
 
 ## Q1 (Video — 120 sec max): Why are you interested in working at Tether?
 
-> **Video response — do NOT write a script. Record in your own words. Talking points:**
+> **Video response — do NOT write a script. Record in your own words. Aim for 60–75 sec. Talking points:**
 
-- You've spent the last year building the backend for a B2B multi-chain crypto-to-fiat platform — wallet transactions, signing, KYC, multi-chain RPC
-- USDT is the infrastructure you've been building on top of. You want to work inside it, not on top of it
-- Tether is one of the very few places where the wallet layer is the product — that's the problem depth you're looking for
-- Short, specific, genuine — no filler
+- **Hook (concrete, not generic):** You've spent the last year building wallet transaction infrastructure for a B2B crypto-to-fiat platform — multi-chain signing, RPC, settlement. That work lives on top of USDT. You want to build inside it.
+- **USDT as strategic asset:** Tether isn't just a stablecoin company — USDT gives people in countries with weak currencies or restricted banking access a stable, USD-denominated store of value. The wallet layer you're applying to is the pipe that makes that real. Say this like you mean it — one sentence.
+- **Lean / high-leverage signal:** At Nespay you set up the entire backend architecture, AWS infra, and CI/CD solo — end-to-end ownership with no handoffs. That's the mode you work best in.
+- **Close:** One question — e.g. "What does the on-call model look like for the wallet team, and how do you handle incident response at Tether's transaction volume?"
 
 ---
 

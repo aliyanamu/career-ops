@@ -10,11 +10,10 @@
 
 > **Talking points — do NOT script or read. Speak naturally.**
 
-- **Hook (specific, not generic):** At Nespay I integrated KYC providers — Sumsub and Kredibel — end-to-end in production. That experience is what made me look at Bitfinex KYC specifically. I already know what the edge cases feel like.
-- **Why Tether:** Bitfinex handles KYC at a scale and scrutiny level that very few platforms reach. I want to ship into an environment where the compliance edge cases are already known and solved — not discovered in production.
-- **Proof point:** I built the full KYC flow on both the customer-facing and admin sides at Nespay — React/Next, Sumsub SDK integration, status tracking, rejection handling. Full ownership.
-- **Why this role:** KYC is where UX and compliance intersect. Most companies treat it as a checkbox; I treat it as a product surface.
-- **Close (optional):** What does the KYC roadmap look like for the next 6–12 months?
+- **Hook (concrete):** At Nespay I integrated Sumsub and Kredibel end-to-end — user flow, admin dashboard, status tracking, rejection handling. Full ownership. That's what drew me to Bitfinex KYC specifically: I already know what the edge cases feel like, I want to solve them at real scale.
+- **USDT as strategic asset:** Tether is enabling dollar-denominated access for people in markets where that's otherwise impossible. KYC is the compliance gate that makes it legitimate and sustainable globally. That framing matters to me — not just "build a form."
+- **Lean / high-leverage signal:** At Nespay I owned the full KYC surface solo — no dedicated QA, no specialist. Spec-to-production with full accountability. That's the ownership mode Tether's team size implies.
+- **Close:** What does the KYC roadmap look like for the next 6–12 months — are you expanding into new markets or tightening existing compliance flows?
 
 ---
 
