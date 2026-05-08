@@ -606,6 +606,7 @@ function promoteToApplications(prepRow) {
   const url = get(5).trim();
   const cvPath = get(6).trim();
   const today = new Date().toISOString().slice(0, 10);
+  const meta = getJobsMeta(company, role);
 
   // Look for an existing Applications row with the same Company+Role
   let existingRow = null;
@@ -631,13 +632,18 @@ function promoteToApplications(prepRow) {
   }
 
   const row = apps.getRow(target);
-  row.getCell(2).value = today;          // Date Applied
-  row.getCell(3).value = company;        // Company
-  row.getCell(4).value = role;           // Role
-  row.getCell(7).value = url;            // Job URL
-  row.getCell(8).value = "Applied";      // Status
-  row.getCell(9).value = today;          // Last Update
-  row.getCell(10).value = cvPath;        // CV Used
+  setRowIndexFormula(apps, target);
+  row.getCell(2).value = today;                          // Date Applied
+  row.getCell(3).value = company;                        // Company
+  row.getCell(4).value = role;                           // Role
+  row.getCell(5).value = meta.elig || "";                // Location / Remote
+  row.getCell(6).value = meta.source || "";              // Source / Portal
+  row.getCell(7).value = url;                            // Job URL
+  row.getCell(8).value = "Applied";                      // Status
+  row.getCell(9).value = today;                          // Last Update
+  row.getCell(10).value = cvPath;                        // CV Used
+  row.getCell(15).value = "Wait for recruiter response"; // Next Action
+  row.getCell(16).value = isoDaysFromNow(14);            // Follow-up Date
   row.getCell(17).value = `Promoted from Preparations row ${prepRow}`;  // Notes
   row.commit();
 
