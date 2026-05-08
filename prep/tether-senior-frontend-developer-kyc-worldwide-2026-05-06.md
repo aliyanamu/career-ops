@@ -57,12 +57,15 @@ At Nespay I built the KYC integration end-to-end for a B2B crypto-to-fiat platfo
 
 ## Video talking points (for interview prep, not a form field)
 
-> **If Tether runs a video interview, use these as talking points only. Speak naturally.**
+> **If Tether runs a video interview, use these as talking points only. Do NOT script or read. Speak naturally.**
 
-- **Hook:** At Nespay I own the KYC surface solo: frontend, admin, backend webhooks, Sumsub + Kredibel. That's what drew me to Bitfinex KYC specifically: I already know what the edge cases feel like.
-- **USDT as strategic asset:** KYC is the compliance gate that makes global dollar access legitimate and sustainable. Not just "build a form", it's the layer that determines who can actually participate.
-- **Lean / high-leverage signal:** Spec-to-production with full accountability. That's the ownership model Tether's team size implies, and it's where I do my best work.
-- **Close:** What does the KYC roadmap look like for the next 6–12 months: expanding into new markets or tightening existing compliance flows?
+Hi, I'm Hana. I'm a full stack engineer at Nespay, where I've owned KYC end-to-end for the past year. Frontend verification flow, admin backoffice, backend webhooks, all of it.
+
+Why Tether? Two reasons.
+
+The first is the role itself. Bitfinex KYC is the same problem I've been solving at Nespay, at a scale and regulatory scrutiny level I want to grow into. I already know what the edge cases feel like: rejection handling, re-submission flows, provider inconsistencies between Sumsub and Kredibel. I'm not coming in to learn what KYC is. I want to solve it at a harder level.
+
+The second is what KYC actually does in context. USDT is widely adopted and popular in Indonesia, and I use it personally, not for speculation, just convenience. But what keeps it legitimate and compliant is the KYC layer. It's not just a form. It's the gate that determines who can actually access dollar-denominated assets. That layer matters, and I want to build it at the company that issues the asset.
 
 ---
 

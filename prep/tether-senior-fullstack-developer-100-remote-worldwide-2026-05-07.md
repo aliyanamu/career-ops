@@ -8,12 +8,17 @@
 
 ## Video (120 sec max): Why are you interested in working at Tether?
 
-> **Talking points: do NOT script or read. Speak naturally.**
+> **Do NOT script or read. Record in your own words. Aim for 80–100 sec.**
 
-- **Hook (concrete):** At Nespay I designed the RPC failover so that when a provider went down, users saw nothing: zero interruption. That's the reliability standard I hold myself to, and it's the kind of infrastructure problem I came looking for at Tether.
-- **USDT as strategic asset:** USDT is how people in markets with weak currencies or restricted banking access hold dollars. Tether's platform is the infrastructure that makes that possible at scale. Working fullstack here means your code touches something that actually matters globally: that's rare.
-- **Lean / high-leverage signal:** At Nespay I'm one of two engineers. I own the backend architecture, AWS infra, CI/CD, and the Backoffice Dashboard. I don't split tickets between specialists; I ship the whole feature. That's the ratio Tether's team structure suggests, and it's where I do my best work.
-- **Close:** How does the team handle reliability at Tether's transaction volumes: what does incident response look like for a fullstack engineer on the team?
+Hi, I'm Hana, a full stack engineer currently at Nespay, building a crypto on/off-ramp platform for the Indonesian market.
+
+Why Tether? It starts from where I am. In Indonesia, USDT is widely adopted and popular. Other stablecoins are whitelisted and available, but USDT is what most people actually use.
+
+I feel that personally. I keep part of my liquid savings in USDT rather than a bank account, not because I'm speculating, but because moving money between Indonesian banks is genuinely painful. Fees, cut-off times, limits. USDT I can move anytime, to anyone, instantly. That convenience is real.
+
+At Nespay I'm one of two engineers. I own the backend architecture, AWS infra, CI/CD, and the backoffice dashboard. I ship the whole feature, not just a slice. That's how I work best, and from what I understand about Tether's team structure, that's the expectation here too.
+
+So I'm not coming in with an abstract interest in stablecoins. I use USDT, I build on top of it, and the wallet infrastructure that makes it reliable at scale is what I want to be working on. That's why Tether specifically.
 
 ---
 
