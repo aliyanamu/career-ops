@@ -24,3 +24,26 @@ The JD's core ask — Node.js/TypeScript backend plus deep wallet integration �
 
 Through my own research process. I track companies building crypto infrastructure directly — Tether came up as the highest-fit role against my evaluation criteria.
 
+---
+
+## Cover Letter
+
+> **Scaffold only — Tether bans AI tools in applications. Rewrite in your own voice from memory before submitting.**
+
+---
+
+Dear Tether Team,
+
+My current role at Appreal (Nespay) is building the backend for a B2B multi-chain crypto-to-fiat payment platform — wallet transactions, invoice lifecycle, KYC compliance, and multi-chain signing via Privy + AWS Nitro Enclave. When I came across this role, it read like a description of work I am already doing, at a company operating the infrastructure layer beneath it.
+
+The technical fit is direct. I work daily in Node.js and TypeScript on NestJS microservices, with PostgreSQL, MySQL, MongoDB, and Redis as data layers, and RabbitMQ handling async event processing. I set up the AWS infrastructure and CI/CD pipelines from scratch and own security across the stack — authentication, authorization, key management, and KYC integration (Sumsub, Kredibel). Before Nespay, I spent five years at ION building and stabilizing a large-scale work-management platform, which gave me a strong foundation in maintaining complex, high-traffic systems without regressions.
+
+On the Web3 side: I have hands-on experience integrating non-custodial wallets, working with RPC services, and shipped a DeFi project to a 3rd-place finish at the EDU Chain Hackathon in 2025. I understand what it means to handle user assets at the protocol level, not just at the API surface.
+
+I am a fully remote engineer based in Yogyakarta, Indonesia (GMT+7), with no timezone blockers for a globally distributed team. I am interested in the wallet infrastructure problem specifically — not just the company — and this role is one of the few where the scope matches my current depth.
+
+I would welcome the chance to discuss the team's architecture challenges.
+
+Hana Aliyah Mufidah
+aliyanamu@gmail.com | linkedin.com/in/hana-aliyah-mufidah
+
