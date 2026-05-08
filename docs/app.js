@@ -92,8 +92,64 @@ window.addEventListener("hashchange", () => {
   }
 });
 
+// ---------- Sheet column schema ----------
+// Single source of truth for every column index in every sheet.
+// Update here when columns are added, removed, or reordered.
+const SCHEMA = {
+  Jobs: {
+    num:       1,
+    dateAdded: 2,
+    company:   3,
+    role:      4,
+    url:       5,
+    source:    6,
+    elig:      7,
+    why:       8,
+    fitScore:  9,
+    deadline:  10,
+    decision:  11,
+    hide:      12,
+    notes:     13,
+  },
+  Preparations: {
+    num:              1,
+    date:             2,
+    company:          3,
+    role:             4,
+    jobUrl:           5,
+    cvPath:           6,
+    cvStatus:         7,
+    qa:               8,
+    videoRequired:    9,
+    videoNotes:       10,
+    videoStatus:      11,
+    aiDisclaimer:     12,
+    submissionStatus: 13,
+    notes:            14,
+  },
+  Applications: {
+    num:         1,
+    dateApplied: 2,
+    company:     3,
+    role:        4,
+    location:    5,
+    source:      6,
+    jobUrl:      7,
+    status:      8,
+    lastUpdate:  9,
+    cvUsed:      10,
+    coverLetter: 11,
+    appLink:     12,
+    salary:      13,
+    contact:     14,
+    nextAction:  15,
+    followUpDate:16,
+    notes:       17,
+  },
+};
+
 // ---------- Rendering ----------
-const JOBS_HIDE_COL = 12; // Jobs sheet: "Hide" column
+const JOBS_HIDE_COL = SCHEMA.Jobs.hide;
 
 function countHiddenJobs() {
   const ws = workbook?.getWorksheet("Jobs");
@@ -536,8 +592,8 @@ function onDropdownChange(e) {
   dirtyCells.add(`${activeSheetName}!${r},${c}`);
   setStatus(`${dirtyCells.size} unsaved change(s)`);
 
-  // Auto-promote / un-promote when Preparations Submission status (col 13) changes
-  if (activeSheetName === "Preparations" && c === 13) {
+  // Auto-promote / un-promote when Preparations Submission status changes
+  if (activeSheetName === "Preparations" && c === SCHEMA.Preparations.submissionStatus) {
     if (sel.value === "Submitted") {
       if (!confirm("Promote this to Applications with Status = Applied?\n\nA new row will be added to the Applications tab.\n\n(Cancel = leave Submission status alone.)")) {
         // Revert the dropdown
@@ -559,14 +615,14 @@ function unpromoteFromApplications(prepRow) {
   const prep = workbook.getWorksheet("Preparations");
   if (!apps || !prep) return;
 
-  const company = (prep.getRow(prepRow).getCell(3).value || "").toString().trim();
-  const role = (prep.getRow(prepRow).getCell(4).value || "").toString().trim();
+  const company = (prep.getRow(prepRow).getCell(SCHEMA.Preparations.company).value || "").toString().trim();
+  const role = (prep.getRow(prepRow).getCell(SCHEMA.Preparations.role).value || "").toString().trim();
   if (!company || !role) return;
 
   let match = null;
   for (let r = 2; r <= apps.rowCount; r++) {
-    const aco = (apps.getRow(r).getCell(3).value || "").toString().trim();
-    const arole = (apps.getRow(r).getCell(4).value || "").toString().trim();
+    const aco = (apps.getRow(r).getCell(SCHEMA.Applications.company).value || "").toString().trim();
+    const arole = (apps.getRow(r).getCell(SCHEMA.Applications.role).value || "").toString().trim();
     if (aco === company && arole === role) { match = r; break; }
   }
   if (!match) return;
@@ -601,10 +657,12 @@ function promoteToApplications(prepRow) {
     }
     return String(v);
   };
-  const company = get(3).trim();
-  const role = get(4).trim();
-  const url = get(5).trim();
-  const cvPath = get(6).trim();
+  const SP = SCHEMA.Preparations;
+  const SA = SCHEMA.Applications;
+  const company = get(SP.company).trim();
+  const role = get(SP.role).trim();
+  const url = get(SP.jobUrl).trim();
+  const cvPath = get(SP.cvPath).trim();
   const today = new Date().toISOString().slice(0, 10);
   const meta = getJobsMeta(company, role);
 
@@ -612,8 +670,8 @@ function promoteToApplications(prepRow) {
   let existingRow = null;
   const lastRow = apps.rowCount;
   for (let r = 2; r <= lastRow; r++) {
-    const aco = (apps.getRow(r).getCell(3).value || "").toString().trim();
-    const arole = (apps.getRow(r).getCell(4).value || "").toString().trim();
+    const aco = (apps.getRow(r).getCell(SA.company).value || "").toString().trim();
+    const arole = (apps.getRow(r).getCell(SA.role).value || "").toString().trim();
     if (aco === company && arole === role) { existingRow = r; break; }
   }
 
@@ -622,34 +680,34 @@ function promoteToApplications(prepRow) {
     return;
   }
 
-  // Find first empty data row (Date Applied / Company / Role all empty)
+  // Find first empty data row
   let target = 2;
   while (target <= 1001) {
     const row = apps.getRow(target);
-    const empty = !row.getCell(2).value && !row.getCell(3).value && !row.getCell(4).value;
+    const empty = !row.getCell(SA.dateApplied).value && !row.getCell(SA.company).value && !row.getCell(SA.role).value;
     if (empty) break;
     target++;
   }
 
   const row = apps.getRow(target);
   setRowIndexFormula(apps, target);
-  row.getCell(2).value = today;                          // Date Applied
-  row.getCell(3).value = company;                        // Company
-  row.getCell(4).value = role;                           // Role
-  row.getCell(5).value = meta.elig || "";                // Location / Remote
-  row.getCell(6).value = meta.source || "";              // Source / Portal
-  row.getCell(7).value = url;                            // Job URL
-  row.getCell(8).value = "Applied";                      // Status
-  row.getCell(9).value = today;                          // Last Update
-  row.getCell(10).value = cvPath;                        // CV Used
-  row.getCell(15).value = "Wait for recruiter response"; // Next Action
-  row.getCell(16).value = isoDaysFromNow(14);            // Follow-up Date
-  const aiDisclaimer = get(12).trim();
+  row.getCell(SA.dateApplied).value  = today;
+  row.getCell(SA.company).value      = company;
+  row.getCell(SA.role).value         = role;
+  row.getCell(SA.location).value     = meta.elig || "";
+  row.getCell(SA.source).value       = meta.source || "";
+  row.getCell(SA.jobUrl).value       = url;
+  row.getCell(SA.status).value       = "Applied";
+  row.getCell(SA.lastUpdate).value   = today;
+  row.getCell(SA.cvUsed).value       = cvPath;
+  row.getCell(SA.nextAction).value   = "Wait for recruiter response";
+  row.getCell(SA.followUpDate).value = isoDaysFromNow(14);
+  const aiDisclaimer = get(SP.aiDisclaimer).trim();
   const noteParts = [`Promoted from Preparations row ${prepRow}`];
   if (aiDisclaimer && aiDisclaimer.toUpperCase().startsWith("YES")) noteParts.push("AI disclaimer: rewrite in own voice");
   if (meta.notes) noteParts.push(meta.notes);
   if (meta.why)   noteParts.push(meta.why);
-  row.getCell(17).value = noteParts.join(" | ");         // Notes
+  row.getCell(SA.notes).value = noteParts.join(" | ");
   row.commit();
 
   dirtyCells.add(`Applications!${target},promote`);
@@ -865,7 +923,7 @@ function addRow() {
 
 // ---------- Save back to GitHub ----------
 // Jobs (formerly Wishlist) Decision col index (1-based): # | Date | Company | Role | URL | Source | WorkElig | Why | Fit | Deadline | Decision | Notes
-const JOBS_DECISION_COL = 11;
+const JOBS_DECISION_COL = SCHEMA.Jobs.decision;
 const JOBS_DELETE_ON_SAVE = new Set(["6. Skip"]);
 
 // Jobs Decision values that propagate to other sheets on save (dirty cells only).
@@ -887,8 +945,8 @@ function findJobsPromotions() {
     const dec = readCellAsString(ws.getRow(r).getCell(c)).trim();
     const cfg = JOBS_PROMOTIONS[dec];
     if (!cfg) continue;
-    const co = readCellAsString(ws.getRow(r).getCell(3)).trim();
-    const role = readCellAsString(ws.getRow(r).getCell(4)).trim();
+    const co = readCellAsString(ws.getRow(r).getCell(SCHEMA.Jobs.company)).trim();
+    const role = readCellAsString(ws.getRow(r).getCell(SCHEMA.Jobs.role)).trim();
     if (!co || !role) continue;
     if (rowExistsInSheet(cfg.sheet, co, role)) continue;
     out.push({ row: r, decision: dec, sheet: cfg.sheet, desc: cfg.desc, company: co, role });
@@ -899,9 +957,12 @@ function findJobsPromotions() {
 function rowExistsInSheet(sheetName, company, role) {
   const ws = workbook.getWorksheet(sheetName);
   if (!ws) return false;
+  const S = SCHEMA[sheetName] || {};
+  const companyCol = S.company || 3;
+  const roleCol    = S.role    || 4;
   for (let r = 2; r <= ws.rowCount; r++) {
-    const co = readCellAsString(ws.getRow(r).getCell(3)).trim();
-    const rl = readCellAsString(ws.getRow(r).getCell(4)).trim();
+    const co = readCellAsString(ws.getRow(r).getCell(companyCol)).trim();
+    const rl = readCellAsString(ws.getRow(r).getCell(roleCol)).trim();
     if (co === company && rl === role) return true;
   }
   return false;
@@ -944,16 +1005,17 @@ function readCellAsUrl(cell) {
 
 function getJobsMeta(company, role) {
   const ws = workbook.getWorksheet("Jobs");
+  const S = SCHEMA.Jobs;
   for (let r = 2; r <= ws.rowCount; r++) {
-    const co = readCellAsString(ws.getRow(r).getCell(3)).trim();
-    const rl = readCellAsString(ws.getRow(r).getCell(4)).trim();
+    const co = readCellAsString(ws.getRow(r).getCell(S.company)).trim();
+    const rl = readCellAsString(ws.getRow(r).getCell(S.role)).trim();
     if (co === company && rl === role) {
       return {
-        url: readCellAsUrl(ws.getRow(r).getCell(5)),
-        source: readCellAsString(ws.getRow(r).getCell(6)),
-        elig: readCellAsString(ws.getRow(r).getCell(7)),
-        why: readCellAsString(ws.getRow(r).getCell(8)),
-        notes: readCellAsString(ws.getRow(r).getCell(12)),
+        url:    readCellAsUrl(ws.getRow(r).getCell(S.url)),
+        source: readCellAsString(ws.getRow(r).getCell(S.source)),
+        elig:   readCellAsString(ws.getRow(r).getCell(S.elig)),
+        why:    readCellAsString(ws.getRow(r).getCell(S.why)),
+        notes:  readCellAsString(ws.getRow(r).getCell(S.notes)),
       };
     }
   }
@@ -992,45 +1054,47 @@ function slugifyForPath(s) {
 function createPreparationsRow(company, role) {
   const target = workbook.getWorksheet("Preparations");
   if (!target) return null;
-  const r = findFirstEmptyDataRow(target, 2);
+  const S = SCHEMA.Preparations;
+  const r = findFirstEmptyDataRow(target, S.date);
   const meta = getJobsMeta(company, role);
   const date = todayISO();
   const qaPath = `prep/${slugifyForPath(company)}-${slugifyForPath(role)}-${date}.md`;
   setRowIndexFormula(target, r);
-  setCellDirty(target, r, 2, date);               // Date
-  setCellDirty(target, r, 3, company);            // Company
-  setCellDirty(target, r, 4, role);               // Role
-  setCellDirty(target, r, 5, meta.url);           // Job URL
-  setCellDirty(target, r, 6, "cv-default.pdf");   // Tailored CV Path — defaults to cv-default.pdf; agent overwrites with output/... when tailored CV is generated
-  setCellDirty(target, r, 7, "Default CV (replace if tailoring)");  // Tailored CV Status
-  setCellDirty(target, r, 8, qaPath);             // Application Q&A — suggested path
-  setCellDirty(target, r, 13, "Not submitted");   // Submission status
+  setCellDirty(target, r, S.date,             date);
+  setCellDirty(target, r, S.company,          company);
+  setCellDirty(target, r, S.role,             role);
+  setCellDirty(target, r, S.jobUrl,           meta.url);
+  setCellDirty(target, r, S.cvPath,           "cv-default.pdf");
+  setCellDirty(target, r, S.cvStatus,         "Default CV (replace if tailoring)");
+  setCellDirty(target, r, S.qa,               qaPath);
+  setCellDirty(target, r, S.submissionStatus, "Not submitted");
   const noteParts = [];
   if (meta.elig)   noteParts.push(`Location: ${meta.elig}`);
   if (meta.source) noteParts.push(`Source: ${meta.source}`);
   if (meta.notes)  noteParts.push(meta.notes);
-  if (noteParts.length) setCellDirty(target, r, 14, noteParts.join(" | "));  // Notes
+  if (noteParts.length) setCellDirty(target, r, S.notes, noteParts.join(" | "));
   return r;
 }
 
 function createApplicationsRow(company, role) {
   const target = workbook.getWorksheet("Applications");
   if (!target) return null;
-  const r = findFirstEmptyDataRow(target, 2);
+  const S = SCHEMA.Applications;
+  const r = findFirstEmptyDataRow(target, S.dateApplied);
   const meta = getJobsMeta(company, role);
   setRowIndexFormula(target, r);
-  setCellDirty(target, r, 2, todayISO());         // Date Applied
-  setCellDirty(target, r, 3, company);
-  setCellDirty(target, r, 4, role);
-  setCellDirty(target, r, 5, meta.elig);          // Location / Remote (use Work Eligibility hint)
-  setCellDirty(target, r, 6, meta.source);        // Source / Portal
-  setCellDirty(target, r, 7, meta.url);           // Job URL
-  setCellDirty(target, r, 8, "Applied");          // Status
-  setCellDirty(target, r, 9, todayISO());         // Last Update
-  setCellDirty(target, r, 10, "cv-default.pdf"); // CV Used
-  setCellDirty(target, r, 15, "Wait for recruiter response"); // Next Action
-  setCellDirty(target, r, 16, isoDaysFromNow(14)); // Follow-up Date
-  if (meta.notes) setCellDirty(target, r, 17, meta.notes);
+  setCellDirty(target, r, S.dateApplied,  todayISO());
+  setCellDirty(target, r, S.company,      company);
+  setCellDirty(target, r, S.role,         role);
+  setCellDirty(target, r, S.location,     meta.elig);
+  setCellDirty(target, r, S.source,       meta.source);
+  setCellDirty(target, r, S.jobUrl,       meta.url);
+  setCellDirty(target, r, S.status,       "Applied");
+  setCellDirty(target, r, S.lastUpdate,   todayISO());
+  setCellDirty(target, r, S.cvUsed,       "cv-default.pdf");
+  setCellDirty(target, r, S.nextAction,   "Wait for recruiter response");
+  setCellDirty(target, r, S.followUpDate, isoDaysFromNow(14));
+  if (meta.notes) setCellDirty(target, r, S.notes, meta.notes);
   return r;
 }
 
@@ -1042,8 +1106,8 @@ function findJobsRowsToDelete() {
     const row = ws.getRow(r);
     const dec = (row.getCell(JOBS_DECISION_COL).value || "").toString().trim();
     if (!JOBS_DELETE_ON_SAVE.has(dec)) continue;
-    const co = (row.getCell(3).value || "").toString().trim();
-    const role = (row.getCell(4).value || "").toString().trim();
+    const co = (row.getCell(SCHEMA.Jobs.company).value || "").toString().trim();
+    const role = (row.getCell(SCHEMA.Jobs.role).value || "").toString().trim();
     if (!co && !role) continue; // skip empty
     hits.push({ row: r, decision: dec, company: co, role });
   }
@@ -1189,9 +1253,10 @@ function snapshotDirtyEdits() {
     const value = ws.getRow(r).getCell(c).value;
     let anchor = null;
     if (ANCHORED_SHEETS.has(sheet)) {
+      const S = SCHEMA[sheet] || {};
       anchor = {
-        company: (ws.getRow(r).getCell(3).value || "").toString().trim(),
-        role: (ws.getRow(r).getCell(4).value || "").toString().trim(),
+        company: (ws.getRow(r).getCell(S.company || 3).value || "").toString().trim(),
+        role:    (ws.getRow(r).getCell(S.role    || 4).value || "").toString().trim(),
       };
       if (!anchor.company && !anchor.role) anchor = null;
     }
