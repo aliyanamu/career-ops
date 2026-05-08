@@ -1,56 +1,78 @@
 # Tether — Backend Engineer (Wallets) — 100% Remote
 
 **Job URL:** https://careers.tether.io/o/backend-engineer-wallets-100-remote-29
+**Application URL:** https://careers.tether.io/o/backend-engineer-wallets-100-remote-29/c/new
 
-> **Scaffold only — Tether bans AI tools in applications. Rewrite every answer below in your own voice from memory before submitting.**
+> **Scaffold only — Tether bans AI tools in applications. All free-text answers must be rewritten in your own voice from memory before submitting. Video answer must be recorded yourself — use bullet points below as talking points only.**
 
-## Q1: Why this role?
+---
 
-Wallet platform engineering is where my last 12 months have been focused — at Appreal (Nespay) I built the backend and admin layer for a B2B multi-chain crypto-to-fiat product, integrating Privy + AWS Nitro Enclave for non-custodial signing across EVM and TRON. Tether operates that same problem set at global infrastructure scale, which is the learning curve I want next.
+## Form Fields
 
-## Q2: Why this company?
+| Field | Answer |
+|-------|--------|
+| Full name | Hana Aliyah Mufidah |
+| Email | aliyanamu@gmail.com |
+| Phone | +62 858-1099-4772 |
+| CV | `output/cv-hana-aliyah-mufidah-tether-backend-wallets-2026-05-06.pdf` |
+| Cover letter | see below |
+| Country (working from) | Indonesia |
+| LinkedIn | linkedin.com/in/hana-aliyah-mufidah |
+| Useful links | *(add GitHub or portfolio link)* |
+| Location | Yogyakarta, Indonesia |
+| Expected annual salary (USD) | *(TBD — research Tether market rate; profile target ~IDR 25–40M/mo ≈ $18–25K/yr, but Tether is global — consider $60–90K USD range for remote roles)* |
 
-USDT is the infrastructure layer I've worked against since my first Web3 role. Building on top of it taught me its limits; I want to work inside it. The wallet team at Tether is one of the few places where the work is foundational — not a product built on someone else's primitives.
+---
 
-## Q3: Relevant experience
+## Q1 (Video — 120 sec max): Why are you interested in working at Tether?
 
-At Appreal (Nespay) I led backend architecture and AWS infrastructure for a B2B crypto-to-fiat platform: multi-chain wallet transactions, invoice lifecycle management, KYC flows, RabbitMQ queues, Redis caching — NestJS + TypeScript + Prisma on PostgreSQL. Previously 5 years at ION on a large-scale work-management platform. 3rd place, EDU Chain Hackathon DeFi Track (2025).
+> **Video response — do NOT write a script. Record in your own words. Talking points:**
 
-## Q4: Why a good fit?
+- You've spent the last year building the backend for a B2B multi-chain crypto-to-fiat platform — wallet transactions, signing, KYC, multi-chain RPC
+- USDT is the infrastructure you've been building on top of. You want to work inside it, not on top of it
+- Tether is one of the very few places where the wallet layer is the product — that's the problem depth you're looking for
+- Short, specific, genuine — no filler
 
-The JD's core ask — Node.js/TypeScript backend plus deep wallet integration — describes my current production stack exactly. At Appreal I shipped both sides: NestJS microservices handling payment state machines, and Privy + Nitro Enclave integrations for multi-chain key management. Both live in the last 12 months.
+---
 
-## Q5: How did you hear?
+## Q2 (Radio): Node.js experience level
 
-Through my own research process. I track companies building crypto infrastructure directly — Tether came up as the highest-fit role against my evaluation criteria.
+**Select: "I have more than 5 years of professional hands-on experience working with Nodejs."**
 
-## Q6: Do you have experience with Peer-to-Peer technologies?
+*(Node.js since Hacktiv8/Ultra Voucher 2018 → ION 2020–2024 → Nespay 2025–present = ~7 years)*
 
-My P2P experience comes primarily through blockchain work rather than direct P2P protocol implementation. At Appreal (Nespay) I integrated multi-chain RPC services — which means interacting with blockchain nodes in a P2P network: broadcasting transactions, subscribing to events, and handling reorgs. I worked with Ethers.js and Viem on the EVM side and TronWeb on TRON, all of which operate over underlying P2P infrastructure.
+---
 
-In my DeFi hackathon project (EDU Chain, 2025) I built smart contract interactions that are inherently P2P — trustless, without intermediaries. I understand wallet-to-wallet transfer flows, mempool mechanics, and transaction finality at the protocol level.
+## Q3 (Text): Do you have experience with Peer to peer technologies?
 
-I have not built a P2P application layer (e.g. libp2p, Hypercore, WebRTC data channels) directly, but the conceptual foundation is solid and I pick up new protocols quickly — as I did when integrating non-custodial signing with AWS Nitro Enclave.
+> **Rewrite in your own voice.**
 
-> **Rewrite in your own voice — be specific about which RPC providers / chains you've touched and honest about the gap if the interviewer probes on Hypercore/KEET.**
+My P2P experience comes primarily through blockchain work rather than direct P2P protocol implementation. At Appreal (Nespay) I integrated multi-chain RPC services — connecting to blockchain nodes in a P2P network: broadcasting transactions, subscribing to on-chain events, and handling reorgs. I worked with Ethers.js and Viem on EVM chains and TronWeb on TRON, all of which operate over P2P infrastructure.
 
-## Q7: Do you have experience working with crypto or digital wallets?
+In my DeFi hackathon project (EDU Chain, 2025) I built smart contract interactions that are inherently P2P — trustless, no intermediaries. I understand wallet-to-wallet transfer flows, mempool mechanics, and transaction finality.
 
-Yes — wallet integration is the core of my current work. At Appreal (Nespay) I built the backend for a B2B multi-chain crypto-to-fiat platform. This includes:
+I have not built a P2P application layer (e.g. libp2p, Hypercore) directly, but the conceptual foundation is solid and I pick up new protocols quickly — as I did integrating non-custodial signing with AWS Nitro Enclave.
+
+---
+
+## Q4 (Text, optional): Do you have experience working with crypto or digital wallets?
+
+> **Rewrite in your own voice.**
+
+Yes — wallet integration is the core of my current work. At Appreal (Nespay) I built the backend for a B2B multi-chain crypto-to-fiat platform:
 
 - Non-custodial wallet key management via Privy + AWS Nitro Enclave (secure signing without exposing private keys)
 - Multi-chain transaction flows across EVM-compatible chains and TRON (Ethers.js, Viem, TronWeb)
 - Wallet-linked invoice and payment state machines — tracking deposits, confirmations, and settlement
-- External wallet integrations on the frontend/admin side
 - RPC service integration for broadcasting transactions and listening to on-chain events
 
-Prior to that I worked on crypto-to-fiat on/off-ramp features at Nespay from the start, which required understanding custody models, transaction finality, and reorg handling. I also built DeFi smart contract interactions for the EDU Chain hackathon (3rd place, DeFi Track, 2025).
+I also built DeFi smart contract interactions for the EDU Chain hackathon (3rd place, DeFi Track, 2025).
 
 ---
 
 ## Cover Letter
 
-> **Scaffold only — Tether bans AI tools in applications. Rewrite in your own voice from memory before submitting.**
+> **Scaffold only — rewrite in your own voice before submitting.**
 
 ---
 
@@ -68,4 +90,3 @@ I would welcome the chance to discuss the team's architecture challenges.
 
 Hana Aliyah Mufidah
 aliyanamu@gmail.com | linkedin.com/in/hana-aliyah-mufidah
-
