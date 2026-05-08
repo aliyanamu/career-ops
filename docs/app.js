@@ -30,7 +30,7 @@ let workbook = null;
 let currentSha = null;
 let activeSheetName = null;
 const dirtyCells = new Set();
-let showHiddenJobs = false; // toggle for Jobs sheet "Hide" column filter
+const showHiddenBySheet = { Jobs: false, Preparations: false, Applications: false };
 
 // ---------- Load xlsx from GitHub ----------
 async function loadWorkbook() {
@@ -126,6 +126,7 @@ const SCHEMA = {
     aiDisclaimer:     12,
     submissionStatus: 13,
     notes:            14,
+    hide:             15,
   },
   Applications: {
     num:         1,
@@ -145,18 +146,20 @@ const SCHEMA = {
     nextAction:  15,
     followUpDate:16,
     notes:       17,
+    hide:        18,
   },
 };
 
 // ---------- Rendering ----------
-const JOBS_HIDE_COL = SCHEMA.Jobs.hide;
 
-function countHiddenJobs() {
-  const ws = workbook?.getWorksheet("Jobs");
+function countHiddenRows(sheetName) {
+  const hideCol = SCHEMA[sheetName]?.hide;
+  if (!hideCol) return 0;
+  const ws = workbook?.getWorksheet(sheetName);
   if (!ws) return 0;
   let n = 0;
   for (let r = 2; r <= ws.rowCount; r++) {
-    const v = readCellAsString(ws.getRow(r).getCell(JOBS_HIDE_COL)).trim().toLowerCase();
+    const v = readCellAsString(ws.getRow(r).getCell(hideCol)).trim().toLowerCase();
     if (v === "hidden") n++;
   }
   return n;
@@ -178,18 +181,18 @@ function renderTabs() {
     tabs.appendChild(btn);
   });
 
-  // "Show hidden" toggle — only on Jobs sheet
-  if (activeSheetName === "Jobs") {
-    const hiddenCount = countHiddenJobs();
+  // "Show hidden" toggle — for any sheet with a hide column
+  if (SCHEMA[activeSheetName]?.hide) {
+    const hiddenCount = countHiddenRows(activeSheetName);
     if (hiddenCount > 0) {
       const toggle = document.createElement("button");
       toggle.className = "tabs-toggle";
-      toggle.textContent = showHiddenJobs
+      toggle.textContent = showHiddenBySheet[activeSheetName]
         ? `Hide hidden (${hiddenCount})`
         : `Show hidden (${hiddenCount})`;
-      toggle.title = "Toggle visibility of Jobs rows marked Hidden";
+      toggle.title = `Toggle visibility of ${activeSheetName} rows marked Hidden`;
       toggle.onclick = () => {
-        showHiddenJobs = !showHiddenJobs;
+        showHiddenBySheet[activeSheetName] = !showHiddenBySheet[activeSheetName];
         renderTabs();
         renderSheet();
       };
@@ -248,11 +251,12 @@ function renderSheet() {
   table.appendChild(thead);
 
   const tbody = document.createElement("tbody");
-  const hideJobsFilter = activeSheetName === "Jobs" && !showHiddenJobs;
+  const hideCol = SCHEMA[activeSheetName]?.hide;
+  const hideFilter = hideCol && !showHiddenBySheet[activeSheetName];
   for (let r = 2; r <= lastRow; r++) {
     const xlsxRow = ws.getRow(r);
-    if (hideJobsFilter) {
-      const hideVal = readCellAsString(xlsxRow.getCell(JOBS_HIDE_COL)).trim().toLowerCase();
+    if (hideFilter) {
+      const hideVal = readCellAsString(xlsxRow.getCell(hideCol)).trim().toLowerCase();
       if (hideVal === "hidden") continue;
     }
     const tr = document.createElement("tr");
@@ -1175,8 +1179,8 @@ async function save() {
       if (hideOk) {
         const jobsWs = workbook.getWorksheet("Jobs");
         for (const h of list) {
-          jobsWs.getRow(h.row).getCell(JOBS_HIDE_COL).value = "Hidden";
-          dirtyCells.add(`Jobs!${h.row},${JOBS_HIDE_COL}`);
+          jobsWs.getRow(h.row).getCell(SCHEMA.Jobs.hide).value = "Hidden";
+          dirtyCells.add(`Jobs!${h.row},${SCHEMA.Jobs.hide}`);
         }
       }
     }
