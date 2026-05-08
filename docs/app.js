@@ -644,7 +644,12 @@ function promoteToApplications(prepRow) {
   row.getCell(10).value = cvPath;                        // CV Used
   row.getCell(15).value = "Wait for recruiter response"; // Next Action
   row.getCell(16).value = isoDaysFromNow(14);            // Follow-up Date
-  row.getCell(17).value = `Promoted from Preparations row ${prepRow}`;  // Notes
+  const aiDisclaimer = get(12).trim();
+  const noteParts = [`Promoted from Preparations row ${prepRow}`];
+  if (aiDisclaimer && aiDisclaimer.toUpperCase().startsWith("YES")) noteParts.push("AI disclaimer: rewrite in own voice");
+  if (meta.notes) noteParts.push(meta.notes);
+  if (meta.why)   noteParts.push(meta.why);
+  row.getCell(17).value = noteParts.join(" | ");         // Notes
   row.commit();
 
   dirtyCells.add(`Applications!${target},promote`);
@@ -1000,6 +1005,11 @@ function createPreparationsRow(company, role) {
   setCellDirty(target, r, 7, "Default CV (replace if tailoring)");  // Tailored CV Status
   setCellDirty(target, r, 8, qaPath);             // Application Q&A — suggested path
   setCellDirty(target, r, 13, "Not submitted");   // Submission status
+  const noteParts = [];
+  if (meta.elig)   noteParts.push(`Location: ${meta.elig}`);
+  if (meta.source) noteParts.push(`Source: ${meta.source}`);
+  if (meta.notes)  noteParts.push(meta.notes);
+  if (noteParts.length) setCellDirty(target, r, 14, noteParts.join(" | "));  // Notes
   return r;
 }
 
