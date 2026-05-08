@@ -1,34 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Career-Ops Tracker</title>
-  <link rel="stylesheet" href="style.css?v=20260507h" />
-  <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
-</head>
-<body>
-  <header>
-    <h1>Career-Ops Tracker</h1>
-    <div class="actions">
-      <span id="status" class="status"></span>
-      <button id="reload-btn" title="Reload from GitHub">↻</button>
-      <button id="save-btn" class="primary">Save</button>
-      <button id="logout-btn" title="Forget PAT">⎋</button>
-    </div>
-  </header>
-
-  <nav id="tabs" class="tabs"></nav>
-
-  <main id="sheet" class="sheet">
-    <p class="loading">Loading…</p>
-  </main>
-
-  <footer>
-    <button id="add-row-btn">+ Add Row</button>
-    <span class="hint">Tap a cell to edit. Save commits to GitHub.</span>
-  </footer>
-
-  <script src="app.js?v=20260508e"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/career-ops/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Career Ops Tracker</title>
+    <script type="module" crossorigin src="/career-ops/assets/index-z6lM4TU2.js"></script>
+    <link rel="stylesheet" crossorigin href="/career-ops/assets/index-C0FZKj0r.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
