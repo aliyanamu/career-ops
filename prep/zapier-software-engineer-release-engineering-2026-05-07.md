@@ -59,9 +59,7 @@ Where AI helped:
 
 2. **Migration plan.** Each service had its own logging quirks. I asked Claude to walk through each service file and generate a per-service checklist (what to replace, what context fields to inject at which middleware layer). It caught edge cases I'd have missed — the queue-worker entry point had no HTTP middleware and needed a different injection pattern entirely.
 
-3. **Grafana query helpers.** I asked Claude to draft LogQL queries for the questions ops kept asking: "show me everything for transaction X," "show me failed provider calls in the last hour." I turned those into saved dashboards so ops could run them without knowing LogQL.
-
-The experience change wasn't speed. Ops could now open Grafana, paste a transaction ID, and see the full event timeline themselves — before reaching out to engineering. Customer complaints got a meaningful first response faster, and escalations to dev dropped to the cases that actually needed code context. Engineering stopped being a prerequisite for ops doing their job.
+The experience change wasn't speed. Ops already had access to Grafana and the backoffice dashboard — the problem was that the logs they could see were too inconsistent to be readable without an engineer interpreting them. Once every service emitted the same fields with a consistent transaction ID, ops could trace what actually happened to a complaint themselves and give customers a meaningful first response before ever reaching engineering. Escalations dropped to the cases that genuinely needed code context.
 
 What I learned: AI was useful at two specific leverage points — getting the schema right upfront (a decision that would have been expensive to fix later) and not missing services during migration. I rewrote every log line myself, but the AI made sure the structure held across the whole codebase.
 
