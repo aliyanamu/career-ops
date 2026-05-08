@@ -47,8 +47,6 @@ I extended an open-source job-search CLI called career-ops (by Santiago Ferreira
 2. **State sync conflicts.** The web editor and the CLI scanner both wrote to the same xlsx. Concurrent edits caused silent overwrites. I built a resolution protocol: snapshot dirty cells on save, reload the latest xlsx from git, re-anchor by `(Company, Role)` as the composite key, re-apply only the changed cells. Effectively a two-way merge.
 3. **Status semantics.** A single "Apply" status conflated "I want to prep this" with "I already submitted." Split into `Apply` (creates a Preparations row for form-drafting) and `Easy Apply` (goes straight to Applications as submitted), gated by save-time confirmation dialogs so nothing is accidentally marked submitted.
 
-Happy to share the repo on request — it's private but I can grant view access.
-
 ### AI-2: Share a specific example where AI changed quality or stakeholder experience — not just speed — and explain what you did to get there.
 
 At Nespay, when a customer raised a complaint about a failed transfer or a missing balance update, the ops team had to come to engineering first before they could say anything back. Not because they weren't capable — but because our logs were inconsistent across services: some used `console.log`, some structured JSON, some had no request context at all. Ops couldn't stitch together what actually happened to a transaction without an engineer doing it for them. Their first response to customers was always "let me check with the team," which eroded trust and slowed resolution.
