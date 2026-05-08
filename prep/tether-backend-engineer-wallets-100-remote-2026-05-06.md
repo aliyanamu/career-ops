@@ -26,12 +26,15 @@
 
 ## Q1 (Video: 120 sec max): Why are you interested in working at Tether?
 
-> **Video response: do NOT write a script. Record in your own words. Aim for 60–75 sec. Talking points:**
+> **Video response: do NOT script or read. Record in your own words. Aim for 60–80 sec.**
 
-- **Hook (concrete, not generic):** You've spent the last year building wallet transaction infrastructure for a B2B crypto-to-fiat platform: multi-chain signing, RPC, settlement. That work lives on top of USDT. You want to build inside it.
-- **USDT as strategic asset:** Tether isn't just a stablecoin company. USDT gives people in countries with weak currencies or restricted banking access a stable, USD-denominated store of value. The wallet layer you're applying to is the pipe that makes that real. Say this like you mean it: one sentence.
-- **Lean / high-leverage signal:** At Nespay you set up the entire backend architecture, AWS infra, and CI/CD solo: end-to-end ownership with no handoffs. That's the mode you work best in.
-- **Close:** One question: e.g. "What does the on-call model look like for the wallet team, and how do you handle incident response at Tether's transaction volume?"
+Hi, I'm Hana, a full stack engineer currently at Nespay, building a crypto on/off-ramp platform for the Indonesian market.
+
+Why Tether specifically? It starts from where I am. In Indonesia, USDT is widely adopted and popular. Other stablecoins are whitelisted and available, but USDT is what most people actually use. Partly how early exchange listings shaped the market, partly just network effect.
+
+I feel that personally. I keep part of my liquid savings in USDT rather than a bank account, not because I'm speculating, but because moving money between Indonesian banks is genuinely painful. Fees, cut-off times, limits. USDT I can move anytime, to anyone, instantly. That convenience is real.
+
+So I'm not coming in with an abstract interest in stablecoins. I use USDT, I build on top of it at work, and what I want to work on is the wallet infrastructure that makes it reliable and accessible at scale. That's where I want to grow, and that's why Tether specifically.
 
 ---
 
