@@ -811,7 +811,7 @@ function onPathCellEdit(e) {
   const newText = span.textContent;
   const ws = workbook.getWorksheet(activeSheetName);
   const cell = ws.getRow(r).getCell(c);
-  const oldText = cellToString(cell.value);
+  const oldText = renderCell(cell, r);
   if (newText !== oldText) {
     cell.value = newText;
     td.classList.add("dirty");
@@ -838,7 +838,7 @@ function onCellEdit(e) {
   const newText = td.textContent;
   const ws = workbook.getWorksheet(activeSheetName);
   const cell = ws.getRow(r).getCell(c);
-  const oldText = cellToString(cell.value);
+  const oldText = renderCell(cell, r);
   if (newText !== oldText) {
     // Preserve numbers if it parses cleanly
     const asNum = Number(newText);
