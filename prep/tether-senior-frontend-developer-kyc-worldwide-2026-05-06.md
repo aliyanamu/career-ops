@@ -2,6 +2,22 @@
 
 **Job URL:** https://careers.tether.io/o/senior-frontend-developer-kyc-worldwide
 
+> **Scaffold only — Tether bans AI tools in applications. All answers must be rewritten in your own voice from memory. Video must be recorded yourself — use bullet points below as talking points only.**
+
+---
+
+## Video (120 sec max): Why are you interested in working at Tether?
+
+> **Talking points — do NOT script or read. Speak naturally.**
+
+- **Hook (specific, not generic):** At Nespay I integrated KYC providers — Sumsub and Kredibel — end-to-end in production. That experience is what made me look at Bitfinex KYC specifically. I already know what the edge cases feel like.
+- **Why Tether:** Bitfinex handles KYC at a scale and scrutiny level that very few platforms reach. I want to ship into an environment where the compliance edge cases are already known and solved — not discovered in production.
+- **Proof point:** I built the full KYC flow on both the customer-facing and admin sides at Nespay — React/Next, Sumsub SDK integration, status tracking, rejection handling. Full ownership.
+- **Why this role:** KYC is where UX and compliance intersect. Most companies treat it as a checkbox; I treat it as a product surface.
+- **Close (optional):** What does the KYC roadmap look like for the next 6–12 months?
+
+---
+
 ## Q1: Why this role?
 
 KYC compliance is the part of crypto product I have spent the past year on — at Nespay I integrated Sumsub and Kredibel end-to-end on a React/Next admin and customer flow. Bitfinex KYC is the same problem at much larger scale.
