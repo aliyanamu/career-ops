@@ -51,7 +51,7 @@ I've spent the past year integrating KYC providers (Sumsub, Kredibel) end-to-end
 
 > **Rewrite in your own voice.**
 
-At Nespay I built the KYC integration end-to-end for a B2B crypto-to-fiat platform. On the frontend (React/Next.js), I implemented the full user-facing verification flow: document upload, liveness check via Sumsub SDK, status polling, and rejection handling with re-submission. On the admin side, I built the backoffice dashboard for compliance ops. KYC queue, manual review actions, and audit trail display. On the backend (NestJS), I handled webhook ingestion from Sumsub and Kredibel, status normalization, and KYC state transitions tied to the invoice lifecycle. Full ownership, no dedicated QA: shipped to production.
+At Nespay I built the KYC integration end-to-end for a B2B crypto-to-fiat platform. On the frontend (React/Next.js), I implemented the full user-facing verification flow: document upload, liveness check via Sumsub SDK, status polling, and rejection handling with re-submission. On the admin side, I built the backoffice dashboard for compliance ops — KYC queue, manual review actions, and audit trail display. On the backend (NestJS), I handled webhook ingestion from Sumsub and Kredibel, status normalization, and KYC state transitions tied to the invoice lifecycle.
 
 ---
 
