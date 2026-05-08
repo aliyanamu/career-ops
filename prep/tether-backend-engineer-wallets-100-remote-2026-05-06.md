@@ -34,6 +34,18 @@ I have not built a P2P application layer (e.g. libp2p, Hypercore, WebRTC data ch
 
 > **Rewrite in your own voice — be specific about which RPC providers / chains you've touched and honest about the gap if the interviewer probes on Hypercore/KEET.**
 
+## Q7: Do you have experience working with crypto or digital wallets?
+
+Yes — wallet integration is the core of my current work. At Appreal (Nespay) I built the backend for a B2B multi-chain crypto-to-fiat platform. This includes:
+
+- Non-custodial wallet key management via Privy + AWS Nitro Enclave (secure signing without exposing private keys)
+- Multi-chain transaction flows across EVM-compatible chains and TRON (Ethers.js, Viem, TronWeb)
+- Wallet-linked invoice and payment state machines — tracking deposits, confirmations, and settlement
+- External wallet integrations on the frontend/admin side
+- RPC service integration for broadcasting transactions and listening to on-chain events
+
+Prior to that I worked on crypto-to-fiat on/off-ramp features at Nespay from the start, which required understanding custody models, transaction finality, and reorg handling. I also built DeFi smart contract interactions for the EDU Chain hackathon (3rd place, DeFi Track, 2025).
+
 ---
 
 ## Cover Letter
