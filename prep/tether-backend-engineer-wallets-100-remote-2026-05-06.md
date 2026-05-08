@@ -2,23 +2,25 @@
 
 **Job URL:** https://careers.tether.io/o/backend-engineer-wallets-100-remote-29
 
+> **Scaffold only — Tether bans AI tools in applications. Rewrite every answer below in your own voice from memory before submitting.**
+
 ## Q1: Why this role?
 
-Wallet platform is exactly where I have been working — at Nespay I built backend + admin for a B2B crypto-to-fiat product (Xellar, Privy, MySQL, MongoDB). Tether operates the same problem at the scale I want to learn next.
+Wallet platform engineering is where my last 12 months have been focused — at Appreal (Nespay) I built the backend and admin layer for a B2B multi-chain crypto-to-fiat product, integrating Privy + AWS Nitro Enclave for non-custodial signing across EVM and TRON. Tether operates that same problem set at global infrastructure scale, which is the learning curve I want next.
 
 ## Q2: Why this company?
 
-USDT is infrastructure I have worked around since I started in Web3. The chance to work on the wallet layer (not on top of it) is rare and matches my current Nespay work directly.
+USDT is the infrastructure layer I've worked against since my first Web3 role. Building on top of it taught me its limits; I want to work inside it. The wallet team at Tether is one of the few places where the work is foundational — not a product built on someone else's primitives.
 
 ## Q3: Relevant experience
 
-Lead architecture, AWS, and backend on Nespay's B2B crypto-to-fiat platform — wallet transactions, invoice management, KYC. 5 years prior at ION on a complex work-management platform. 3rd place EDU Chain Hackathon DeFi Track (May 2025).
+At Appreal (Nespay) I led backend architecture and AWS infrastructure for a B2B crypto-to-fiat platform: multi-chain wallet transactions, invoice lifecycle management, KYC flows, RabbitMQ queues, Redis caching — NestJS + TypeScript + Prisma on PostgreSQL. Previously 5 years at ION on a large-scale work-management platform. 3rd place, EDU Chain Hackathon DeFi Track (2025).
 
 ## Q4: Why a good fit?
 
-I sit at the intersection of Node.js backend craft and Web3 wallet integration — the two stacks the JD names. Both shipped in production within the last 12 months.
+The JD's core ask — Node.js/TypeScript backend plus deep wallet integration — describes my current production stack exactly. At Appreal I shipped both sides: NestJS microservices handling payment state machines, and Privy + Nitro Enclave integrations for multi-chain key management. Both live in the last 12 months.
 
 ## Q5: How did you hear?
 
-Through my own job-search workflow. Tether ranked highest against my criteria.
+Through my own research process. I track companies building crypto infrastructure directly — Tether came up as the highest-fit role against my evaluation criteria.
 
