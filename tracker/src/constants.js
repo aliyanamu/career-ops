@@ -25,6 +25,41 @@ export const SCHEMA = {
   },
 }
 
+// Column header display names. Edit any value here to rename the column across the app.
+// Fields not listed fall back to auto-formatting (camelCase → "Camel Case").
+export const HEADER_NAMES = {
+  // Jobs
+  num:              '#',
+  dateAdded:        'Date Added',
+  url:              'Job URL',
+  elig:             'Work Eligibility',
+  why:              'Why Interested',
+  fitScore:         'Fit Score',
+  decision:         'Decision',
+  // Preparations
+  date:             'Date',
+  jobUrl:           'Job URL',
+  cvPath:           'CV Path',
+  qa:               'Q&A',
+  videoRequired:    'Video Required?',
+  videoNotes:       'Video Notes',
+  videoStatus:      'Video Status',
+  aiDisclaimer:     'AI Disclaimer?',
+  submissionStatus: 'Submission Status',
+  // Applications
+  dateApplied:      'Date Applied',
+  lastUpdate:       'Last Update',
+  cvUsed:           'CV Used',
+  coverLetter:      'Cover Letter',
+  appLink:          'Application Link',
+  salary:           'Salary / Range',
+  nextAction:       'Next Action',
+  followUpDate:     'Follow-up Date',
+  // Companies
+  careersUrl:       'Careers URL',
+  enabled:          'Enabled',
+}
+
 // singleSelect fields use { value, label } — value is stored in xlsx, label is displayed.
 // On load, old stored labels (e.g. "4. Saved") are normalized to the canonical value ("saved").
 export const DROPDOWN_OPTIONS = {

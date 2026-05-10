@@ -3,7 +3,7 @@ import { AgGridReact } from 'ag-grid-react'
 import { themeQuartz } from 'ag-grid-community'
 import { Box, Typography, Switch, FormControlLabel } from '@mui/material'
 import { useWorkbookContext } from './WorkbookContext'
-import { SCHEMA, DROPDOWN_OPTIONS, REPO_OWNER, REPO_NAME, BRANCH } from './constants'
+import { SCHEMA, DROPDOWN_OPTIONS, HEADER_NAMES, REPO_OWNER, REPO_NAME, BRANCH } from './constants'
 import { CvSummaryView } from './CvSummaryView'
 import { DashboardView } from './DashboardView'
 
@@ -24,8 +24,6 @@ const URL_FIELDS         = new Set(['url', 'jobUrl', 'appLink'])
 const GITHUB_PATH_FIELDS = new Set(['qa', 'cvPath', 'cvUsed', 'coverLetter'])
 const BOOLEAN_FIELDS     = new Set(['hide'])
 const NON_EDITABLE       = new Set(['num'])
-const HEADER_NAMES       = { qa: 'Q&A' }
-
 const colStateKey = (sheetName) => `career-ops-col-state-${sheetName}`
 
 const toHideBool = (v) => v === true || v === 'Hidden' || v === 'Yes' || v === 'yes'
