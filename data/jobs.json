@@ -255,30 +255,6 @@
       "application": null
     },
     {
-      "num": 10,
-      "dateAdded": "2026-05-06",
-      "url": "https://jobs.ashbyhq.com/AlephAlpha/1963147c-dc27-416e-b432-065295733bef",
-      "source": "career-ops scan",
-      "elig": "",
-      "why": "Tier A",
-      "fitScore": "3",
-      "deadline": "",
-      "decision": "pending",
-      "hide": "",
-      "notes": "Loc:  | verify: unclear",
-      "role": "Senior AI Software Engineer - Model Evaluation (f/m/d)",
-      "company": {
-        "num": 54,
-        "company": "Aleph Alpha",
-        "careersUrl": "https://jobs.ashbyhq.com/AlephAlpha",
-        "enabled": "Yes",
-        "notes": "Heidelberg DE. Sovereign European LLM provider, enterprise & government focus.",
-        "status": ""
-      },
-      "preparation": null,
-      "application": null
-    },
-    {
       "num": 11,
       "dateAdded": "2026-05-06",
       "url": "https://boomi.com/boomi-jobs/?gh_jid=5776784004",
