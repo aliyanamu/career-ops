@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useCallback } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import { Box, Typography, Switch, FormControlLabel } from '@mui/material'
 import { useWorkbookContext } from './WorkbookContext'
@@ -131,9 +131,8 @@ function GenericSheetView({ sheet }) {
       <DataGrid
         rows={rows} columns={headers}
         disableRowSelectionOnClick density="compact"
-        // No pagination — show all rows, DataGrid virtualizes them
-        hideFooterPagination
-        initialState={{ pagination: { paginationModel: { pageSize: 10000 } } }}
+        pageSizeOptions={[25, 50, 100]}
+        initialState={{ pagination: { paginationModel: { pageSize: 50 } } }}
         sx={{ '& .MuiDataGrid-cell': { whiteSpace: 'normal', wordBreak: 'break-word', py: 0.5 } }}
       />
     </Box>
@@ -143,6 +142,12 @@ function GenericSheetView({ sheet }) {
 export function SheetDataGrid({ sheetName }) {
   const { workbook, markDirty, dirtyCount } = useWorkbookContext()
   const [showHidden, setShowHidden] = useState(false)
+  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 100 })
+
+  // Reset to page 1 whenever the sort changes so the top of sorted results is visible
+  const handleSortModelChange = useCallback(() => {
+    setPaginationModel(prev => ({ ...prev, page: 0 }))
+  }, [])
 
   // Special views for non-editable sheets
   if (sheetName === 'CV Summary') return <CvSummaryView />
@@ -304,11 +309,11 @@ export function SheetDataGrid({ sheetName }) {
           getRowClassName={getRowClassName}
           getRowHeight={() => 'auto'}
           disableRowSelectionOnClick
-          // No pagination — all rows visible, DataGrid handles virtualization
-          hideFooterPagination
-          hideFooterSelectedRowCount
+          paginationModel={paginationModel}
+          onPaginationModelChange={setPaginationModel}
+          onSortModelChange={handleSortModelChange}
+          pageSizeOptions={[25, 50, 100]}
           slots={{ footer: RowCountFooter }}
-          initialState={{ pagination: { paginationModel: { pageSize: 10000 } } }}
           sx={{
             height: '100%',
             '& .MuiDataGrid-cell': {
