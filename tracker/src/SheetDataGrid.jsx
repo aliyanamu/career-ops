@@ -316,8 +316,6 @@ export function SheetDataGrid({ sheetName }) {
           disableRowSelectionOnClick
           hideFooterPagination
           hideFooterSelectedRowCount
-          pageSizeOptions={[1000]}
-          initialState={{ pagination: { paginationModel: { pageSize: 1000 } } }}
           slots={{ footer: RowCountFooter }}
           sx={{
             height: '100%',
