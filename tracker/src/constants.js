@@ -36,13 +36,40 @@ export const DROPDOWN_OPTIONS = {
     ],
   },
   Preparations: {
-    cvStatus: ['Draft', 'Ready', 'Submitted'],
-    videoRequired: ['Yes', 'No'],
-    videoStatus: ['Pending', 'Recorded', 'Uploaded'],
-    aiDisclaimer: ['Yes', 'No'],
-    submissionStatus: ['Pending', 'Submitted', 'Rejected'],
+    cvStatus: [
+      { value: 'draft',     label: 'Draft' },
+      { value: 'ready',     label: 'Ready' },
+      { value: 'submitted', label: 'Submitted' },
+    ],
+    videoRequired: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no',  label: 'No' },
+    ],
+    videoStatus: [
+      { value: 'pending',  label: 'Pending' },
+      { value: 'recorded', label: 'Recorded' },
+      { value: 'uploaded', label: 'Uploaded' },
+    ],
+    aiDisclaimer: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no',  label: 'No' },
+    ],
+    submissionStatus: [
+      { value: 'pending',   label: 'Pending' },
+      { value: 'submitted', label: 'Submitted' },
+      { value: 'rejected',  label: 'Rejected' },
+    ],
   },
   Applications: {
-    status: ['Evaluated', 'Applied', 'Responded', 'Interview', 'Offer', 'Rejected', 'Discarded', 'SKIP'],
+    status: [
+      { value: 'evaluated', label: 'Evaluated' },
+      { value: 'applied',   label: 'Applied' },
+      { value: 'responded', label: 'Responded' },
+      { value: 'interview', label: 'Interview' },
+      { value: 'offer',     label: 'Offer' },
+      { value: 'rejected',  label: 'Rejected' },
+      { value: 'discarded', label: 'Discarded' },
+      { value: 'skip',      label: 'SKIP' },
+    ],
   },
 }
