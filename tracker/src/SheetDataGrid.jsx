@@ -218,6 +218,16 @@ export function SheetDataGrid({ sheetName }) {
         rowData[field] = cellText(row.getCell(c))
       }
 
+      // Normalize dropdown fields: map stored label ("4. Saved") or old value
+      // to the canonical value ("saved") so MUI singleSelect can match it.
+      for (const [field, options] of Object.entries(dropdownOptions)) {
+        if (!Array.isArray(options) || typeof options[0] !== 'object') continue
+        const raw = rowData[field]
+        if (!raw) continue
+        const match = options.find(o => o.value === raw || o.label === raw)
+        if (match) rowData[field] = match.value
+      }
+
       if (!showHidden && schema.hide && rowData.hide === 'Hidden') return
 
       result.push(rowData)

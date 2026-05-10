@@ -22,10 +22,18 @@ export const SCHEMA = {
   },
 }
 
-// Values must match what is actually stored in the xlsx cells
+// singleSelect fields use { value, label } — value is stored in xlsx, label is displayed.
+// On load, old stored labels (e.g. "4. Saved") are normalized to the canonical value ("saved").
 export const DROPDOWN_OPTIONS = {
   Jobs: {
-    decision: ['1. Apply', '2. Easy Apply', '3. Recommended', '4. Saved', '5. Pending', '6. Skip'],
+    decision: [
+      { value: 'apply',       label: '1. Apply' },
+      { value: 'easy_apply',  label: '2. Easy Apply' },
+      { value: 'recommended', label: '3. Recommended' },
+      { value: 'saved',       label: '4. Saved' },
+      { value: 'pending',     label: '5. Pending' },
+      { value: 'skip',        label: '6. Skip' },
+    ],
   },
   Preparations: {
     cvStatus: ['Draft', 'Ready', 'Submitted'],
