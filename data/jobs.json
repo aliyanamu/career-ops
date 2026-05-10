@@ -2967,7 +2967,7 @@
       "why": "Vue/React/JS, 7.5M+ JPY, Japan relocation",
       "fitScore": "",
       "deadline": "",
-      "decision": "recommended",
+      "decision": "easy_apply",
       "hide": "",
       "notes": "(via GitTap)",
       "role": "Senior Front-End Engineer",
@@ -2975,7 +2975,23 @@
         "company": "Shippio"
       },
       "preparation": null,
-      "application": null
+      "application": {
+        "dateApplied": "2026-05-10",
+        "location": "",
+        "source": "career-ops scan / gittap.jp",
+        "jobUrl": "https://www.gittap.jp/jobs/1720",
+        "status": "applied",
+        "lastUpdate": "2026-05-10",
+        "cvUsed": "cv-default.pdf",
+        "coverLetter": "",
+        "appLink": "",
+        "salary": "",
+        "contact": "",
+        "nextAction": "",
+        "followUpDate": "",
+        "notes": "",
+        "hide": ""
+      }
     },
     {
       "num": 123,
