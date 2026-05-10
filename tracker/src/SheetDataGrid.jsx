@@ -197,7 +197,11 @@ export function SheetDataGrid({ sheetName }) {
         editable: !NON_EDITABLE.has(field),
       }
 
-      if (isBool) { col.type = 'boolean'; return col }
+      if (isBool) {
+        col.type = 'boolean'
+        col.renderCell = (p) => p.value ? <span title="Hidden">✓</span> : null
+        return col
+      }
 
       if (isDropdown) {
         col.type = 'singleSelect'
