@@ -29,7 +29,7 @@
       "fitScore": "5",
       "deadline": "",
       "decision": "apply",
-      "hide": "",
+      "hide": true,
       "notes": "Loc: VN | verify: GLOBAL_OK (JSON-LD)",
       "role": "Backend Engineer - Wallets (100% Remote)",
       "company": {
@@ -77,7 +77,7 @@
       "fitScore": "5",
       "deadline": "",
       "decision": "apply",
-      "hide": "",
+      "hide": true,
       "notes": "Loc: AE,CZ,EG,ES,HR,IN,IT,MY,NL,VN | verify: GLOBAL_OK (JSON-LD)",
       "role": "Senior Frontend Developer (100% Remote Worldwide)",
       "company": {
@@ -2968,7 +2968,7 @@
       "fitScore": "",
       "deadline": "",
       "decision": "easy_apply",
-      "hide": "",
+      "hide": true,
       "notes": "(via GitTap)",
       "role": "Senior Front-End Engineer",
       "company": {
