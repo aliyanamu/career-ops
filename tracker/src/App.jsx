@@ -1,20 +1,19 @@
-import { useEffect, useCallback } from 'react'
+import { useEffect } from 'react'
+import { Routes, Route, NavLink, Navigate, useLocation } from 'react-router-dom'
 import { AppBar, Toolbar, Typography, Button, Box, Tabs, Tab, Chip } from '@mui/material'
 import SaveIcon   from '@mui/icons-material/Save'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { useWorkbookContext } from './WorkbookContext'
 import { SheetDataGrid } from './SheetDataGrid'
 
-const TABS = ['CV Summary', 'Dashboard', 'Jobs', 'Preparations', 'Applications', 'Companies']
-
-function sheetFromHash() {
-  const m = window.location.hash.match(/[#&]sheet=([^&]+)/)
-  return m ? decodeURIComponent(m[1]) : null
-}
-
-function setHash(sheetName) {
-  window.location.replace(`#sheet=${encodeURIComponent(sheetName)}`)
-}
+const TABS = [
+  { label: 'CV Summary',   path: '/cv-summary',   sheet: 'CV Summary'   },
+  { label: 'Dashboard',    path: '/dashboard',     sheet: 'Dashboard'    },
+  { label: 'Jobs',         path: '/jobs',          sheet: 'Jobs'         },
+  { label: 'Preparations', path: '/preparations',  sheet: 'Preparations' },
+  { label: 'Applications', path: '/applications',  sheet: 'Applications' },
+  { label: 'Companies',    path: '/companies',     sheet: 'Companies'    },
+]
 
 function StatusChip({ status, message }) {
   const colorMap = { idle: 'default', loading: 'info', saving: 'warning', saved: 'success', error: 'error' }
@@ -29,35 +28,12 @@ function StatusChip({ status, message }) {
 }
 
 export default function App() {
-  const { workbook, activeSheet, setActiveSheet, dirtyCount, status, statusMessage, loadWorkbook, saveWorkbook, logout } = useWorkbookContext()
-
-  const syncFromHash = useCallback(() => {
-    const fromHash = sheetFromHash()
-    if (fromHash && TABS.includes(fromHash)) setActiveSheet(fromHash)
-  }, [setActiveSheet])
+  const { dirtyCount, status, statusMessage, loadWorkbook, saveWorkbook, logout } = useWorkbookContext()
+  const location = useLocation()
 
   useEffect(() => { loadWorkbook() }, [loadWorkbook])
 
-  // Honour hash on load
-  useEffect(() => {
-    if (!workbook) return
-    const fromHash = sheetFromHash()
-    if (fromHash && TABS.includes(fromHash)) setActiveSheet(fromHash)
-  }, [workbook]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Keep hash in sync
-  useEffect(() => {
-    if (!activeSheet) return
-    if (sheetFromHash() !== activeSheet) setHash(activeSheet)
-  }, [activeSheet])
-
-  // Browser back/forward
-  useEffect(() => {
-    window.addEventListener('hashchange', syncFromHash)
-    return () => window.removeEventListener('hashchange', syncFromHash)
-  }, [syncFromHash])
-
-  const activeTabIndex = Math.max(0, TABS.indexOf(activeSheet ?? 'Jobs'))
+  const activeTabIndex = TABS.findIndex(t => location.pathname === t.path)
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -83,14 +59,21 @@ export default function App() {
       </AppBar>
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper' }}>
-        <Tabs value={activeTabIndex} onChange={(_, v) => setActiveSheet(TABS[v])}
-          variant="scrollable" scrollButtons="auto">
-          {TABS.map(name => <Tab key={name} label={name} />)}
+        <Tabs value={activeTabIndex === -1 ? false : activeTabIndex} variant="scrollable" scrollButtons="auto">
+          {TABS.map(tab => (
+            <Tab key={tab.path} label={tab.label} component={NavLink} to={tab.path} />
+          ))}
         </Tabs>
       </Box>
 
       <Box sx={{ flex: 1, overflow: 'hidden', bgcolor: 'background.default' }}>
-        {activeSheet && <SheetDataGrid sheetName={activeSheet} />}
+        <Routes>
+          <Route index element={<Navigate to="/jobs" replace />} />
+          {TABS.map(tab => (
+            <Route key={tab.path} path={tab.path} element={<SheetDataGrid sheetName={tab.sheet} />} />
+          ))}
+          <Route path="*" element={<Navigate to="/jobs" replace />} />
+        </Routes>
       </Box>
     </Box>
   )
