@@ -149,10 +149,6 @@ export function SheetDataGrid({ sheetName }) {
     setPaginationModel(prev => ({ ...prev, page: 0 }))
   }, [])
 
-  // Special views for non-editable sheets
-  if (sheetName === 'CV Summary') return <CvSummaryView />
-  if (sheetName === 'Dashboard')  return <DashboardView />
-
   const schema = SCHEMA[sheetName]
   const dropdownOptions = DROPDOWN_OPTIONS[sheetName] || {}
 
@@ -261,6 +257,10 @@ export function SheetDataGrid({ sheetName }) {
     if (params.row.status)   classes.push(rowStatusClass(params.row.status))
     return classes.filter(Boolean).join(' ')
   }
+
+  // Special views — placed after all hooks to satisfy Rules of Hooks
+  if (sheetName === 'CV Summary') return <CvSummaryView />
+  if (sheetName === 'Dashboard')  return <DashboardView />
 
   if (!schema) {
     if (!workbook) return <Box sx={{ p: 2 }}><Typography color="text.secondary">Workbook not loaded.</Typography></Box>
