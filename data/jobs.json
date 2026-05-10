@@ -2900,7 +2900,7 @@
         "cvPath": "cv-default.pdf",
         "cvStatus": "Default CV — no tailoring required",
         "qa": "prep/zapier-software-engineer-release-engineering-2026-05-07.md",
-        "videoRequired": "",
+        "videoRequired": "no",
         "videoNotes": "",
         "videoStatus": "",
         "aiDisclaimer": "",
