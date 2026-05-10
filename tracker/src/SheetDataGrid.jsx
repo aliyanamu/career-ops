@@ -142,12 +142,6 @@ function GenericSheetView({ sheet }) {
 export function SheetDataGrid({ sheetName }) {
   const { workbook, markDirty, dirtyCount } = useWorkbookContext()
   const [showHidden, setShowHidden] = useState(false)
-  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 100 })
-
-  // Reset to page 1 whenever the sort changes so the top of sorted results is visible
-  const handleSortModelChange = useCallback(() => {
-    setPaginationModel(prev => ({ ...prev, page: 0 }))
-  }, [])
 
   const schema = SCHEMA[sheetName]
   const dropdownOptions = DROPDOWN_OPTIONS[sheetName] || {}
@@ -233,6 +227,11 @@ export function SheetDataGrid({ sheetName }) {
         if (match) rowData[field] = match.value
       }
 
+      // Skip rows where every field (besides num) is empty
+      const NON_DATA_FIELDS = new Set(['num', 'id'])
+      const hasData = Object.entries(rowData).some(([k, v]) => !NON_DATA_FIELDS.has(k) && v !== '')
+      if (!hasData) return
+
       if (!showHidden && schema.hide && rowData.hide === 'Hidden') return
       result.push(rowData)
     })
@@ -309,10 +308,9 @@ export function SheetDataGrid({ sheetName }) {
           getRowClassName={getRowClassName}
           getRowHeight={() => 'auto'}
           disableRowSelectionOnClick
-          paginationModel={paginationModel}
-          onPaginationModelChange={setPaginationModel}
-          onSortModelChange={handleSortModelChange}
-          pageSizeOptions={[25, 50, 100]}
+          hideFooterPagination
+          pageSizeOptions={[rows.length || 9999]}
+          paginationModel={{ page: 0, pageSize: rows.length || 9999 }}
           slots={{ footer: RowCountFooter }}
           sx={{
             height: '100%',

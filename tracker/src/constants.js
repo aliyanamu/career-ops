@@ -27,12 +27,12 @@ export const SCHEMA = {
 export const DROPDOWN_OPTIONS = {
   Jobs: {
     decision: [
-      { value: 'apply',       label: '1. Apply' },
-      { value: 'easy_apply',  label: '2. Easy Apply' },
-      { value: 'recommended', label: '3. Recommended' },
-      { value: 'saved',       label: '4. Saved' },
-      { value: 'pending',     label: '5. Pending' },
-      { value: 'skip',        label: '6. Skip' },
+      { value: 'apply',       label: 'Apply' },
+      { value: 'easy_apply',  label: 'Easy Apply' },
+      { value: 'recommended', label: 'Recommended' },
+      { value: 'saved',       label: 'Saved' },
+      { value: 'pending',     label: 'Pending' },
+      { value: 'skip',        label: 'Skip' },
     ],
   },
   Preparations: {
@@ -69,7 +69,6 @@ export const DROPDOWN_OPTIONS = {
       { value: 'offer',     label: 'Offer' },
       { value: 'rejected',  label: 'Rejected' },
       { value: 'discarded', label: 'Discarded' },
-      { value: 'skip',      label: 'SKIP' },
     ],
   },
 }
