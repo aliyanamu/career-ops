@@ -239,7 +239,9 @@ export function SheetDataGrid({ sheetName }) {
     if (!showHidden && schema?.hide) {
       result = result.filter(r => !r.hide)
     }
-    return result
+
+    // Re-number visible rows sequentially so num has no gaps
+    return result.map((r, i) => ({ ...r, num: i + 1 }))
   }, [jobs, companies, sheetName, schema, showHidden, dirtyCount])
 
   const hiddenCount = useMemo(() => {
