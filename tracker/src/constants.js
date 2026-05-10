@@ -22,10 +22,10 @@ export const SCHEMA = {
   },
 }
 
-// Dropdown options for known columns
+// Values must match what is actually stored in the xlsx cells
 export const DROPDOWN_OPTIONS = {
   Jobs: {
-    decision: ['Pending', 'Apply', 'Skip', 'Saved', 'Recommended'],
+    decision: ['1. Apply', '2. Easy Apply', '3. Recommended', '4. Saved', '5. Pending', '6. Skip'],
   },
   Preparations: {
     cvStatus: ['Draft', 'Ready', 'Submitted'],
