@@ -207,30 +207,6 @@
       "application": null
     },
     {
-      "num": 8,
-      "dateAdded": "2026-05-06",
-      "url": "https://jobs.ashbyhq.com/n8n/d195a389-6af5-4b95-82e5-2258953c7297",
-      "source": "career-ops scan",
-      "elig": "",
-      "why": "REMOTE-unverified • Tier A",
-      "fitScore": "4",
-      "deadline": "",
-      "decision": "pending",
-      "hide": "",
-      "notes": "Loc: Remote - Europe | TS/Vue/NodeJS | verify: unclear",
-      "role": "Sr AI Engineer",
-      "company": {
-        "num": 32,
-        "company": "n8n",
-        "careersUrl": "https://jobs.ashbyhq.com/n8n",
-        "enabled": "Yes",
-        "notes": "Berlin + remote EU/US. Workflow automation.",
-        "status": ""
-      },
-      "preparation": null,
-      "application": null
-    },
-    {
       "num": 9,
       "dateAdded": "2026-05-06",
       "url": "https://jobs.ashbyhq.com/n8n/640d55b3-3603-42f4-a05b-90962768fd16",
@@ -297,30 +273,6 @@
         "careersUrl": "https://job-boards.greenhouse.io/boomilp",
         "enabled": "Yes",
         "notes": "Integration and automation platform.",
-        "status": ""
-      },
-      "preparation": null,
-      "application": null
-    },
-    {
-      "num": 13,
-      "dateAdded": "2026-05-06",
-      "url": "https://job-boards.greenhouse.io/celonis/jobs/7681601003?gh_jid=7681601003",
-      "source": "career-ops scan",
-      "elig": "",
-      "why": "Tier A",
-      "fitScore": "3",
-      "deadline": "",
-      "decision": "pending",
-      "hide": "",
-      "notes": "Loc:  | verify: unclear",
-      "role": "Salesforce Software Engineer",
-      "company": {
-        "num": 58,
-        "company": "Celonis",
-        "careersUrl": "https://job-boards.greenhouse.io/celonis",
-        "enabled": "Yes",
-        "notes": "Munich / NYC. Process intelligence, Applied AI Engineer roles, Field CTOs.",
         "status": ""
       },
       "preparation": null,
