@@ -102,6 +102,14 @@ function jobToRow(job, idx) {
   }
 }
 
+// Normalize legacy submissionStatus values to the two-option canonical set
+const normalizeSubmissionStatus = (v) => {
+  if (!v) return 'not_submitted'
+  const l = String(v).toLowerCase()
+  if (l === 'submitted') return 'submitted'
+  return 'not_submitted'
+}
+
 function prepToRow(job, jobIdx) {
   const p = job.preparation
   return {
@@ -118,7 +126,7 @@ function prepToRow(job, jobIdx) {
     videoNotes:       p.videoNotes ?? '',
     videoStatus:      p.videoStatus ?? '',
     aiDisclaimer:     p.aiDisclaimer ?? '',
-    submissionStatus: p.submissionStatus ?? '',
+    submissionStatus: normalizeSubmissionStatus(p.submissionStatus),
     notes:            p.notes ?? '',
     hide:             toHideBool(p.hide),
   }

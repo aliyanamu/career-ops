@@ -2961,10 +2961,10 @@
     {
       "num": 122,
       "dateAdded": "2026-05-07",
-      "url": "https://www.gittap.jp/jobs/1720",
+      "url": "https://cs.gittap.jp/jobs/1719",
       "source": "career-ops scan / gittap.jp",
       "elig": "Visa sponsorship needed",
-      "why": "Vue/React/JS, 7.5M+ JPY, Japan relocation",
+      "why": "React/Vue/JS, front-end lead, digital logistics, Japan relocation",
       "fitScore": "",
       "deadline": "",
       "decision": "easy_apply",
@@ -2977,9 +2977,9 @@
       "preparation": null,
       "application": {
         "dateApplied": "2026-05-10",
-        "location": "Remote Work From Japan",
+        "location": "Remote (Japan, 1d/wk office)",
         "source": "career-ops scan / gittap.jp",
-        "jobUrl": "https://www.gittap.jp/jobs/1720",
+        "jobUrl": "https://cs.gittap.jp/jobs/1719",
         "status": "applied",
         "lastUpdate": "2026-05-10",
         "cvUsed": "cv-default.pdf",
@@ -3116,6 +3116,25 @@
         "notes": "cv-default used. 45 wpm typing speed noted. Screenshot uploaded on application page. Promoted from Preparations",
         "hide": ""
       }
+    },
+    {
+      "num": 127,
+      "dateAdded": "2026-05-10",
+      "url": "https://cs.gittap.jp/jobs/4877",
+      "source": "career-ops / gittap.jp",
+      "elig": "⚠️ Requires Japan residence (no visa sponsorship mentioned)",
+      "why": "SaaS product (shift mgmt); XP/TDD culture; TypeScript/JS; AWS Lambda; pair programming; English-first team of 7",
+      "fitScore": null,
+      "deadline": "",
+      "decision": "pending",
+      "hide": "",
+      "notes": "Angular frontend (not React); AWS Lambda (not EC2); Japan residency is a must-have gate — visa unknown",
+      "role": "Software Engineer — Fullstack",
+      "company": {
+        "company": "Sharefull"
+      },
+      "preparation": null,
+      "application": null
     }
   ]
 }

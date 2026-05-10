@@ -58,9 +58,8 @@ export const DROPDOWN_OPTIONS = {
       { value: 'no',  label: 'No' },
     ],
     submissionStatus: [
-      { value: 'pending',   label: 'Pending' },
-      { value: 'submitted', label: 'Submitted' },
-      { value: 'rejected',  label: 'Rejected' },
+      { value: 'not_submitted', label: 'Not Submitted' },
+      { value: 'submitted',     label: 'Submitted' },
     ],
   },
   Applications: {

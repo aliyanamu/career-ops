@@ -119,13 +119,22 @@ export function useTracker() {
       if (!pat) { setStatus('error'); setStatusMessage('No PAT provided.'); return }
     }
 
+    // Skip rows are permanently deleted on save
+    const skipRows = jobs.filter(j => j.decision === 'skip')
+    if (skipRows.length > 0) {
+      const ok = window.confirm(`${skipRows.length} row(s) marked Skip will be permanently deleted. Proceed?`)
+      if (!ok) { setStatus('idle'); setStatusMessage('Save cancelled.'); return }
+    }
+    const jobsToSave = jobs.filter(j => j.decision !== 'skip')
+
     setStatus('saving'); setStatusMessage('Saving…')
     try {
       const [newJobsSha, newCompaniesSha] = await Promise.all([
-        pushJsonFile(JOBS_PATH,      pat, shaRef.current.jobs,      { jobs },      'chore: update jobs.json via tracker'),
-        pushJsonFile(COMPANIES_PATH, pat, shaRef.current.companies, { companies }, 'chore: update companies.json via tracker'),
+        pushJsonFile(JOBS_PATH,      pat, shaRef.current.jobs,      { jobs: jobsToSave }, 'chore: update jobs.json via tracker'),
+        pushJsonFile(COMPANIES_PATH, pat, shaRef.current.companies, { companies },         'chore: update companies.json via tracker'),
       ])
       shaRef.current = { jobs: newJobsSha, companies: newCompaniesSha }
+      if (skipRows.length > 0) setJobs(jobsToSave)
       setDirtyCount(0)
       setStatus('saved'); setStatusMessage('Saved successfully.')
     } catch (err) {
@@ -160,8 +169,56 @@ export function useTracker() {
           } else {
             next[idx] = { ...next[idx], [field]: value }
           }
+
+          // Decision side-effects: auto-create sub-records on first promotion
+          if (field === 'decision') {
+            const today = new Date().toISOString().slice(0, 10)
+            const job = next[idx]
+            if (value === 'apply' && !job.preparation) {
+              next[idx] = {
+                ...next[idx],
+                preparation: {
+                  date: today, jobUrl: job.url ?? '',
+                  cvPath: '', cvStatus: 'draft',
+                  qa: '', videoRequired: 'no', videoNotes: '',
+                  videoStatus: 'pending', aiDisclaimer: 'no',
+                  submissionStatus: 'pending', notes: '', hide: '',
+                },
+              }
+            } else if (value === 'easy_apply' && !job.application) {
+              next[idx] = {
+                ...next[idx],
+                application: {
+                  dateApplied: today, location: '',
+                  source: job.source ?? '', jobUrl: job.url ?? '',
+                  status: 'applied', lastUpdate: today,
+                  cvUsed: 'cv-default.pdf',
+                  coverLetter: '', appLink: '', salary: '',
+                  contact: '', nextAction: '', followUpDate: '',
+                  notes: '', hide: '',
+                },
+              }
+            }
+          }
         } else if (entity === 'preparations') {
           next[idx] = { ...next[idx], preparation: { ...(next[idx].preparation ?? {}), [field]: value } }
+          // Submitting a preparation auto-creates an application record if one doesn't exist
+          if (field === 'submissionStatus' && value === 'submitted' && !next[idx].application) {
+            const today = new Date().toISOString().slice(0, 10)
+            const job = next[idx]
+            next[idx] = {
+              ...next[idx],
+              application: {
+                dateApplied: today, location: '',
+                source: job.source ?? '', jobUrl: job.url ?? '',
+                status: 'applied', lastUpdate: today,
+                cvUsed: job.preparation?.cvPath || 'cv-default.pdf',
+                coverLetter: '', appLink: '', salary: '',
+                contact: '', nextAction: '', followUpDate: '',
+                notes: 'Promoted from Preparations', hide: '',
+              },
+            }
+          }
         } else if (entity === 'applications') {
           next[idx] = { ...next[idx], application: { ...(next[idx].application ?? {}), [field]: value } }
         }
