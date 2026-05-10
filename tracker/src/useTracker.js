@@ -29,18 +29,37 @@ async function fetchJsonFile(path, pat) {
   return { content, sha: meta.sha }
 }
 
+async function fetchFileSha(path, pat) {
+  const res = await fetch(ghApi(path), {
+    headers: { Authorization: `token ${pat}`, Accept: 'application/vnd.github.v3+json' },
+  })
+  if (!res.ok) throw new Error(`GitHub ${res.status}`)
+  const data = await res.json()
+  return data.sha
+}
+
 async function pushJsonFile(path, pat, sha, content, message) {
   const json   = JSON.stringify(content, null, 2)
   const base64 = btoa(unescape(encodeURIComponent(json)))
-  const res = await fetch(ghApi(path), {
+
+  const doPut = (currentSha) => fetch(ghApi(path), {
     method: 'PUT',
     headers: {
       Authorization: `token ${pat}`,
       Accept: 'application/vnd.github.v3+json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ message, content: base64, sha, branch: BRANCH }),
+    body: JSON.stringify({ message, content: base64, sha: currentSha, branch: BRANCH }),
   })
+
+  let res = await doPut(sha)
+
+  // SHA mismatch (file was updated externally) — fetch fresh SHA and retry once
+  if (res.status === 409) {
+    const freshSha = await fetchFileSha(path, pat)
+    res = await doPut(freshSha)
+  }
+
   if (!res.ok) {
     const err = await res.json().catch(() => ({}))
     throw new Error(`GitHub PUT ${res.status}: ${err.message || res.statusText}`)
