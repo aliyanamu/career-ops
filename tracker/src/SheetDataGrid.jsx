@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback, useRef, useEffect } from 'react'
+import { useMemo, useState, useCallback, useRef, useEffect, forwardRef, useImperativeHandle } from 'react'
 import { AgGridReact } from 'ag-grid-react'
 import { themeQuartz } from 'ag-grid-community'
 import { Box, Typography, Switch, FormControlLabel } from '@mui/material'
@@ -62,6 +62,22 @@ function GithubPathCellRenderer({ value }) {
 function BoolCellRenderer({ value }) {
   return value ? <span title="Hidden">✓</span> : null
 }
+
+// Dropdown editor: shows labels in the select, stores canonical values
+const DropdownCellEditor = forwardRef(({ value, stopEditing, options }, ref) => {
+  const current = useRef(value)
+  useImperativeHandle(ref, () => ({ getValue: () => current.current }))
+  return (
+    <select
+      defaultValue={value}
+      onChange={e => { current.current = e.target.value; stopEditing() }}
+      autoFocus
+      style={{ width: '100%', height: '100%', padding: '0 4px', fontSize: 13, border: 'none', outline: 'none', background: 'white' }}
+    >
+      {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+    </select>
+  )
+})
 
 // ---------------------------------------------------------------------------
 // Column widths
@@ -211,9 +227,11 @@ export function SheetDataGrid({ sheetName }) {
       }
 
       if (isDropdown) {
-        const order = Object.fromEntries(options.map((o, i) => [o.value, i]))
-        colDef.cellEditor       = 'agSelectCellEditor'
-        colDef.cellEditorParams = { values: options.map(o => o.value) }
+        const order        = Object.fromEntries(options.map((o, i) => [o.value, i]))
+        const valueToLabel = Object.fromEntries(options.map(o => [o.value, o.label]))
+        colDef.cellEditor       = DropdownCellEditor
+        colDef.cellEditorParams = { options }
+        colDef.cellRenderer     = ({ value }) => valueToLabel[value] ?? value ?? ''
         colDef.comparator       = (v1, v2) => (order[v1] ?? 999) - (order[v2] ?? 999)
       }
 
