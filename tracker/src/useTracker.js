@@ -23,7 +23,9 @@ async function fetchJsonFile(path, pat) {
     throw new Error(`GitHub ${res.status}: ${res.statusText}`)
   }
   const meta = await res.json()
-  const content = JSON.parse(atob(meta.content.replace(/\n/g, '')))
+  // atob produces a Latin-1 byte string; decode as UTF-8 to preserve Unicode
+  const bytes  = Uint8Array.from(atob(meta.content.replace(/\n/g, '')), c => c.charCodeAt(0))
+  const content = JSON.parse(new TextDecoder('utf-8').decode(bytes))
   return { content, sha: meta.sha }
 }
 
