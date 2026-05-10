@@ -179,7 +179,7 @@ export function useTracker() {
                 ...next[idx],
                 preparation: {
                   date: today, jobUrl: job.url ?? '',
-                  cvPath: '', cvStatus: 'draft',
+                  cvPath: '',
                   qa: '', videoRequired: 'no', videoNotes: '',
                   videoStatus: '', aiDisclaimer: 'no',
                   submissionStatus: 'pending', notes: '', hide: '',

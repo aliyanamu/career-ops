@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback, useRef } from 'react'
+import { useMemo, useState, useCallback, useRef, useEffect } from 'react'
 import { AgGridReact } from 'ag-grid-react'
 import { themeQuartz } from 'ag-grid-community'
 import { Box, Typography, Switch, FormControlLabel } from '@mui/material'
@@ -24,6 +24,9 @@ const URL_FIELDS         = new Set(['url', 'jobUrl', 'appLink'])
 const GITHUB_PATH_FIELDS = new Set(['qa', 'cvPath', 'cvUsed', 'coverLetter'])
 const BOOLEAN_FIELDS     = new Set(['hide'])
 const NON_EDITABLE       = new Set(['num'])
+const HEADER_NAMES       = { qa: 'Q&A' }
+
+const colStateKey = (sheetName) => `career-ops-col-state-${sheetName}`
 
 const toHideBool = (v) => v === true || v === 'Hidden' || v === 'Yes' || v === 'yes'
 
@@ -120,7 +123,6 @@ function prepToRow(job, jobIdx) {
     role:             job.role ?? '',
     jobUrl:           p.jobUrl ?? '',
     cvPath:           p.cvPath ?? '',
-    cvStatus:         p.cvStatus ?? '',
     qa:               p.qa ?? '',
     videoRequired:    p.videoRequired ?? '',
     videoNotes:       p.videoNotes ?? '',
@@ -192,7 +194,7 @@ export function SheetDataGrid({ sheetName }) {
 
       const colDef = {
         field,
-        headerName: field.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()).trim(),
+        headerName: HEADER_NAMES[field] ?? field.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()).trim(),
         editable:   !NON_EDITABLE.has(field),
         minWidth:   isBool ? 70 : (MIN_WIDTHS[field] ?? 120),
         flex:       WIDE_FIELDS.has(field) ? 2 : 1,
@@ -253,6 +255,23 @@ export function SheetDataGrid({ sheetName }) {
     return all.filter(r => r.hide).length
   }, [jobs, sheetName, schema, dirtyCount])
 
+  const onGridReady = useCallback((params) => {
+    const saved = localStorage.getItem(colStateKey(sheetName))
+    if (saved) {
+      try { params.api.applyColumnState({ state: JSON.parse(saved), applyOrder: true }) }
+      catch { /* stale/invalid state — ignore */ }
+    }
+  }, [sheetName])
+
+  const saveColState = useCallback((params) => {
+    const state = params.api.getColumnState()
+    localStorage.setItem(colStateKey(sheetName), JSON.stringify(state))
+  }, [sheetName])
+
+  const onColumnResized = useCallback((params) => {
+    if (params.finished) saveColState(params)
+  }, [saveColState])
+
   const onCellValueChanged = useCallback((params) => {
     const { data, colDef, newValue, oldValue } = params
     const field  = colDef.field
@@ -306,7 +325,10 @@ export function SheetDataGrid({ sheetName }) {
           rowData={rows}
           columnDefs={columnDefs}
           getRowId={(params) => String(params.data.id)}
+          onGridReady={onGridReady}
           onCellValueChanged={onCellValueChanged}
+          onColumnResized={onColumnResized}
+          onColumnMoved={saveColState}
           rowClassRules={rowClassRules}
           suppressPaginationPanel
           defaultColDef={{ resizable: true, sortable: true }}

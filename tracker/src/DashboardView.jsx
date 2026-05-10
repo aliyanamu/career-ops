@@ -43,19 +43,15 @@ export function DashboardView() {
   const stats = useMemo(() => {
     if (!jobs) return null
 
-    const isHidden = (v) => v === true || v === 'Hidden' || v === 'Yes' || v === 'yes'
-    const visible = jobs.filter(j => !isHidden(j.hide))
-
-    // Applications by status
+    // Dashboard counts all jobs regardless of hide flag — hide is a Jobs-tab display filter only
     const statusCounts = {}
-    for (const job of visible) {
+    for (const job of jobs) {
       const s = job.application?.status
       if (s) statusCounts[s] = (statusCounts[s] || 0) + 1
     }
 
-    // Jobs by decision
     const decisionCounts = {}
-    for (const job of visible) {
+    for (const job of jobs) {
       const d = job.decision
       if (d) decisionCounts[d] = (decisionCounts[d] || 0) + 1
     }
@@ -63,9 +59,9 @@ export function DashboardView() {
     return {
       statusCounts,
       decisionCounts,
-      totalJobs:  visible.length,
-      totalPreps: visible.filter(j => j.preparation).length,
-      totalApps:  visible.filter(j => j.application).length,
+      totalJobs:  jobs.length,
+      totalPreps: jobs.filter(j => j.preparation).length,
+      totalApps:  jobs.filter(j => j.application).length,
     }
   }, [jobs])
 

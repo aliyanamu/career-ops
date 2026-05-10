@@ -10,9 +10,9 @@ export const SCHEMA = {
     elig: 7, why: 8, fitScore: 9, deadline: 10, decision: 11, hide: 12, notes: 13,
   },
   Preparations: {
-    num: 1, date: 2, company: 3, role: 4, jobUrl: 5, cvPath: 6, cvStatus: 7,
-    qa: 8, videoRequired: 9, videoNotes: 10, videoStatus: 11, aiDisclaimer: 12,
-    submissionStatus: 13, notes: 14, hide: 15,
+    num: 1, date: 2, company: 3, role: 4, jobUrl: 5, cvPath: 6,
+    qa: 7, videoRequired: 8, videoNotes: 9, videoStatus: 10, aiDisclaimer: 11,
+    submissionStatus: 12, notes: 13, hide: 14,
   },
   Applications: {
     num: 1, dateApplied: 2, company: 3, role: 4, location: 5, source: 6,
@@ -39,11 +39,6 @@ export const DROPDOWN_OPTIONS = {
     ],
   },
   Preparations: {
-    cvStatus: [
-      { value: 'draft',     label: 'Draft' },
-      { value: 'ready',     label: 'Ready' },
-      { value: 'submitted', label: 'Submitted' },
-    ],
     videoRequired: [
       { value: 'yes', label: 'Yes' },
       { value: 'no',  label: 'No' },
