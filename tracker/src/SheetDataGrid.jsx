@@ -1,12 +1,22 @@
 import { useMemo, useState, useCallback, useRef } from 'react'
 import { AgGridReact } from 'ag-grid-react'
-import 'ag-grid-community/styles/ag-grid.css'
-import 'ag-grid-community/styles/ag-theme-quartz.css'
+import { themeQuartz } from 'ag-grid-community'
 import { Box, Typography, Switch, FormControlLabel } from '@mui/material'
 import { useWorkbookContext } from './WorkbookContext'
 import { SCHEMA, DROPDOWN_OPTIONS, REPO_OWNER, REPO_NAME, BRANCH } from './constants'
 import { CvSummaryView } from './CvSummaryView'
 import { DashboardView } from './DashboardView'
+
+const gridTheme = themeQuartz.withParams({
+  fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
+  fontSize: 13,
+  accentColor: '#1976d2',
+  selectedRowBackgroundColor: 'rgba(25,118,210,0.08)',
+  rowHoverColor: 'rgba(0,0,0,0.04)',
+  headerBackgroundColor: '#f5f5f5',
+  borderColor: '#e0e0e0',
+  cellHorizontalBorderColor: 'transparent',
+})
 
 const GITHUB_BLOB = `https://github.com/${REPO_OWNER}/${REPO_NAME}/blob/${BRANCH}/`
 
@@ -281,9 +291,10 @@ export function SheetDataGrid({ sheetName }) {
         </Box>
       )}
 
-      <Box className="ag-theme-quartz" sx={{ flex: 1, overflow: 'hidden', '--ag-font-family': '"Roboto","Helvetica","Arial",sans-serif', '--ag-font-size': '13px', '--ag-primary-color': '#1976d2', '--ag-selected-row-background-color': 'rgba(25,118,210,0.08)', '--ag-row-hover-color': 'rgba(0,0,0,0.04)', '--ag-header-background-color': '#f5f5f5', '--ag-border-color': '#e0e0e0', '--ag-cell-horizontal-border': 'none' }}>
+      <Box sx={{ flex: 1, overflow: 'hidden' }}>
         <AgGridReact
           ref={gridRef}
+          theme={gridTheme}
           rowData={rows}
           columnDefs={columnDefs}
           getRowId={(params) => String(params.data.id)}
@@ -291,7 +302,6 @@ export function SheetDataGrid({ sheetName }) {
           rowClassRules={rowClassRules}
           suppressPaginationPanel
           defaultColDef={{ resizable: true, sortable: true }}
-          style={{ height: '100%', width: '100%' }}
         />
       </Box>
 
