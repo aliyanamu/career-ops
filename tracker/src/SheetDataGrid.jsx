@@ -88,7 +88,7 @@ function jobToRow(job, idx) {
     id: idx,
     _entity: 'jobs',
     _idx: idx,
-    num: job.num ?? idx + 1,
+    num: idx + 1,
     dateAdded: job.dateAdded ?? '',
     company: job.company?.company ?? '',
     role: job.role ?? '',
@@ -110,7 +110,7 @@ function prepToRow(job, jobIdx) {
     id: jobIdx,
     _entity: 'preparations',
     _idx: jobIdx,
-    num: jobIdx + 1,
+    num: jobIdx + 1,  // stable: same job index as Jobs tab
     date: p.date ?? '',
     company: job.company?.company ?? '',
     role: job.role ?? '',
@@ -240,8 +240,7 @@ export function SheetDataGrid({ sheetName }) {
       result = result.filter(r => !r.hide)
     }
 
-    // Re-number visible rows sequentially so num has no gaps
-    return result.map((r, i) => ({ ...r, num: i + 1 }))
+    return result
   }, [jobs, companies, sheetName, schema, showHidden, dirtyCount])
 
   const hiddenCount = useMemo(() => {
@@ -317,6 +316,8 @@ export function SheetDataGrid({ sheetName }) {
           disableRowSelectionOnClick
           hideFooterPagination
           hideFooterSelectedRowCount
+          pageSizeOptions={[1000]}
+          initialState={{ pagination: { paginationModel: { pageSize: 1000 } } }}
           slots={{ footer: RowCountFooter }}
           sx={{
             height: '100%',
