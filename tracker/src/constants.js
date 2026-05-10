@@ -20,6 +20,9 @@ export const SCHEMA = {
     appLink: 12, salary: 13, contact: 14, nextAction: 15, followUpDate: 16,
     notes: 17, hide: 18,
   },
+  Companies: {
+    num: 1, company: 2, careersUrl: 3, enabled: 4, notes: 5, status: 6,
+  },
 }
 
 // singleSelect fields use { value, label } — value is stored in xlsx, label is displayed.

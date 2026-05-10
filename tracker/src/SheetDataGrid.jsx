@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback } from 'react'
+import { useMemo, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import { Box, Typography, Switch, FormControlLabel } from '@mui/material'
 import { useWorkbookContext } from './WorkbookContext'
@@ -8,23 +8,9 @@ import { DashboardView } from './DashboardView'
 
 const GITHUB_BLOB = `https://github.com/${REPO_OWNER}/${REPO_NAME}/blob/${BRANCH}/`
 
-const URL_FIELDS = new Set(['url', 'jobUrl', 'appLink'])
+const URL_FIELDS         = new Set(['url', 'jobUrl', 'appLink'])
 const GITHUB_PATH_FIELDS = new Set(['qa', 'cvPath', 'cvUsed', 'coverLetter'])
-
-export function cellText(cell) {
-  if (!cell) return ''
-  try {
-    const t = cell.text
-    if (t != null && t !== '') return t
-    const v = cell.value
-    if (v == null) return ''
-    if (typeof v !== 'object') return String(v)
-    if (Array.isArray(v.richText)) return v.richText.map(r => r.text ?? '').join('')
-    if (v.result != null) return String(v.result)
-    if (v.text != null) return String(v.text)
-    return ''
-  } catch { return '' }
-}
+const NON_EDITABLE       = new Set(['num'])
 
 function LinkCell({ value }) {
   if (!value) return null
@@ -33,10 +19,9 @@ function LinkCell({ value }) {
     const u = new URL(value)
     display = u.hostname + (u.pathname.length > 1 ? u.pathname : '')
     if (display.length > 45) display = display.slice(0, 45) + '…'
-  } catch { display = value.slice(0, 45) }
+  } catch { display = String(value).slice(0, 45) }
   return (
-    <a href={value} target="_blank" rel="noreferrer"
-       onClick={e => e.stopPropagation()}
+    <a href={value} target="_blank" rel="noreferrer" onClick={e => e.stopPropagation()}
        style={{ color: '#1976d2', textDecoration: 'none' }}>
       {display}
     </a>
@@ -45,11 +30,10 @@ function LinkCell({ value }) {
 
 function GithubPathCell({ value }) {
   if (!value) return null
-  const href = GITHUB_BLOB + value.replace(/^\//, '')
+  const href     = GITHUB_BLOB + value.replace(/^\//, '')
   const filename = value.split('/').pop()
   return (
-    <a href={href} target="_blank" rel="noreferrer"
-       onClick={e => e.stopPropagation()}
+    <a href={href} target="_blank" rel="noreferrer" onClick={e => e.stopPropagation()}
        style={{ color: '#1976d2', textDecoration: 'none', fontSize: '0.78rem' }}>
       {filename}
     </a>
@@ -59,10 +43,10 @@ function GithubPathCell({ value }) {
 function rowDecisionClass(decision) {
   if (!decision) return ''
   const d = decision.toLowerCase()
-  if (d.includes('recommended')) return 'row-recommended'
-  if (d.includes('apply'))       return 'row-apply'
-  if (d.includes('saved'))       return 'row-saved'
-  if (d.includes('skip'))        return 'row-skip'
+  if (d === 'recommended') return 'row-recommended'
+  if (d === 'apply' || d === 'easy_apply') return 'row-apply'
+  if (d === 'saved')  return 'row-saved'
+  if (d === 'skip')   return 'row-skip'
   return ''
 }
 
@@ -82,8 +66,8 @@ const MIN_WIDTHS = {
   dateAdded: 110, date: 110, dateApplied: 110, lastUpdate: 110,
   deadline: 110, followUpDate: 110,
   company: 150, role: 190, location: 120, salary: 110,
-  decision: 145, status: 120, source: 155,
-  url: 180, jobUrl: 180, appLink: 160,
+  decision: 130, status: 120, source: 155,
+  url: 180, jobUrl: 180, appLink: 160, careersUrl: 180,
   elig: 190, why: 220, notes: 240, qa: 200, videoNotes: 180,
   cvPath: 200, cvUsed: 200, coverLetter: 160,
   contact: 140, nextAction: 155,
@@ -91,191 +75,201 @@ const MIN_WIDTHS = {
 
 const WIDE_FIELDS = new Set(['notes', 'qa', 'why', 'videoNotes', 'elig'])
 
-// Build a value→label map for a dropdown option set so we can sort by label
-function makeValueLabelMap(options) {
-  if (!Array.isArray(options) || typeof options[0] !== 'object') return null
-  const map = {}
-  options.forEach(o => { map[o.value] = o.label })
-  return map
+// ---------------------------------------------------------------------------
+// Row builders — one per tab
+// Rows carry _entity and _idx so processRowUpdate knows where to write back.
+// ---------------------------------------------------------------------------
+
+function jobToRow(job, idx) {
+  return {
+    id: idx,
+    _entity: 'jobs',
+    _idx: idx,
+    num: job.num ?? idx + 1,
+    dateAdded: job.dateAdded ?? '',
+    company: job.company?.company ?? '',
+    role: job.role ?? '',
+    url: job.url ?? '',
+    source: job.source ?? '',
+    elig: job.elig ?? '',
+    why: job.why ?? '',
+    fitScore: job.fitScore ?? '',
+    deadline: job.deadline ?? '',
+    decision: job.decision ?? '',
+    hide: job.hide ?? '',
+    notes: job.notes ?? '',
+  }
 }
 
-function GenericSheetView({ sheet }) {
-  if (!sheet) return <Box sx={{ p: 2 }}><Typography>Sheet not found.</Typography></Box>
-
-  const headers = []
-  const rows = []
-  let maxCols = 0
-
-  sheet.eachRow((row, rowNum) => {
-    if (row.cellCount > maxCols) maxCols = row.cellCount
-    if (rowNum === 1) {
-      for (let c = 1; c <= row.cellCount; c++) {
-        headers.push({
-          field: `col${c}`,
-          headerName: cellText(row.getCell(c)) || `Col ${c}`,
-          minWidth: 120, flex: 1, editable: false,
-        })
-      }
-    } else {
-      const rowData = { id: rowNum }
-      for (let c = 1; c <= maxCols; c++) rowData[`col${c}`] = cellText(row.getCell(c))
-      rows.push(rowData)
-    }
-  })
-
-  if (headers.length === 0)
-    return <Box sx={{ p: 2 }}><Typography color="text.secondary">Sheet is empty.</Typography></Box>
-
-  return (
-    <Box sx={{ height: 'calc(100vh - 130px)', width: '100%' }}>
-      <DataGrid
-        rows={rows} columns={headers}
-        disableRowSelectionOnClick density="compact"
-        pageSizeOptions={[25, 50, 100]}
-        initialState={{ pagination: { paginationModel: { pageSize: 50 } } }}
-        sx={{ '& .MuiDataGrid-cell': { whiteSpace: 'normal', wordBreak: 'break-word', py: 0.5 } }}
-      />
-    </Box>
-  )
+function prepToRow(job, jobIdx) {
+  const p = job.preparation
+  return {
+    id: jobIdx,
+    _entity: 'preparations',
+    _idx: jobIdx,
+    num: jobIdx + 1,
+    date: p.date ?? '',
+    company: job.company?.company ?? '',
+    role: job.role ?? '',
+    jobUrl: p.jobUrl ?? '',
+    cvPath: p.cvPath ?? '',
+    cvStatus: p.cvStatus ?? '',
+    qa: p.qa ?? '',
+    videoRequired: p.videoRequired ?? '',
+    videoNotes: p.videoNotes ?? '',
+    videoStatus: p.videoStatus ?? '',
+    aiDisclaimer: p.aiDisclaimer ?? '',
+    submissionStatus: p.submissionStatus ?? '',
+    notes: p.notes ?? '',
+    hide: p.hide ?? '',
+  }
 }
 
+function appToRow(job, jobIdx) {
+  const a = job.application
+  return {
+    id: jobIdx,
+    _entity: 'applications',
+    _idx: jobIdx,
+    num: jobIdx + 1,
+    dateApplied: a.dateApplied ?? '',
+    company: job.company?.company ?? '',
+    role: job.role ?? '',
+    location: a.location ?? '',
+    source: a.source ?? '',
+    jobUrl: a.jobUrl ?? '',
+    status: a.status ?? '',
+    lastUpdate: a.lastUpdate ?? '',
+    cvUsed: a.cvUsed ?? '',
+    coverLetter: a.coverLetter ?? '',
+    appLink: a.appLink ?? '',
+    salary: a.salary ?? '',
+    contact: a.contact ?? '',
+    nextAction: a.nextAction ?? '',
+    followUpDate: a.followUpDate ?? '',
+    notes: a.notes ?? '',
+    hide: a.hide ?? '',
+  }
+}
+
+function companyToRow(company, idx) {
+  return {
+    id: idx,
+    _entity: 'companies',
+    _idx: idx,
+    num: company.num ?? idx + 1,
+    company: company.company ?? '',
+    careersUrl: company.careersUrl ?? '',
+    enabled: company.enabled ?? '',
+    notes: company.notes ?? '',
+    status: company.status ?? '',
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Main component
+// ---------------------------------------------------------------------------
 export function SheetDataGrid({ sheetName }) {
-  const { workbook, markDirty, dirtyCount } = useWorkbookContext()
+  const { jobs, companies, updateField, dirtyCount } = useWorkbookContext()
   const [showHidden, setShowHidden] = useState(false)
 
-  const schema = SCHEMA[sheetName]
-  const dropdownOptions = DROPDOWN_OPTIONS[sheetName] || {}
+  const schema        = SCHEMA[sheetName]
+  const dropdownOpts  = DROPDOWN_OPTIONS[sheetName] || {}
 
-  const colNumToField = useMemo(() => {
-    if (!schema) return {}
-    const map = {}
-    for (const [field, colNum] of Object.entries(schema)) map[colNum] = field
-    return map
-  }, [schema])
-
+  // Build columns from schema field list
   const columns = useMemo(() => {
     if (!schema) return []
-    return Object.entries(schema).map(([field]) => {
-      const options = dropdownOptions[field]
+    return Object.keys(schema).map(field => {
+      const options   = dropdownOpts[field]
       const isDropdown = options != null
-      const isUrl  = URL_FIELDS.has(field)
-      const isPath = GITHUB_PATH_FIELDS.has(field)
+      const isUrl     = URL_FIELDS.has(field)
+      const isPath    = GITHUB_PATH_FIELDS.has(field)
 
       const col = {
         field,
         headerName: field.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()).trim(),
         minWidth: MIN_WIDTHS[field] ?? 120,
         flex: WIDE_FIELDS.has(field) ? 2 : 1,
-        editable: true,
+        editable: !NON_EDITABLE.has(field),
       }
 
       if (isDropdown) {
         col.type = 'singleSelect'
         col.valueOptions = options
-        // Sort by display label (which carries the number prefix like "1. Apply")
-        const labelMap = makeValueLabelMap(options)
-        if (labelMap) {
-          col.sortComparator = (v1, v2) =>
-            (labelMap[v1] ?? v1 ?? '').localeCompare(labelMap[v2] ?? v2 ?? '')
-        }
+        const order = Object.fromEntries(options.map((o, i) => [o.value, i]))
+        col.sortComparator = (v1, v2) => (order[v1] ?? 999) - (order[v2] ?? 999)
       }
       if (isUrl)  col.renderCell = (p) => <LinkCell value={p.value} />
       if (isPath) col.renderCell = (p) => <GithubPathCell value={p.value} />
 
       return col
     })
-  }, [schema, dropdownOptions])
+  }, [schema, dropdownOpts])
 
-  const hiddenCount = useMemo(() => {
-    if (!workbook || !schema?.hide) return 0
-    const sheet = workbook.getWorksheet(sheetName)
-    if (!sheet) return 0
-    let n = 0
-    sheet.eachRow((row, rowNum) => {
-      if (rowNum === 1) return
-      if (cellText(row.getCell(schema.hide)) === 'Hidden') n++
-    })
-    return n
-  }, [workbook, sheetName, schema, dirtyCount])
-
+  // Build rows from JSON
   const rows = useMemo(() => {
     void dirtyCount
+    if (!jobs || !companies) return []
 
-    if (!workbook || !schema) return []
-    const sheet = workbook.getWorksheet(sheetName)
-    if (!sheet) return []
+    let result = []
+    if (sheetName === 'Jobs') {
+      result = jobs.map((job, idx) => jobToRow(job, idx))
+    } else if (sheetName === 'Preparations') {
+      result = jobs
+        .map((job, idx) => job.preparation ? prepToRow(job, idx) : null)
+        .filter(Boolean)
+    } else if (sheetName === 'Applications') {
+      result = jobs
+        .map((job, idx) => job.application ? appToRow(job, idx) : null)
+        .filter(Boolean)
+    } else if (sheetName === 'Companies') {
+      result = companies.map((co, idx) => companyToRow(co, idx))
+    }
 
-    const result = []
-    const maxColNum = Math.max(...Object.values(schema))
-
-    sheet.eachRow((row, rowNum) => {
-      if (rowNum === 1) return
-
-      const rowData = { id: rowNum }
-      for (let c = 1; c <= maxColNum; c++) {
-        const field = colNumToField[c]
-        if (!field) continue
-        rowData[field] = cellText(row.getCell(c))
-      }
-
-      // Normalize stored labels/old-format values to canonical dropdown values
-      for (const [field, options] of Object.entries(dropdownOptions)) {
-        if (!Array.isArray(options) || typeof options[0] !== 'object') continue
-        const raw = rowData[field]
-        if (!raw) continue
-        const match = options.find(o => o.value === raw || o.label === raw)
-        if (match) rowData[field] = match.value
-      }
-
-      // Skip rows where every field (besides num) is empty
-      const NON_DATA_FIELDS = new Set(['num', 'id'])
-      const hasData = Object.entries(rowData).some(([k, v]) => !NON_DATA_FIELDS.has(k) && v !== '')
-      if (!hasData) return
-
-      if (!showHidden && schema.hide && rowData.hide === 'Hidden') return
-      result.push(rowData)
-    })
+    if (!showHidden && schema?.hide) {
+      result = result.filter(r => r.hide !== 'Hidden')
+    }
     return result
-  }, [workbook, sheetName, schema, colNumToField, dirtyCount, showHidden])
+  }, [jobs, companies, sheetName, schema, showHidden, dirtyCount])
+
+  const hiddenCount = useMemo(() => {
+    if (!schema?.hide || !jobs || !companies) return 0
+    let all = []
+    if (sheetName === 'Jobs') all = jobs.map((j, i) => jobToRow(j, i))
+    else if (sheetName === 'Preparations') all = jobs.map((j, i) => j.preparation ? prepToRow(j, i) : null).filter(Boolean)
+    else if (sheetName === 'Applications') all = jobs.map((j, i) => j.application ? appToRow(j, i) : null).filter(Boolean)
+    return all.filter(r => r.hide === 'Hidden').length
+  }, [jobs, companies, sheetName, schema, dirtyCount])
 
   const processRowUpdate = (newRow) => {
-    if (!schema || !workbook) return newRow
-    const rowNum = newRow.id
-    const prevRow = rows.find(r => r.id === rowNum) ?? {}
-    for (const [field, colNum] of Object.entries(schema)) {
+    const prevRow = rows.find(r => r.id === newRow.id) ?? {}
+    for (const field of Object.keys(schema ?? {})) {
       const oldVal = String(prevRow[field] ?? '')
       const newVal = String(newRow[field] ?? '')
-      if (newVal !== oldVal) markDirty(sheetName, rowNum, colNum, newVal)
+      if (newVal !== oldVal) updateField(newRow._entity, newRow._idx, field, newVal)
     }
     return newRow
   }
 
   const getRowClassName = (params) => {
-    const classes = []
-    if (params.row.decision) classes.push(rowDecisionClass(params.row.decision))
-    if (params.row.status)   classes.push(rowStatusClass(params.row.status))
-    return classes.filter(Boolean).join(' ')
+    const cls = []
+    if (params.row.decision) cls.push(rowDecisionClass(params.row.decision))
+    if (params.row.status)   cls.push(rowStatusClass(params.row.status))
+    return cls.filter(Boolean).join(' ')
   }
 
-  // Special views — placed after all hooks to satisfy Rules of Hooks
+  // Special views
   if (sheetName === 'CV Summary') return <CvSummaryView />
   if (sheetName === 'Dashboard')  return <DashboardView />
 
-  if (!schema) {
-    if (!workbook) return <Box sx={{ p: 2 }}><Typography color="text.secondary">Workbook not loaded.</Typography></Box>
-    return <GenericSheetView sheet={workbook.getWorksheet(sheetName)} />
-  }
+  if (!jobs || !companies)
+    return <Box sx={{ p: 2 }}><Typography color="text.secondary">Loading…</Typography></Box>
 
-  if (!workbook)
-    return <Box sx={{ p: 2 }}><Typography color="text.secondary">Workbook not loaded yet.</Typography></Box>
+  if (!schema)
+    return <Box sx={{ p: 2 }}><Typography color="text.secondary">No schema for "{sheetName}".</Typography></Box>
 
-  const sheet = workbook.getWorksheet(sheetName)
-  if (!sheet)
-    return <Box sx={{ p: 2 }}><Typography color="text.secondary">Sheet "{sheetName}" not found.</Typography></Box>
-
-  // Custom footer: row count only, no pagination controls
   const RowCountFooter = () => (
-    <Box sx={{ px: 2, py: 0.75, borderTop: 1, borderColor: 'divider', display: 'flex', alignItems: 'center', gap: 2 }}>
+    <Box sx={{ px: 2, py: 0.75, borderTop: 1, borderColor: 'divider', display: 'flex', alignItems: 'center' }}>
       <Typography variant="caption" color="text.secondary">
         {rows.length} row{rows.length !== 1 ? 's' : ''}
         {hiddenCount > 0 && !showHidden ? ` · ${hiddenCount} hidden` : ''}
@@ -304,7 +298,7 @@ export function SheetDataGrid({ sheetName }) {
           rows={rows}
           columns={columns}
           processRowUpdate={processRowUpdate}
-          onProcessRowUpdateError={(err) => console.error('Row update error:', err)}
+          onProcessRowUpdateError={err => console.error('Row update error:', err)}
           getRowClassName={getRowClassName}
           getRowHeight={() => 'auto'}
           disableRowSelectionOnClick
@@ -314,12 +308,7 @@ export function SheetDataGrid({ sheetName }) {
           slots={{ footer: RowCountFooter }}
           sx={{
             height: '100%',
-            '& .MuiDataGrid-cell': {
-              alignItems: 'flex-start',
-              whiteSpace: 'normal',
-              wordBreak: 'break-word',
-              py: 0.5,
-            },
+            '& .MuiDataGrid-cell': { alignItems: 'flex-start', whiteSpace: 'normal', wordBreak: 'break-word', py: 0.5 },
             '& .row-recommended': { bgcolor: 'rgba(255, 193, 7, 0.18)' },
             '& .row-apply':       { bgcolor: 'rgba(76, 175, 80, 0.10)' },
             '& .row-saved':       { bgcolor: 'rgba(33, 150, 243, 0.08)' },

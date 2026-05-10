@@ -1,0 +1,828 @@
+{
+  "companies": [
+    {
+      "num": 1,
+      "company": "Anthropic",
+      "careersUrl": "https://job-boards.greenhouse.io/anthropic",
+      "enabled": "Yes",
+      "notes": "",
+      "status": ""
+    },
+    {
+      "num": 2,
+      "company": "OpenAI",
+      "careersUrl": "https://openai.com/careers",
+      "enabled": "Yes",
+      "notes": "",
+      "status": ""
+    },
+    {
+      "num": 3,
+      "company": "PolyAI",
+      "careersUrl": "https://job-boards.eu.greenhouse.io/polyai",
+      "enabled": "Yes",
+      "notes": "UK. Voice AI for enterprise contact centers.",
+      "status": ""
+    },
+    {
+      "num": 4,
+      "company": "Parloa",
+      "careersUrl": "https://job-boards.eu.greenhouse.io/parloa",
+      "enabled": "Yes",
+      "notes": "Berlin EMEA. Voice AI enterprise.",
+      "status": ""
+    },
+    {
+      "num": 5,
+      "company": "Intercom",
+      "careersUrl": "https://job-boards.greenhouse.io/intercom",
+      "enabled": "Yes",
+      "notes": "Dublin EMEA. Fin AI agent.",
+      "status": ""
+    },
+    {
+      "num": 6,
+      "company": "Hume AI",
+      "careersUrl": "https://job-boards.greenhouse.io/humeai",
+      "enabled": "Yes",
+      "notes": "NYC. Empathic voice AI.",
+      "status": ""
+    },
+    {
+      "num": 7,
+      "company": "ElevenLabs",
+      "careersUrl": "https://jobs.ashbyhq.com/elevenlabs",
+      "enabled": "Yes",
+      "notes": "Voice AI TTS leader.",
+      "status": ""
+    },
+    {
+      "num": 8,
+      "company": "Deepgram",
+      "careersUrl": "https://jobs.ashbyhq.com/deepgram",
+      "enabled": "Yes",
+      "notes": "STT/TTS APIs.",
+      "status": ""
+    },
+    {
+      "num": 9,
+      "company": "Vapi",
+      "careersUrl": "https://jobs.ashbyhq.com/vapi",
+      "enabled": "Yes",
+      "notes": "Voice AI infrastructure.",
+      "status": ""
+    },
+    {
+      "num": 10,
+      "company": "Bland AI",
+      "careersUrl": "https://jobs.ashbyhq.com/bland",
+      "enabled": "Yes",
+      "notes": "Voice phone agents. $65M Series B.",
+      "status": ""
+    },
+    {
+      "num": 11,
+      "company": "Retool",
+      "careersUrl": "https://retool.com/careers",
+      "enabled": "Yes",
+      "notes": "London. Popularized Deployed Engineer role.",
+      "status": ""
+    },
+    {
+      "num": 12,
+      "company": "Airtable",
+      "careersUrl": "https://job-boards.greenhouse.io/airtable",
+      "enabled": "Yes",
+      "notes": "No-code + AI platform.",
+      "status": ""
+    },
+    {
+      "num": 13,
+      "company": "Vercel",
+      "careersUrl": "https://job-boards.greenhouse.io/vercel",
+      "enabled": "Yes",
+      "notes": "AI SDK, v0.dev. Frontend AI tooling.",
+      "status": ""
+    },
+    {
+      "num": 14,
+      "company": "Temporal",
+      "careersUrl": "https://job-boards.greenhouse.io/temporal",
+      "enabled": "Yes",
+      "notes": "Workflow orchestration.",
+      "status": ""
+    },
+    {
+      "num": 15,
+      "company": "Arize AI",
+      "careersUrl": "https://job-boards.greenhouse.io/arizeai",
+      "enabled": "Yes",
+      "notes": "LLMOps / AI observability.",
+      "status": ""
+    },
+    {
+      "num": 16,
+      "company": "RunPod",
+      "careersUrl": "https://job-boards.greenhouse.io/runpod",
+      "enabled": "Yes",
+      "notes": "GPU cloud for AI.",
+      "status": ""
+    },
+    {
+      "num": 17,
+      "company": "Glean",
+      "careersUrl": "https://job-boards.greenhouse.io/gleanwork",
+      "enabled": "Yes",
+      "notes": "Enterprise AI search.",
+      "status": ""
+    },
+    {
+      "num": 18,
+      "company": "Ada",
+      "careersUrl": "https://job-boards.greenhouse.io/ada",
+      "enabled": "Yes",
+      "notes": "Toronto + remote. AI customer service.",
+      "status": ""
+    },
+    {
+      "num": 19,
+      "company": "LivePerson",
+      "careersUrl": "https://liveperson.com/company/careers",
+      "enabled": "Yes",
+      "notes": "Remote EMEA. Conversational AI enterprise.",
+      "status": ""
+    },
+    {
+      "num": 20,
+      "company": "Sierra",
+      "careersUrl": "https://jobs.ashbyhq.com/sierra",
+      "enabled": "Yes",
+      "notes": "Bret Taylor (ex-CEO Salesforce). AI customer agents.",
+      "status": ""
+    },
+    {
+      "num": 21,
+      "company": "Decagon",
+      "careersUrl": "https://jobs.ashbyhq.com/decagon",
+      "enabled": "Yes",
+      "notes": "AI customer support agents.",
+      "status": ""
+    },
+    {
+      "num": 22,
+      "company": "Talkdesk",
+      "careersUrl": "https://www.talkdesk.com/careers",
+      "enabled": "Yes",
+      "notes": "Lisbon. Contact center AI. EMEA friendly.",
+      "status": ""
+    },
+    {
+      "num": 23,
+      "company": "Twilio",
+      "careersUrl": "https://www.twilio.com/en-us/company/jobs",
+      "enabled": "Yes",
+      "notes": "Voice/messaging infrastructure.",
+      "status": ""
+    },
+    {
+      "num": 24,
+      "company": "Dialpad",
+      "careersUrl": "https://www.dialpad.com/careers",
+      "enabled": "Yes",
+      "notes": "Voice AI for business comms.",
+      "status": ""
+    },
+    {
+      "num": 25,
+      "company": "Gong",
+      "careersUrl": "https://www.gong.io/careers",
+      "enabled": "Yes",
+      "notes": "Revenue intelligence with voice AI.",
+      "status": ""
+    },
+    {
+      "num": 26,
+      "company": "Genesys",
+      "careersUrl": "https://www.genesys.com/careers",
+      "enabled": "Yes",
+      "notes": "Contact center cloud + AI.",
+      "status": ""
+    },
+    {
+      "num": 27,
+      "company": "Salesforce",
+      "careersUrl": "https://careers.salesforce.com",
+      "enabled": "Yes",
+      "notes": "Agentforce = AI agents platform.",
+      "status": ""
+    },
+    {
+      "num": 28,
+      "company": "Langfuse",
+      "careersUrl": "https://langfuse.com/careers",
+      "enabled": "Yes",
+      "notes": "Berlin. LLMOps / observability.",
+      "status": ""
+    },
+    {
+      "num": 29,
+      "company": "Lindy",
+      "careersUrl": "https://jobs.ashbyhq.com/lindy",
+      "enabled": "Yes",
+      "notes": "AI agent management platform.",
+      "status": ""
+    },
+    {
+      "num": 30,
+      "company": "Cognigy",
+      "careersUrl": "https://careers.cognigy.com",
+      "enabled": "Yes",
+      "notes": "Dusseldorf EMEA. Conversational AI enterprise.",
+      "status": ""
+    },
+    {
+      "num": 31,
+      "company": "Speechmatics",
+      "careersUrl": "https://job-boards.greenhouse.io/speechmatics",
+      "enabled": "Yes",
+      "notes": "Cambridge UK. Speech recognition platform.",
+      "status": ""
+    },
+    {
+      "num": 32,
+      "company": "n8n",
+      "careersUrl": "https://jobs.ashbyhq.com/n8n",
+      "enabled": "Yes",
+      "notes": "Berlin + remote EU/US. Workflow automation.",
+      "status": ""
+    },
+    {
+      "num": 33,
+      "company": "Zapier",
+      "careersUrl": "https://jobs.ashbyhq.com/zapier",
+      "enabled": "Yes",
+      "notes": "Remote-first. Automation platform leader.",
+      "status": ""
+    },
+    {
+      "num": 34,
+      "company": "Make.com (Celonis)",
+      "careersUrl": "https://www.make.com/en/careers",
+      "enabled": "Yes",
+      "notes": "Celonis parent company. Automation platform.",
+      "status": ""
+    },
+    {
+      "num": 35,
+      "company": "Boomi",
+      "careersUrl": "https://job-boards.greenhouse.io/boomilp",
+      "enabled": "Yes",
+      "notes": "Integration and automation platform.",
+      "status": ""
+    },
+    {
+      "num": 36,
+      "company": "Cohere",
+      "careersUrl": "https://jobs.ashbyhq.com/cohere",
+      "enabled": "Yes",
+      "notes": "AI/LLM provider. Toronto + remote.",
+      "status": ""
+    },
+    {
+      "num": 37,
+      "company": "LangChain",
+      "careersUrl": "https://jobs.ashbyhq.com/langchain",
+      "enabled": "Yes",
+      "notes": "LangChain/LangSmith framework.",
+      "status": ""
+    },
+    {
+      "num": 38,
+      "company": "Pinecone",
+      "careersUrl": "https://jobs.ashbyhq.com/pinecone",
+      "enabled": "Yes",
+      "notes": "Vector database.",
+      "status": ""
+    },
+    {
+      "num": 39,
+      "company": "Mistral AI",
+      "careersUrl": "https://jobs.lever.co/mistral",
+      "enabled": "Yes",
+      "notes": "Paris. European AI lab.",
+      "status": ""
+    },
+    {
+      "num": 40,
+      "company": "Weights & Biases",
+      "careersUrl": "https://jobs.lever.co/wandb",
+      "enabled": "Yes",
+      "notes": "MLOps platform.",
+      "status": ""
+    },
+    {
+      "num": 41,
+      "company": "Palantir",
+      "careersUrl": "https://jobs.lever.co/palantir",
+      "enabled": "Yes",
+      "notes": "FDE roles. Mostly US/London.",
+      "status": ""
+    },
+    {
+      "num": 42,
+      "company": "Later",
+      "careersUrl": "https://job-boards.greenhouse.io/later",
+      "enabled": "Yes",
+      "notes": "Vancouver/Toronto. Social media and creator platform.",
+      "status": ""
+    },
+    {
+      "num": 43,
+      "company": "Safari AI",
+      "careersUrl": "https://job-boards.greenhouse.io/safariai",
+      "enabled": "Yes",
+      "notes": "Miami HQ / Vancouver engineering. Computer vision AI for operations in the physical economy.",
+      "status": ""
+    },
+    {
+      "num": 44,
+      "company": "Hootsuite",
+      "careersUrl": "https://job-boards.greenhouse.io/hootsuite",
+      "enabled": "Yes",
+      "notes": "Vancouver. Social media management platform.",
+      "status": ""
+    },
+    {
+      "num": 45,
+      "company": "Klue",
+      "careersUrl": "https://jobs.ashbyhq.com/klue",
+      "enabled": "Yes",
+      "notes": "Vancouver. Competitive intelligence SaaS.",
+      "status": ""
+    },
+    {
+      "num": 46,
+      "company": "Glacis AI",
+      "careersUrl": "https://jobs.ashbyhq.com/glacis-ai",
+      "enabled": "Yes",
+      "notes": "Ho Chi Minh City. AI agents for supply chain and logistics workflows.",
+      "status": ""
+    },
+    {
+      "num": 47,
+      "company": "Sanctuary AI",
+      "careersUrl": "https://jobs.lever.co/sanctuary",
+      "enabled": "Yes",
+      "notes": "Vancouver. Humanoid robotics and embodied AI.",
+      "status": ""
+    },
+    {
+      "num": 48,
+      "company": "Semios",
+      "careersUrl": "https://apply.workable.com/semios/",
+      "enabled": "Yes",
+      "notes": "Vancouver. Agtech and crop intelligence platform.",
+      "status": ""
+    },
+    {
+      "num": 49,
+      "company": "Factorial",
+      "careersUrl": "https://job-boards.greenhouse.io/factorial",
+      "enabled": "Yes",
+      "notes": "Barcelona. HR SaaS unicorn.",
+      "status": ""
+    },
+    {
+      "num": 50,
+      "company": "Attio",
+      "careersUrl": "https://jobs.ashbyhq.com/attio",
+      "enabled": "Yes",
+      "notes": "Remote EU. AI-native CRM. Series B $52M.",
+      "status": ""
+    },
+    {
+      "num": 51,
+      "company": "Tinybird",
+      "careersUrl": "https://jobs.ashbyhq.com/tinybird",
+      "enabled": "Yes",
+      "notes": "Remote. Real-time data platform.",
+      "status": ""
+    },
+    {
+      "num": 52,
+      "company": "Clarity AI",
+      "careersUrl": "https://jobs.lever.co/clarity-ai",
+      "enabled": "Yes",
+      "notes": "Madrid/Remote. Sustainability analytics with AI.",
+      "status": ""
+    },
+    {
+      "num": 53,
+      "company": "Travelperk",
+      "careersUrl": "https://jobs.ashbyhq.com/travelperk",
+      "enabled": "Yes",
+      "notes": "Barcelona. Business travel unicorn.",
+      "status": ""
+    },
+    {
+      "num": 54,
+      "company": "Aleph Alpha",
+      "careersUrl": "https://jobs.ashbyhq.com/AlephAlpha",
+      "enabled": "Yes",
+      "notes": "Heidelberg DE. Sovereign European LLM provider, enterprise & government focus.",
+      "status": ""
+    },
+    {
+      "num": 55,
+      "company": "DeepL",
+      "careersUrl": "https://jobs.ashbyhq.com/DeepL",
+      "enabled": "Yes",
+      "notes": "Cologne DE. Translation & language AI. 60+ open roles, EU/DACH heavy.",
+      "status": ""
+    },
+    {
+      "num": 56,
+      "company": "Black Forest Labs",
+      "careersUrl": "https://job-boards.greenhouse.io/blackforestlabs",
+      "enabled": "Yes",
+      "notes": "Freiburg DE / SF. FLUX image models, ex-Stable Diffusion team.",
+      "status": ""
+    },
+    {
+      "num": 57,
+      "company": "Helsing",
+      "careersUrl": "https://job-boards.greenhouse.io/helsing",
+      "enabled": "Yes",
+      "notes": "Munich / Berlin / London / Paris. Defence AI unicorn. 100+ roles, ML & FDE.",
+      "status": ""
+    },
+    {
+      "num": 58,
+      "company": "Celonis",
+      "careersUrl": "https://job-boards.greenhouse.io/celonis",
+      "enabled": "Yes",
+      "notes": "Munich / NYC. Process intelligence, Applied AI Engineer roles, Field CTOs.",
+      "status": ""
+    },
+    {
+      "num": 59,
+      "company": "Contentful",
+      "careersUrl": "https://job-boards.greenhouse.io/contentful",
+      "enabled": "Yes",
+      "notes": "Berlin / Denver. Headless CMS, AI content workflows.",
+      "status": ""
+    },
+    {
+      "num": 60,
+      "company": "GetYourGuide",
+      "careersUrl": "https://job-boards.greenhouse.io/getyourguide",
+      "enabled": "Yes",
+      "notes": "Berlin. Travel marketplace, ML & data platform roles.",
+      "status": ""
+    },
+    {
+      "num": 61,
+      "company": "HelloFresh",
+      "careersUrl": "https://job-boards.greenhouse.io/hellofresh",
+      "enabled": "Yes",
+      "notes": "Berlin. Meal kit unicorn, large data/ML org.",
+      "status": ""
+    },
+    {
+      "num": 62,
+      "company": "N26",
+      "careersUrl": "https://job-boards.greenhouse.io/n26",
+      "enabled": "Yes",
+      "notes": "Berlin / Barcelona. Mobile bank, ~50 roles, ML & risk.",
+      "status": ""
+    },
+    {
+      "num": 63,
+      "company": "Trade Republic",
+      "careersUrl": "https://job-boards.greenhouse.io/traderepublicbank",
+      "enabled": "Yes",
+      "notes": "Berlin / London / Paris. Neobroker, ~50 roles, platform & data.",
+      "status": ""
+    },
+    {
+      "num": 64,
+      "company": "SumUp",
+      "careersUrl": "https://job-boards.greenhouse.io/sumup",
+      "enabled": "No",
+      "notes": "Berlin / London. Payments fintech, EU + LATAM hiring. OFFICE-FIRST — not remote. Flexible work case-by-case via interview. Excluded from scans (relocation friction + many duplicates).",
+      "status": "Excluded"
+    },
+    {
+      "num": 65,
+      "company": "Qonto",
+      "careersUrl": "https://jobs.lever.co/qonto",
+      "enabled": "Yes",
+      "notes": "Paris / Berlin / Barcelona / Milan. SMB neobank, MLOps for AI Product roles.",
+      "status": ""
+    },
+    {
+      "num": 66,
+      "company": "Forto",
+      "careersUrl": "https://jobs.lever.co/forto",
+      "enabled": "Yes",
+      "notes": "Berlin DE. Digital freight forwarder, product & data roles, German + English.",
+      "status": ""
+    },
+    {
+      "num": 67,
+      "company": "Lakera",
+      "careersUrl": "https://jobs.ashbyhq.com/lakera.ai",
+      "enabled": "Yes",
+      "notes": "Zurich CH / SF. AI security & guardrails. Has Forward Deployed Engineer roles.",
+      "status": ""
+    },
+    {
+      "num": 68,
+      "company": "Scandit",
+      "careersUrl": "https://job-boards.greenhouse.io/scandit",
+      "enabled": "Yes",
+      "notes": "Zurich CH. Computer vision / smart data capture, ML roles.",
+      "status": ""
+    },
+    {
+      "num": 69,
+      "company": "Cradle",
+      "careersUrl": "https://jobs.ashbyhq.com/cradlebio",
+      "enabled": "Yes",
+      "notes": "Zurich CH / Amsterdam. AI-guided protein design, ML researcher roles.",
+      "status": ""
+    },
+    {
+      "num": 70,
+      "company": "Hugging Face",
+      "careersUrl": "https://apply.workable.com/huggingface/",
+      "enabled": "Yes",
+      "notes": "Paris / NYC / Remote. ML hub & open-source models.",
+      "status": ""
+    },
+    {
+      "num": 71,
+      "company": "Photoroom",
+      "careersUrl": "https://jobs.ashbyhq.com/photoroom",
+      "enabled": "Yes",
+      "notes": "Paris FR. AI photo editor, Head of CV / Head of ML roles.",
+      "status": ""
+    },
+    {
+      "num": 72,
+      "company": "Pigment",
+      "careersUrl": "https://jobs.lever.co/pigment",
+      "enabled": "Yes",
+      "notes": "Paris FR / NYC / London. AI-powered FP&A planning platform.",
+      "status": ""
+    },
+    {
+      "num": 73,
+      "company": "Wayve",
+      "careersUrl": "https://job-boards.greenhouse.io/wayve",
+      "enabled": "No",
+      "notes": "London UK / Tokyo. Self-driving AV — hardware/automotive/embedded stack (C/C++, Linux BSP, Yocto, QNX, AUTOSAR, SoC bring-up). NOT relevant to user's web/backend profile. Excluded from scans.",
+      "status": "Excluded"
+    },
+    {
+      "num": 74,
+      "company": "Isomorphic Labs",
+      "careersUrl": "https://job-boards.greenhouse.io/isomorphiclabs",
+      "enabled": "Yes",
+      "notes": "London / Lausanne / Cambridge MA. DeepMind spin-out for drug discovery AI.",
+      "status": ""
+    },
+    {
+      "num": 75,
+      "company": "PhysicsX",
+      "careersUrl": "https://job-boards.greenhouse.io/physicsx",
+      "enabled": "Yes",
+      "notes": "London UK. Physics-informed ML for engineering, ~40 roles.",
+      "status": ""
+    },
+    {
+      "num": 76,
+      "company": "Stability AI",
+      "careersUrl": "https://job-boards.greenhouse.io/stabilityai",
+      "enabled": "Yes",
+      "notes": "London / SF. Generative AI image/video research lab.",
+      "status": ""
+    },
+    {
+      "num": 77,
+      "company": "Synthesia",
+      "careersUrl": "https://jobs.ashbyhq.com/synthesia",
+      "enabled": "Yes",
+      "notes": "London UK. AI video generation for enterprise, $4B valuation.",
+      "status": ""
+    },
+    {
+      "num": 78,
+      "company": "Faculty",
+      "careersUrl": "https://jobs.ashbyhq.com/faculty",
+      "enabled": "Yes",
+      "notes": "London UK. Applied AI consultancy. 80+ roles, AI Safety / MLE / Delivery.",
+      "status": ""
+    },
+    {
+      "num": 79,
+      "company": "Causaly",
+      "careersUrl": "https://jobs.ashbyhq.com/causaly",
+      "enabled": "Yes",
+      "notes": "London / Athens. Biomedical knowledge graph + AI.",
+      "status": ""
+    },
+    {
+      "num": 80,
+      "company": "Lovable",
+      "careersUrl": "https://jobs.ashbyhq.com/lovable",
+      "enabled": "Yes",
+      "notes": "Stockholm SE. AI app builder (text-to-app), 80+ open roles.",
+      "status": ""
+    },
+    {
+      "num": 81,
+      "company": "Legora",
+      "careersUrl": "https://jobs.ashbyhq.com/legora",
+      "enabled": "Yes",
+      "notes": "Stockholm SE / NYC / London. AI-native legal workspace.",
+      "status": ""
+    },
+    {
+      "num": 82,
+      "company": "Spotify",
+      "careersUrl": "https://jobs.lever.co/spotify",
+      "enabled": "Yes",
+      "notes": "Stockholm SE / NYC / London. Audio platform, large ML/personalization org.",
+      "status": ""
+    },
+    {
+      "num": 83,
+      "company": "Vinted",
+      "careersUrl": "https://jobs.lever.co/vinted",
+      "enabled": "Yes",
+      "notes": "Vilnius LT / Berlin. C2C marketplace unicorn, data science & ML roles.",
+      "status": ""
+    },
+    {
+      "num": 84,
+      "company": "Amplemarket",
+      "careersUrl": "https://job-boards.greenhouse.io/amplemarket",
+      "enabled": "Yes",
+      "notes": "Lisbon PT / Remote. AI-native sales platform.",
+      "status": ""
+    },
+    {
+      "num": 85,
+      "company": "Perplexity",
+      "careersUrl": "https://jobs.ashbyhq.com/perplexity",
+      "enabled": "Yes",
+      "notes": "AI-native search and enterprise AI platform.",
+      "status": ""
+    },
+    {
+      "num": 86,
+      "company": "Clay Labs",
+      "careersUrl": "https://jobs.ashbyhq.com/claylabs",
+      "enabled": "Yes",
+      "notes": "AI-native GTM and workflow automation platform.",
+      "status": ""
+    },
+    {
+      "num": 87,
+      "company": "Runway",
+      "careersUrl": "https://job-boards.greenhouse.io/runwayml",
+      "enabled": "Yes",
+      "notes": "Generative AI video and creative tooling platform.",
+      "status": ""
+    },
+    {
+      "num": 88,
+      "company": "Hightouch",
+      "careersUrl": "https://job-boards.greenhouse.io/hightouch",
+      "enabled": "Yes",
+      "notes": "Data activation platform with AI agents and solutions engineering roles.",
+      "status": ""
+    },
+    {
+      "num": 89,
+      "company": "WorkOS",
+      "careersUrl": "https://jobs.ashbyhq.com/workos",
+      "enabled": "Yes",
+      "notes": "Developer tools and enterprise-ready auth/platform APIs.",
+      "status": ""
+    },
+    {
+      "num": 90,
+      "company": "Supabase",
+      "careersUrl": "https://jobs.ashbyhq.com/supabase",
+      "enabled": "Yes",
+      "notes": "Open-source Firebase alternative. Remote-first. Postgres + Auth + Storage. Strong DevRel/DX hiring.",
+      "status": ""
+    },
+    {
+      "num": 91,
+      "company": "Resend",
+      "careersUrl": "https://jobs.ashbyhq.com/resend",
+      "enabled": "Yes",
+      "notes": "Email API for developers. Remote-first. DX/DevRel focused.",
+      "status": ""
+    },
+    {
+      "num": 92,
+      "company": "Clerk",
+      "careersUrl": "https://jobs.ashbyhq.com/clerk",
+      "enabled": "Yes",
+      "notes": "Auth & user management for developers. SE / TAM / PM roles.",
+      "status": ""
+    },
+    {
+      "num": 93,
+      "company": "Inngest",
+      "careersUrl": "https://jobs.ashbyhq.com/inngest",
+      "enabled": "Yes",
+      "notes": "Durable workflow engine for serverless. DX/DevRel/Engineering hiring.",
+      "status": ""
+    },
+    {
+      "num": 94,
+      "company": "PlanetScale",
+      "careersUrl": "https://job-boards.greenhouse.io/planetscale",
+      "enabled": "Yes",
+      "notes": "Serverless MySQL platform. Customer Engineering, Engineering, Sales.",
+      "status": ""
+    },
+    {
+      "num": 95,
+      "company": "Zep AI",
+      "careersUrl": "https://www.getzep.com/careers",
+      "enabled": "Yes",
+      "notes": "Context engineering platform for AI agents. YC W24. Lead FDE + DevRel Lead roles. US-only currently.",
+      "status": ""
+    },
+    {
+      "num": 96,
+      "company": "Maxim AI",
+      "careersUrl": "https://www.getmaxim.ai/careers",
+      "enabled": "Yes",
+      "notes": "AI evaluation and observability platform. Bangalore-based, mostly on-site.",
+      "status": ""
+    },
+    {
+      "num": 97,
+      "company": "Espresso Systems",
+      "careersUrl": "https://jobs.lever.co/Espresso",
+      "enabled": "Yes",
+      "notes": "Web3 / ZK-proof sequencing infrastructure. Rust-preferred.",
+      "status": ""
+    },
+    {
+      "num": 98,
+      "company": "ReNK CHANNEL",
+      "careersUrl": "https://www.gittap.jp",
+      "enabled": "Yes",
+      "notes": "Japan — sourced via gittap.jp aggregator.",
+      "status": ""
+    },
+    {
+      "num": 99,
+      "company": "Shippio",
+      "careersUrl": "https://www.gittap.jp",
+      "enabled": "Yes",
+      "notes": "Japan logistics SaaS — sourced via gittap.jp aggregator.",
+      "status": ""
+    },
+    {
+      "num": 100,
+      "company": "StraitsX",
+      "careersUrl": "https://job-boards.eu.greenhouse.io/straitsx",
+      "enabled": "Yes",
+      "notes": "Singapore. Crypto payments / stablecoin infrastructure.",
+      "status": ""
+    },
+    {
+      "num": 101,
+      "company": "Sumsub",
+      "careersUrl": "https://careers.sumsub.com",
+      "enabled": "Yes",
+      "notes": "Remote APAC. KYC/AML compliance SaaS.",
+      "status": ""
+    },
+    {
+      "num": 102,
+      "company": "Tether",
+      "careersUrl": "https://careers.tether.io",
+      "enabled": "Yes",
+      "notes": "Remote worldwide. USDT issuer. AI disclaimer on all roles.",
+      "status": ""
+    },
+    {
+      "num": 103,
+      "company": "stakefish",
+      "careersUrl": "https://stakefish.com/careers",
+      "enabled": "Yes",
+      "notes": "Remote. Web3 staking infrastructure.",
+      "status": ""
+    }
+  ]
+}
