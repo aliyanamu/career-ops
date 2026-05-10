@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 import {
   AppBar,
   Toolbar,
@@ -17,13 +17,18 @@ import { SCHEMA } from './constants'
 
 const SCHEMA_SHEET_NAMES = Object.keys(SCHEMA)
 
+function sheetFromHash() {
+  const m = window.location.hash.match(/[#&]sheet=([^&]+)/)
+  return m ? decodeURIComponent(m[1]) : null
+}
+
+function setHash(sheetName) {
+  window.location.replace(`#sheet=${encodeURIComponent(sheetName)}`)
+}
+
 function StatusChip({ status, message }) {
   const colorMap = {
-    idle: 'default',
-    loading: 'info',
-    saving: 'warning',
-    saved: 'success',
-    error: 'error',
+    idle: 'default', loading: 'info', saving: 'warning', saved: 'success', error: 'error',
   }
   return (
     <Chip
@@ -48,6 +53,14 @@ export default function App() {
     logout,
   } = useWorkbookContext()
 
+  // Sync hash → activeSheet (runs on mount and on browser back/forward)
+  const syncFromHash = useCallback((allSheetNames) => {
+    const fromHash = sheetFromHash()
+    if (fromHash && allSheetNames.includes(fromHash)) {
+      setActiveSheet(fromHash)
+    }
+  }, [setActiveSheet])
+
   useEffect(() => {
     loadWorkbook()
   }, [loadWorkbook])
@@ -56,6 +69,28 @@ export default function App() {
   const sheetNames = workbook
     ? workbook.worksheets.map(ws => ws.name)
     : SCHEMA_SHEET_NAMES
+
+  // On workbook load: honour hash if present, else use default (Jobs)
+  useEffect(() => {
+    if (!workbook) return
+    const fromHash = sheetFromHash()
+    if (fromHash && sheetNames.includes(fromHash)) {
+      setActiveSheet(fromHash)
+    }
+  }, [workbook]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Keep hash in sync when activeSheet changes
+  useEffect(() => {
+    if (!activeSheet) return
+    if (sheetFromHash() !== activeSheet) setHash(activeSheet)
+  }, [activeSheet])
+
+  // Browser back / forward
+  useEffect(() => {
+    const onHashChange = () => syncFromHash(sheetNames)
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [sheetNames, syncFromHash])
 
   const activeTabIndex = Math.max(0, sheetNames.indexOf(activeSheet))
 
