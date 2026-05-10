@@ -181,7 +181,7 @@ export function useTracker() {
                   date: today, jobUrl: job.url ?? '',
                   cvPath: '', cvStatus: 'draft',
                   qa: '', videoRequired: 'no', videoNotes: '',
-                  videoStatus: 'pending', aiDisclaimer: 'no',
+                  videoStatus: '', aiDisclaimer: 'no',
                   submissionStatus: 'pending', notes: '', hide: '',
                 },
               }
