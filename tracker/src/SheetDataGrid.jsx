@@ -10,7 +10,10 @@ const GITHUB_BLOB = `https://github.com/${REPO_OWNER}/${REPO_NAME}/blob/${BRANCH
 
 const URL_FIELDS         = new Set(['url', 'jobUrl', 'appLink'])
 const GITHUB_PATH_FIELDS = new Set(['qa', 'cvPath', 'cvUsed', 'coverLetter'])
+const BOOLEAN_FIELDS     = new Set(['hide'])
 const NON_EDITABLE       = new Set(['num'])
+
+const toHideBool = (v) => v === true || v === 'Hidden' || v === 'Yes' || v === 'yes'
 
 function LinkCell({ value }) {
   if (!value) return null
@@ -96,7 +99,7 @@ function jobToRow(job, idx) {
     fitScore: job.fitScore ?? '',
     deadline: job.deadline ?? '',
     decision: job.decision ?? '',
-    hide: job.hide ?? '',
+    hide: toHideBool(job.hide),
     notes: job.notes ?? '',
   }
 }
@@ -121,7 +124,7 @@ function prepToRow(job, jobIdx) {
     aiDisclaimer: p.aiDisclaimer ?? '',
     submissionStatus: p.submissionStatus ?? '',
     notes: p.notes ?? '',
-    hide: p.hide ?? '',
+    hide: toHideBool(p.hide),
   }
 }
 
@@ -148,7 +151,7 @@ function appToRow(job, jobIdx) {
     nextAction: a.nextAction ?? '',
     followUpDate: a.followUpDate ?? '',
     notes: a.notes ?? '',
-    hide: a.hide ?? '',
+    hide: toHideBool(a.hide),
   }
 }
 
@@ -185,13 +188,16 @@ export function SheetDataGrid({ sheetName }) {
       const isUrl     = URL_FIELDS.has(field)
       const isPath    = GITHUB_PATH_FIELDS.has(field)
 
+      const isBool = BOOLEAN_FIELDS.has(field)
       const col = {
         field,
         headerName: field.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()).trim(),
-        minWidth: MIN_WIDTHS[field] ?? 120,
+        minWidth: isBool ? 70 : (MIN_WIDTHS[field] ?? 120),
         flex: WIDE_FIELDS.has(field) ? 2 : 1,
         editable: !NON_EDITABLE.has(field),
       }
+
+      if (isBool) { col.type = 'boolean'; return col }
 
       if (isDropdown) {
         col.type = 'singleSelect'
@@ -227,7 +233,7 @@ export function SheetDataGrid({ sheetName }) {
     }
 
     if (!showHidden && schema?.hide) {
-      result = result.filter(r => r.hide !== 'Hidden')
+      result = result.filter(r => !r.hide)
     }
     return result
   }, [jobs, companies, sheetName, schema, showHidden, dirtyCount])
@@ -238,14 +244,15 @@ export function SheetDataGrid({ sheetName }) {
     if (sheetName === 'Jobs') all = jobs.map((j, i) => jobToRow(j, i))
     else if (sheetName === 'Preparations') all = jobs.map((j, i) => j.preparation ? prepToRow(j, i) : null).filter(Boolean)
     else if (sheetName === 'Applications') all = jobs.map((j, i) => j.application ? appToRow(j, i) : null).filter(Boolean)
-    return all.filter(r => r.hide === 'Hidden').length
+    return all.filter(r => r.hide).length
   }, [jobs, companies, sheetName, schema, dirtyCount])
 
   const processRowUpdate = (newRow) => {
     const prevRow = rows.find(r => r.id === newRow.id) ?? {}
     for (const field of Object.keys(schema ?? {})) {
-      const oldVal = String(prevRow[field] ?? '')
-      const newVal = String(newRow[field] ?? '')
+      const isBool = BOOLEAN_FIELDS.has(field)
+      const oldVal = isBool ? Boolean(prevRow[field]) : String(prevRow[field] ?? '')
+      const newVal = isBool ? Boolean(newRow[field])  : String(newRow[field] ?? '')
       if (newVal !== oldVal) updateField(newRow._entity, newRow._idx, field, newVal)
     }
     return newRow

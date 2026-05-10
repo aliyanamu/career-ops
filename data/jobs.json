@@ -14,12 +14,7 @@
       "notes": "Simple application (CV drop only) — no prep needed. Loc: Remote (global) | Rust preferred (not required)",
       "role": "Software Engineer, Infrastructure",
       "company": {
-        "num": 97,
-        "company": "Espresso Systems",
-        "careersUrl": "https://jobs.lever.co/Espresso",
-        "enabled": "Yes",
-        "notes": "Web3 / ZK-proof sequencing infrastructure. Rust-preferred.",
-        "status": ""
+        "company": "Espresso Systems"
       },
       "preparation": null,
       "application": null
@@ -38,12 +33,7 @@
       "notes": "Loc: VN | verify: GLOBAL_OK (JSON-LD)",
       "role": "Backend Engineer - Wallets (100% Remote)",
       "company": {
-        "num": 102,
-        "company": "Tether",
-        "careersUrl": "https://careers.tether.io",
-        "enabled": "Yes",
-        "notes": "Remote worldwide. USDT issuer. AI disclaimer on all roles.",
-        "status": ""
+        "company": "Tether"
       },
       "preparation": {
         "date": "2026-05-06",
@@ -91,12 +81,7 @@
       "notes": "Loc: AE,CZ,EG,ES,HR,IN,IT,MY,NL,VN | verify: GLOBAL_OK (JSON-LD)",
       "role": "Senior Frontend Developer (100% Remote Worldwide)",
       "company": {
-        "num": 102,
-        "company": "Tether",
-        "careersUrl": "https://careers.tether.io",
-        "enabled": "Yes",
-        "notes": "Remote worldwide. USDT issuer. AI disclaimer on all roles.",
-        "status": ""
+        "company": "Tether"
       },
       "preparation": {
         "date": "2026-05-06",
@@ -144,12 +129,7 @@
       "notes": "Loc: AE,CH,ES,GR,IN,IT,NG,NL | verify: GLOBAL_OK (JSON-LD)",
       "role": "Senior Fullstack Developer (100% remote Worldwide)",
       "company": {
-        "num": 102,
-        "company": "Tether",
-        "careersUrl": "https://careers.tether.io",
-        "enabled": "Yes",
-        "notes": "Remote worldwide. USDT issuer. AI disclaimer on all roles.",
-        "status": ""
+        "company": "Tether"
       },
       "preparation": {
         "date": "2026-05-07",
@@ -159,7 +139,7 @@
         "qa": "prep/tether-senior-fullstack-developer-100-remote-worldwide-2026-05-07.md",
         "videoRequired": "TBD — check on submission",
         "videoNotes": "60-90s; open with Nespay multi-provider failover anecdote (no user impact); one sentence on backend-emphasis fullstack (vs. FE-only); one question: how the platform handles GPU job scheduling under contention. Bullets only — do not script.",
-        "videoStatus": "Not recorded",
+        "videoStatus": "recorded",
         "aiDisclaimer": "YES — rewrite all drafts in own voice before pasting",
         "submissionStatus": "Not submitted",
         "notes": "Score 4.0/5 — see reports/003-tether-fs-2026-05-07.md. Gaps (all preferred only): Kubernetes, Holepunch p2p, AI/ML infra.",
@@ -181,12 +161,7 @@
       "notes": "Loc: NO | verify: GLOBAL_OK (JSON-LD)",
       "role": "Senior Backend Developer",
       "company": {
-        "num": 102,
-        "company": "Tether",
-        "careersUrl": "https://careers.tether.io",
-        "enabled": "Yes",
-        "notes": "Remote worldwide. USDT issuer. AI disclaimer on all roles.",
-        "status": ""
+        "company": "Tether"
       },
       "preparation": null,
       "application": null
@@ -205,12 +180,7 @@
       "notes": "Loc: IT | verify: GLOBAL_OK (JSON-LD)",
       "role": "Senior Frontend Developer (100% remote)",
       "company": {
-        "num": 102,
-        "company": "Tether",
-        "careersUrl": "https://careers.tether.io",
-        "enabled": "Yes",
-        "notes": "Remote worldwide. USDT issuer. AI disclaimer on all roles.",
-        "status": ""
+        "company": "Tether"
       },
       "preparation": null,
       "application": null
@@ -3002,12 +2972,7 @@
       "notes": "(via GitTap)",
       "role": "Senior Full-Stack Engineer",
       "company": {
-        "num": 99,
-        "company": "Shippio",
-        "careersUrl": "https://www.gittap.jp",
-        "enabled": "Yes",
-        "notes": "Japan logistics SaaS — sourced via gittap.jp aggregator.",
-        "status": ""
+        "company": "Shippio"
       },
       "preparation": null,
       "application": null
@@ -3026,12 +2991,7 @@
       "notes": "(via GitTap)",
       "role": "Front End Engineer (Visa Support)",
       "company": {
-        "num": 98,
-        "company": "ReNK CHANNEL",
-        "careersUrl": "https://www.gittap.jp",
-        "enabled": "Yes",
-        "notes": "Japan — sourced via gittap.jp aggregator.",
-        "status": ""
+        "company": "ReNK CHANNEL"
       },
       "preparation": null,
       "application": null
@@ -3050,12 +3010,7 @@
       "notes": "Applied via LinkedIn Easy Apply 2026-05-07. User-flagged as ideal fit shape (2026-05-07)",
       "role": "Web3 / Full-stack Software Engineer",
       "company": {
-        "num": 103,
-        "company": "stakefish",
-        "careersUrl": "https://stakefish.com/careers",
-        "enabled": "Yes",
-        "notes": "Remote. Web3 staking infrastructure.",
-        "status": ""
+        "company": "stakefish"
       },
       "preparation": null,
       "application": {
@@ -3090,12 +3045,7 @@
       "notes": "Originally LinkedIn 4401055938 (Taipei entry-level); swapped to Jakarta Mid via Greenhouse",
       "role": "Mid Software Engineer - Blockchain",
       "company": {
-        "num": 100,
-        "company": "StraitsX",
-        "careersUrl": "https://job-boards.eu.greenhouse.io/straitsx",
-        "enabled": "Yes",
-        "notes": "Singapore. Crypto payments / stablecoin infrastructure.",
-        "status": ""
+        "company": "StraitsX"
       },
       "preparation": null,
       "application": {
@@ -3130,12 +3080,7 @@
       "notes": "Mandarin required (hard gap — currently learning). cv-default used. 45 wpm typing speed.",
       "role": "Technical Support Engineer (L3)",
       "company": {
-        "num": 101,
-        "company": "Sumsub",
-        "careersUrl": "https://careers.sumsub.com",
-        "enabled": "Yes",
-        "notes": "Remote APAC. KYC/AML compliance SaaS.",
-        "status": ""
+        "company": "Sumsub"
       },
       "preparation": null,
       "application": {

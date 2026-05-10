@@ -43,7 +43,8 @@ export function DashboardView() {
   const stats = useMemo(() => {
     if (!jobs) return null
 
-    const visible = jobs.filter(j => j.hide !== 'Hidden')
+    const isHidden = (v) => v === true || v === 'Hidden' || v === 'Yes' || v === 'yes'
+    const visible = jobs.filter(j => !isHidden(j.hide))
 
     // Applications by status
     const statusCounts = {}
