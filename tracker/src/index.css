@@ -12,3 +12,13 @@ body {
   height: 100vh;
   width: 100%;
 }
+
+/* AG Grid row colours — mirrors the old MUI DataGrid sx classes */
+.ag-theme-quartz .row-recommended { background-color: rgba(255, 193,   7, 0.18) !important; }
+.ag-theme-quartz .row-apply       { background-color: rgba( 76, 175,  80, 0.10) !important; }
+.ag-theme-quartz .row-saved       { background-color: rgba( 33, 150, 243, 0.08) !important; }
+.ag-theme-quartz .row-skip        { background-color: rgba(  0,   0,   0, 0.04) !important; color: rgba(0,0,0,0.38) !important; }
+.ag-theme-quartz .row-offer       { background-color: rgba(255, 193,   7, 0.20) !important; }
+.ag-theme-quartz .row-interview   { background-color: rgba( 76, 175,  80, 0.15) !important; }
+.ag-theme-quartz .row-applied     { background-color: rgba( 33, 150, 243, 0.10) !important; }
+.ag-theme-quartz .row-rejected    { background-color: rgba(244,  67,  54, 0.08) !important; color: rgba(0,0,0,0.38) !important; }
