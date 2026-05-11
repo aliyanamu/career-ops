@@ -3154,17 +3154,19 @@
     {
       "num": 132,
       "dateAdded": "2026-05-11",
-      "url": "https://jobs.ashbyhq.com/tem/9f448576-a9aa-4c38-b6eb-745b4cc1fc35",
+      "url": "https://jobs.ashbyhq.com/tem/262aa322-bc6f-4eee-a8ab-a5c95fb466ec",
       "source": "User-added (Ashby)",
       "elig": "",
-      "why": "ENERGY FINTECH • FULLSTACK • UK REMOTE (BLOCKER)",
-      "fitScore": "2.5",
+      "why": "ENERGY FINTECH • FULLSTACK • UK REMOTE (TZ BLOCKER)",
+      "fitScore": "3.0",
       "deadline": "",
       "decision": "pending",
       "hide": false,
-      "notes": "UK Remote hard blocker (GMT+0/+1 vs GMT+7). Node.js/React/AWS strong; Python gap. Score 4.0/5 if global remote confirmed.",
-      "role": "Senior Full Stack Engineer",
-      "company": "tem",
+      "notes": "React/Node.js strong; Python gap (and/or OK); AWS serverless gap. £64,600 or local equiv. Distributed Europe — TZ blocker. Score 4.0 if APAC hire confirmed.",
+      "role": "Full Stack Engineer",
+      "company": {
+        "company": "tem"
+      },
       "preparation": "",
       "application": ""
     }
