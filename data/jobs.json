@@ -123,7 +123,7 @@
       "fitScore": "5",
       "deadline": "",
       "decision": "apply",
-      "hide": "",
+      "hide": true,
       "notes": "Loc: AE,CH,ES,GR,IN,IT,NG,NL | verify: GLOBAL_OK (JSON-LD)",
       "role": "Senior Fullstack Developer (100% remote Worldwide)",
       "company": {
