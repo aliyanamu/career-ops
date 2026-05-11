@@ -3086,7 +3086,7 @@
       "fitScore": "3.8",
       "deadline": "",
       "decision": "easy_apply",
-      "hide": "",
+      "hide": true,
       "notes": "Fully remote. Vue3/TS/Webpack/Jest. Hana integrated Sumsub KYC SDK at Nespay — unique domain story. See reports/005-sumsub-2026-05-11.md",
       "role": "Senior Frontend (VueJS) Developer",
       "company": {
