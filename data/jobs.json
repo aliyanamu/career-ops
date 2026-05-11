@@ -63,7 +63,7 @@
         "nextAction": "Wait for recruiter response",
         "followUpDate": "2026-05-22",
         "notes": "Promoted from Preparations",
-        "hide": ""
+        "hide": true
       }
     },
     {
@@ -110,7 +110,7 @@
         "nextAction": "Wait for recruiter response",
         "followUpDate": "2026-05-22",
         "notes": "Promoted from Preparations",
-        "hide": ""
+        "hide": true
       }
     },
     {
