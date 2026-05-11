@@ -3160,15 +3160,40 @@
       "why": "ENERGY FINTECH • FULLSTACK • UK REMOTE (TZ BLOCKER)",
       "fitScore": "3.5",
       "deadline": "",
-      "decision": "pending",
-      "hide": false,
+      "decision": "apply",
+      "hide": true,
       "notes": "React/Node.js strong; Python gap (and/or OK); AWS serverless gap. £64,600 or local equiv. Distributed Europe — TZ blocker. Score 4.0 if APAC hire confirmed.",
       "role": "Full Stack Engineer",
       "company": {
         "company": "tem"
       },
-      "preparation": "",
-      "application": ""
+      "preparation": {
+        "date": "2026-05-11",
+        "jobUrl": "https://jobs.ashbyhq.com/tem/262aa322-bc6f-4eee-a8ab-a5c95fb466ec",
+        "cvPath": "cv-default.pdf",
+        "qa": "prep/tem-full-stack-engineer-2026-05-11.md",
+        "videoRequired": "no",
+        "submissionStatus": "submitted",
+        "notes": "Score 3.5/5 — see reports/008-tem-2026-05-11.md",
+        "hide": true
+      },
+      "application": {
+        "dateApplied": "2026-05-11",
+        "location": "Remote (United Kingdom)",
+        "source": "User-added (Ashby)",
+        "jobUrl": "https://jobs.ashbyhq.com/tem/262aa322-bc6f-4eee-a8ab-a5c95fb466ec",
+        "status": "applied",
+        "lastUpdate": "2026-05-11",
+        "cvUsed": "cv-default.pdf",
+        "coverLetter": "",
+        "appLink": "",
+        "salary": "£64,600 / year or local equiv.",
+        "contact": "",
+        "nextAction": "Wait for recruiter response",
+        "followUpDate": "2026-05-25",
+        "notes": "Promoted from Preparations",
+        "hide": true
+      }
     }
   ]
 }
