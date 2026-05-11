@@ -509,7 +509,7 @@
       "company": "SumUp",
       "careersUrl": "https://job-boards.greenhouse.io/sumup",
       "enabled": "No",
-      "notes": "Berlin / London. Payments fintech, EU + LATAM hiring. OFFICE-FIRST — not remote. Flexible work case-by-case via interview. Excluded from scans (relocation friction + many duplicates).",
+      "notes": "Berlin / London. Payments fintech, EU + LATAM hiring. OFFICE-FIRST \u2014 not remote. Flexible work case-by-case via interview. Excluded from scans (relocation friction + many duplicates).",
       "status": "Excluded"
     },
     {
@@ -581,7 +581,7 @@
       "company": "Wayve",
       "careersUrl": "https://job-boards.greenhouse.io/wayve",
       "enabled": "No",
-      "notes": "London UK / Tokyo. Self-driving AV — hardware/automotive/embedded stack (C/C++, Linux BSP, Yocto, QNX, AUTOSAR, SoC bring-up). NOT relevant to user's web/backend profile. Excluded from scans.",
+      "notes": "London UK / Tokyo. Self-driving AV \u2014 hardware/automotive/embedded stack (C/C++, Linux BSP, Yocto, QNX, AUTOSAR, SoC bring-up). NOT relevant to user's web/backend profile. Excluded from scans.",
       "status": "Excluded"
     },
     {
@@ -781,7 +781,7 @@
       "company": "ReNK CHANNEL",
       "careersUrl": "https://www.gittap.jp",
       "enabled": "Yes",
-      "notes": "Japan — sourced via gittap.jp aggregator.",
+      "notes": "Japan \u2014 sourced via gittap.jp aggregator.",
       "status": ""
     },
     {
@@ -789,7 +789,7 @@
       "company": "Shippio",
       "careersUrl": "https://www.gittap.jp",
       "enabled": "Yes",
-      "notes": "Japan logistics SaaS — sourced via gittap.jp aggregator.",
+      "notes": "Japan logistics SaaS \u2014 sourced via gittap.jp aggregator.",
       "status": ""
     },
     {
