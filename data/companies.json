@@ -823,6 +823,30 @@
       "enabled": "Yes",
       "notes": "Remote. Web3 staking infrastructure.",
       "status": ""
+    },
+    {
+      "num": 104,
+      "company": "UpGuard",
+      "careersUrl": "https://jobs.lever.co/upguard",
+      "enabled": "No",
+      "notes": "Cybersecurity risk platform. Go required in backend stack. No visa sponsorship.",
+      "status": "Excluded"
+    },
+    {
+      "num": 105,
+      "company": "VicRoads",
+      "careersUrl": "https://rlservices.wd105.myworkdayjobs.com/External_Careers",
+      "enabled": "No",
+      "notes": "Victorian state govt roads authority. On-site Melbourne. Requires Australian work rights.",
+      "status": "Excluded"
+    },
+    {
+      "num": 106,
+      "company": "Junction",
+      "careersUrl": "https://www.ycombinator.com/companies/junction/jobs",
+      "enabled": "No",
+      "notes": "YC-backed health data API ($18M Series A). Formerly Vital. Engineering hub GMT only + no sponsorship. Tech fit strong \u2014 watch for APAC hub.",
+      "status": "Watchlist"
     }
   ]
 }
