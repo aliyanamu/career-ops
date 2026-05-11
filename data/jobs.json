@@ -3126,7 +3126,7 @@
       "fitScore": "4.5",
       "deadline": "",
       "decision": "easy_apply",
-      "hide": false,
+      "hide": true,
       "notes": "Structural blockers: GMT/IE/PT physical required + no sponsorship. Tech fit 4.0–4.5/5. Bookmarked — apply if location changes or APAC hub opens.",
       "role": "Product Engineer / Fullstack Engineer",
       "company": {
