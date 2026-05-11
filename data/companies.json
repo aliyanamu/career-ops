@@ -572,9 +572,9 @@
       "num": 72,
       "company": "Pigment",
       "careersUrl": "https://jobs.lever.co/pigment",
-      "enabled": "Yes",
-      "notes": "Paris FR / NYC / London. AI-powered FP&A planning platform.",
-      "status": ""
+      "enabled": "No",
+      "notes": "Paris FR / NYC / London. AI-powered FP&A planning platform. IT/Engineering roles are hybrid (UK or France-based). Not compatible with remote-only from Indonesia.",
+      "status": "Excluded"
     },
     {
       "num": 73,
