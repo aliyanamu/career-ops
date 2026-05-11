@@ -9,7 +9,7 @@
       "why": "WEB3 • USER PICK • Rust-preferred (C++/Haskell ok)",
       "fitScore": "5",
       "deadline": "",
-      "decision": "recommended",
+      "decision": "easy_apply",
       "hide": "",
       "notes": "Simple application (CV drop only) — no prep needed. Loc: Remote (global) | Rust preferred (not required)",
       "role": "Software Engineer, Infrastructure",
@@ -17,7 +17,23 @@
         "company": "Espresso Systems"
       },
       "preparation": null,
-      "application": null
+      "application": {
+        "dateApplied": "2026-05-11",
+        "location": "",
+        "source": "User-added (Lever)",
+        "jobUrl": "https://jobs.lever.co/Espresso/bf359a02-5579-4d8b-a254-23c989f67af5",
+        "status": "applied",
+        "lastUpdate": "2026-05-11",
+        "cvUsed": "cv-default.pdf",
+        "coverLetter": "",
+        "appLink": "",
+        "salary": "",
+        "contact": "",
+        "nextAction": "",
+        "followUpDate": "",
+        "notes": "",
+        "hide": ""
+      }
     },
     {
       "num": 2,
