@@ -46,7 +46,7 @@
         "aiDisclaimer": "YES — rewrite all drafts in own voice before pasting",
         "submissionStatus": "submitted",
         "notes": "Score 4.5/5 — see reports/001-tether-2026-05-06.md",
-        "hide": ""
+        "hide": true
       },
       "application": {
         "dateApplied": "2026-05-08",
@@ -93,7 +93,7 @@
         "aiDisclaimer": "YES — rewrite all drafts in own voice before pasting",
         "submissionStatus": "submitted",
         "notes": "Score 4.2/5 — see reports/002-tether-2026-05-06.md. Gaps: Redux + SASS not on CV; brush up Redux Toolkit before interview.",
-        "hide": ""
+        "hide": true
       },
       "application": {
         "dateApplied": "2026-05-08",
