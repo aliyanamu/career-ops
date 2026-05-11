@@ -10,7 +10,7 @@
       "fitScore": "5",
       "deadline": "",
       "decision": "easy_apply",
-      "hide": "",
+      "hide": true,
       "notes": "Simple application (CV drop only) — no prep needed. Loc: Remote (global) | Rust preferred (not required)",
       "role": "Software Engineer, Infrastructure",
       "company": {
