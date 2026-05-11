@@ -3126,7 +3126,7 @@
       "fitScore": "2",
       "deadline": "",
       "decision": "skip",
-      "hide": false,
+      "hide": true,
       "notes": "BLOCKER: Go required (mandatory backend lang) + Aug 2023 ghost posting + no visa sponsorship",
       "role": "Software Engineer (Multiple Levels)",
       "company": {
@@ -3145,7 +3145,7 @@
       "fitScore": "2",
       "deadline": "",
       "decision": "skip",
-      "hide": false,
+      "hide": true,
       "notes": "BLOCKER: Melbourne on-site (govt agency) + Australian work rights required. Good stack: React/TS/Node/Next.js/GraphQL/AWS.",
       "role": "Senior Full Stack Developer",
       "company": {
