@@ -476,9 +476,9 @@
       "num": 60,
       "company": "GetYourGuide",
       "careersUrl": "https://job-boards.greenhouse.io/getyourguide",
-      "enabled": "Yes",
-      "notes": "Berlin. Travel marketplace, ML & data platform roles.",
-      "status": ""
+      "enabled": "No",
+      "notes": "Berlin. Travel marketplace. IT/Engineering roles are hybrid (Berlin-based). No IT openings in APAC. Not compatible with remote-only from Indonesia.",
+      "status": "Excluded"
     },
     {
       "num": 61,
@@ -847,6 +847,14 @@
       "enabled": "No",
       "notes": "YC-backed health data API ($18M Series A). Formerly Vital. Engineering hub GMT only + no sponsorship. Tech fit strong — watch for APAC hub.",
       "status": "Watchlist"
+    },
+    {
+      "num": 107,
+      "company": "tem",
+      "careersUrl": "https://jobs.ashbyhq.com/tem",
+      "enabled": "No",
+      "notes": "$75M Series B (Feb 2026, Lightspeed). AI energy transaction platform (Stripe of energy). UK Remote only — GMT+0/+1 blocker. Verify global remote before applying.",
+      "status": "Evaluated"
     }
   ]
 }

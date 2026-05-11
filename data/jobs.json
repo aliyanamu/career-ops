@@ -639,8 +639,8 @@
       "why": "Tier A",
       "fitScore": "3",
       "deadline": "",
-      "decision": "pending",
-      "hide": "",
+      "decision": "skip",
+      "hide": true,
       "notes": "Loc:  | verify: unclear",
       "role": "Associate Software Engineer",
       "company": {
@@ -663,8 +663,8 @@
       "why": "Tier A",
       "fitScore": "5",
       "deadline": "",
-      "decision": "recommended",
-      "hide": "",
+      "decision": "skip",
+      "hide": true,
       "notes": "Loc:  | verify: unclear",
       "role": "Senior Software Engineer (Backend focused)",
       "company": {
@@ -687,8 +687,8 @@
       "why": "Tier A",
       "fitScore": "5",
       "deadline": "",
-      "decision": "recommended",
-      "hide": "",
+      "decision": "skip",
+      "hide": true,
       "notes": "Loc:  | verify: unclear",
       "role": "Senior Software Engineer (Backend focused) - Supply",
       "company": {
@@ -711,8 +711,8 @@
       "why": "Tier A",
       "fitScore": "3",
       "deadline": "",
-      "decision": "pending",
-      "hide": "",
+      "decision": "skip",
+      "hide": true,
       "notes": "Loc:  | verify: unclear",
       "role": "Senior Software Engineer - (Frontend)",
       "company": {
@@ -735,8 +735,8 @@
       "why": "Tier A",
       "fitScore": "3",
       "deadline": "",
-      "decision": "pending",
-      "hide": "",
+      "decision": "skip",
+      "hide": true,
       "notes": "Loc:  | verify: unclear",
       "role": "Senior Software Engineer,  Developer Enablement",
       "company": {
@@ -759,8 +759,8 @@
       "why": "Tier A",
       "fitScore": "3",
       "deadline": "",
-      "decision": "pending",
-      "hide": "",
+      "decision": "skip",
+      "hide": true,
       "notes": "Loc:  | verify: unclear",
       "role": "Senior Software Engineer, Revenue Platform (Backend Focused)",
       "company": {
@@ -783,8 +783,8 @@
       "why": "Tier A",
       "fitScore": "3",
       "deadline": "",
-      "decision": "pending",
-      "hide": "",
+      "decision": "skip",
+      "hide": true,
       "notes": "Loc:  | verify: unclear",
       "role": "Senior Software Engineer, Search Platform",
       "company": {
@@ -807,8 +807,8 @@
       "why": "Tier A",
       "fitScore": "3",
       "deadline": "",
-      "decision": "pending",
-      "hide": "",
+      "decision": "skip",
+      "hide": true,
       "notes": "Loc:  | verify: unclear",
       "role": "Senior Software Engineer, User Profiles (Backend Focused)",
       "company": {
@@ -831,8 +831,8 @@
       "why": "Tier A",
       "fitScore": "3",
       "deadline": "",
-      "decision": "pending",
-      "hide": "",
+      "decision": "skip",
+      "hide": true,
       "notes": "Loc:  | verify: unclear",
       "role": "Software Engineer,  Developer Enablement",
       "company": {
@@ -3150,6 +3150,23 @@
         "notes": "",
         "hide": ""
       }
+    },
+    {
+      "num": 132,
+      "dateAdded": "2026-05-11",
+      "url": "https://jobs.ashbyhq.com/tem/9f448576-a9aa-4c38-b6eb-745b4cc1fc35",
+      "source": "User-added (Ashby)",
+      "elig": "",
+      "why": "ENERGY FINTECH • FULLSTACK • UK REMOTE (BLOCKER)",
+      "fitScore": "2.5",
+      "deadline": "",
+      "decision": "pending",
+      "hide": false,
+      "notes": "UK Remote hard blocker (GMT+0/+1 vs GMT+7). Node.js/React/AWS strong; Python gap. Score 4.0/5 if global remote confirmed.",
+      "role": "Senior Full Stack Engineer",
+      "company": "tem",
+      "preparation": "",
+      "application": ""
     }
   ]
 }
