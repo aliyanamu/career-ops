@@ -132,9 +132,9 @@
       "num": 17,
       "company": "Glean",
       "careersUrl": "https://job-boards.greenhouse.io/gleanwork",
-      "enabled": "Yes",
-      "notes": "Enterprise AI search.",
-      "status": ""
+      "enabled": "No",
+      "notes": "Excluded: remote roles are region-locked (local work auth required per region). Enterprise AI search.",
+      "status": "Excluded"
     },
     {
       "num": 18,
@@ -269,7 +269,7 @@
       "company": "Make.com (Celonis)",
       "careersUrl": "https://www.make.com/en/careers",
       "enabled": "No",
-      "notes": "Celonis parent company. Automation platform. Mostly hybrid roles — no remote for ID-based applicants. Excluded.",
+      "notes": "Celonis parent company. Automation platform. Mostly hybrid roles \u2014 no remote for ID-based applicants. Excluded.",
       "status": "Excluded"
     },
     {
@@ -509,7 +509,7 @@
       "company": "SumUp",
       "careersUrl": "https://job-boards.greenhouse.io/sumup",
       "enabled": "No",
-      "notes": "Berlin / London. Payments fintech, EU + LATAM hiring. OFFICE-FIRST — not remote. Flexible work case-by-case via interview. Excluded from scans (relocation friction + many duplicates).",
+      "notes": "Berlin / London. Payments fintech, EU + LATAM hiring. OFFICE-FIRST \u2014 not remote. Flexible work case-by-case via interview. Excluded from scans (relocation friction + many duplicates).",
       "status": "Excluded"
     },
     {
@@ -581,7 +581,7 @@
       "company": "Wayve",
       "careersUrl": "https://job-boards.greenhouse.io/wayve",
       "enabled": "No",
-      "notes": "London UK / Tokyo. Self-driving AV — hardware/automotive/embedded stack (C/C++, Linux BSP, Yocto, QNX, AUTOSAR, SoC bring-up). NOT relevant to user's web/backend profile. Excluded from scans.",
+      "notes": "London UK / Tokyo. Self-driving AV \u2014 hardware/automotive/embedded stack (C/C++, Linux BSP, Yocto, QNX, AUTOSAR, SoC bring-up). NOT relevant to user's web/backend profile. Excluded from scans.",
       "status": "Excluded"
     },
     {
@@ -781,7 +781,7 @@
       "company": "ReNK CHANNEL",
       "careersUrl": "https://www.gittap.jp",
       "enabled": "Yes",
-      "notes": "Japan — sourced via gittap.jp aggregator.",
+      "notes": "Japan \u2014 sourced via gittap.jp aggregator.",
       "status": ""
     },
     {
@@ -789,7 +789,7 @@
       "company": "Shippio",
       "careersUrl": "https://www.gittap.jp",
       "enabled": "Yes",
-      "notes": "Japan logistics SaaS — sourced via gittap.jp aggregator.",
+      "notes": "Japan logistics SaaS \u2014 sourced via gittap.jp aggregator.",
       "status": ""
     },
     {
@@ -845,7 +845,7 @@
       "company": "Junction",
       "careersUrl": "https://www.ycombinator.com/companies/junction/jobs",
       "enabled": "No",
-      "notes": "YC-backed health data API ($18M Series A). Formerly Vital. Engineering hub GMT only + no sponsorship. Tech fit strong — watch for APAC hub.",
+      "notes": "YC-backed health data API ($18M Series A). Formerly Vital. Engineering hub GMT only + no sponsorship. Tech fit strong \u2014 watch for APAC hub.",
       "status": "Watchlist"
     },
     {
@@ -853,7 +853,7 @@
       "company": "tem",
       "careersUrl": "https://jobs.ashbyhq.com/tem",
       "enabled": "No",
-      "notes": "$75M Series B (Lightspeed, Atomico, Allianz, Hitachi). AI energy transaction platform (Stripe of energy). Fully remote; 90+ global team. Engineering distributed across Europe — TZ overlap unverified for GMT+7. Verify before applying.",
+      "notes": "$75M Series B (Lightspeed, Atomico, Allianz, Hitachi). AI energy transaction platform (Stripe of energy). Fully remote; 90+ global team. Engineering distributed across Europe \u2014 TZ overlap unverified for GMT+7. Verify before applying.",
       "status": "Evaluated"
     }
   ]
