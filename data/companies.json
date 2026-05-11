@@ -268,9 +268,9 @@
       "num": 34,
       "company": "Make.com (Celonis)",
       "careersUrl": "https://www.make.com/en/careers",
-      "enabled": "Yes",
-      "notes": "Celonis parent company. Automation platform.",
-      "status": ""
+      "enabled": "No",
+      "notes": "Celonis parent company. Automation platform. Mostly hybrid roles — no remote for ID-based applicants. Excluded.",
+      "status": "Excluded"
     },
     {
       "num": 35,

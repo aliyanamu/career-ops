@@ -303,8 +303,8 @@
       "why": "Tier A",
       "fitScore": "3",
       "deadline": "",
-      "decision": "pending",
-      "hide": "",
+      "decision": "skip",
+      "hide": true,
       "notes": "Loc:  | verify: unclear",
       "role": "Senior Software Engineer - Java",
       "company": {
@@ -327,8 +327,8 @@
       "why": "Tier A",
       "fitScore": "3",
       "deadline": "",
-      "decision": "pending",
-      "hide": "",
+      "decision": "skip",
+      "hide": true,
       "notes": "Loc:  | verify: unclear",
       "role": "Senior Software Engineer - Orchestration and Automation",
       "company": {
@@ -351,8 +351,8 @@
       "why": "Tier A",
       "fitScore": "3",
       "deadline": "",
-      "decision": "pending",
-      "hide": "",
+      "decision": "skip",
+      "hide": true,
       "notes": "Loc:  | verify: unclear",
       "role": "Senior Software Engineer - Provisioning and Licensing",
       "company": {
