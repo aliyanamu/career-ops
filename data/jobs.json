@@ -208,7 +208,7 @@
       "fitScore": "3.5",
       "deadline": "",
       "decision": "easy_apply",
-      "hide": "",
+      "hide": true,
       "notes": "Evaluated 2026-05-11. Score 3.5/5. Internal tooling (dashboards, automations, AI workflows). Stack match strong (TS/React/PG). Not Web3/fintech. Supabase brand + comp upside. Report: reports/009-supabase-2026-05-11.md",
       "role": "Software Engineer - Support Tooling (APAC/AMER)",
       "company": {
