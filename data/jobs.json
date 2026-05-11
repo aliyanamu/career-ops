@@ -3069,7 +3069,7 @@
       "why": "FINTECH • KYC domain • Remote • Vue3 ≡ React/TS",
       "fitScore": "3.8",
       "deadline": "",
-      "decision": "recommended",
+      "decision": "easy_apply",
       "hide": "",
       "notes": "Fully remote. Vue3/TS/Webpack/Jest. Hana integrated Sumsub KYC SDK at Nespay — unique domain story. See reports/005-sumsub-2026-05-11.md",
       "role": "Senior Frontend (VueJS) Developer",
@@ -3082,7 +3082,23 @@
         "status": ""
       },
       "preparation": null,
-      "application": null
+      "application": {
+        "dateApplied": "2026-05-11",
+        "location": "",
+        "source": "career-ops scan",
+        "jobUrl": "https://careers.sumsub.com/jobs/7677054-senior-frontend-vuejs-developer",
+        "status": "applied",
+        "lastUpdate": "2026-05-11",
+        "cvUsed": "cv-default.pdf",
+        "coverLetter": "",
+        "appLink": "",
+        "salary": "",
+        "contact": "",
+        "nextAction": "",
+        "followUpDate": "",
+        "notes": "",
+        "hide": ""
+      }
     }
   ]
 }
