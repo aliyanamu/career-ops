@@ -2082,7 +2082,7 @@
         "nextAction": "Wait for recruiter response",
         "followUpDate": "",
         "notes": "",
-        "hide": ""
+        "hide": true
       }
     },
     {
@@ -2206,7 +2206,7 @@
         "nextAction": "Wait for recruiter response",
         "followUpDate": "2026-05-22",
         "notes": "cv-default used. 45 wpm typing speed noted. Screenshot uploaded on application page. Promoted from Preparations",
-        "hide": ""
+        "hide": true
       }
     },
     {
@@ -2265,7 +2265,7 @@
         "nextAction": "Wait for recruiter response",
         "followUpDate": "",
         "notes": "",
-        "hide": ""
+        "hide": true
       }
     },
     {
