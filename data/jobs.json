@@ -2372,7 +2372,7 @@
         "aiDisclaimer": "",
         "cvPath": "cv-default.pdf",
         "date": "2026-07-08",
-        "hide": "",
+        "hide": true,
         "jobUrl": "https://job-boards.greenhouse.io/startale/jobs/5026706008",
         "notes": "",
         "qa": "prep/startale-senior-frontend-engineer-2026-07-08.md",
@@ -2388,12 +2388,12 @@
         "cvUsed": "cv-default.pdf",
         "dateApplied": "2026-07-08",
         "followUpDate": "2026-07-22",
-        "hide": "",
+        "hide": false,
         "jobUrl": "https://job-boards.greenhouse.io/startale/jobs/5026706008",
         "lastUpdate": "2026-07-08",
         "location": "Japan/Remote/Singapore (remote from Indonesia)",
         "nextAction": "Wait for recruiter response",
-        "notes": "Promoted from Preparations",
+        "notes": "Promoted from Preparations. Prep: prep/startale-senior-frontend-engineer-2026-07-08.md",
         "salary": "$60,000 USD (location-adjusted)",
         "source": "career-ops scan (Greenhouse)",
         "status": "applied"
@@ -2424,16 +2424,32 @@
         "aiDisclaimer": "",
         "cvPath": "cv-default.pdf",
         "date": "2026-07-08",
-        "hide": "",
+        "hide": true,
         "jobUrl": "https://job-boards.greenhouse.io/startale/jobs/5291409008",
         "notes": "",
         "qa": "prep/startale-typescript-backend-engineer-2026-07-08.md",
-        "submissionStatus": "Not submitted",
+        "submissionStatus": "submitted",
         "videoNotes": "",
         "videoRequired": "",
         "videoStatus": ""
       },
-      "application": null
+      "application": {
+        "appLink": "https://job-boards.greenhouse.io/startale/jobs/5291409008",
+        "contact": "Startale Recruiting (applied via Greenhouse portal)",
+        "coverLetter": "No",
+        "cvUsed": "cv-default.pdf",
+        "dateApplied": "2026-07-08",
+        "followUpDate": "2026-07-22",
+        "hide": false,
+        "jobUrl": "https://job-boards.greenhouse.io/startale/jobs/5291409008",
+        "lastUpdate": "2026-07-08",
+        "location": "Japan/Remote/Singapore (remote from Indonesia)",
+        "nextAction": "Wait for recruiter response",
+        "notes": "Promoted from Preparations. Prep: prep/startale-typescript-backend-engineer-2026-07-08.md",
+        "salary": "",
+        "source": "career-ops scan (Greenhouse)",
+        "status": "applied"
+      }
     }
   ]
 }

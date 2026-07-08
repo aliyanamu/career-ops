@@ -4,7 +4,7 @@
 **Location:** Japan; Remote; Singapore (applying remote from Indonesia; LinkedIn notes East-Asia-preferred, overridden)
 **Stack:** Senior TS backend; APIs, data pipelines, DBs, blockchain indexers; Web3 wallet (Sony/SBI-backed DeFi L1 + Startale super-app)
 **Fit:** 5/5 Web3
-**Status:** Draft — not yet submitted
+**Status:** Applied 2026-07-08 (GitHub / Telegram / salary entered directly in the Greenhouse form; not recorded here)
 
 > Contact PII (phone, email) intentionally kept out of this file — it lives in `config/profile.yml` (this repo is public).
 
@@ -51,5 +51,5 @@ In my current role I built and operate the payment backend for a B2B crypto-to-f
 - **EDU Chain Hackathon (May 2025):** 3rd place, DeFi track.
 - **AWS Certified Cloud Practitioner** (2024–2027).
 
-## Still needed before submitting
-- GitHub URL (required) · Telegram (or N/A) · salary number · confirm TS years + availability
+## Completed at submission (values not stored here)
+- GitHub URL · Telegram · base salary (USD) · TS years · availability
