@@ -2346,6 +2346,78 @@
         "notes": "Promoted from Preparations",
         "hide": false
       }
+    },
+    {
+      "num": 133,
+      "company": {
+        "num": 108,
+        "company": "Startale Group",
+        "enabled": "Yes",
+        "careersUrl": "https://job-boards.greenhouse.io/startale",
+        "status": "",
+        "notes": "Web3. Sony/SBI-backed (Strium DeFi L1 + Startale super-app). Tokyo/NY/Singapore, English-operating. LinkedIn: East-Asia-preferred (user override: apply anyway)."
+      },
+      "role": "Senior Frontend Engineer",
+      "url": "https://job-boards.greenhouse.io/startale/jobs/5026706008",
+      "source": "career-ops scan (Greenhouse)",
+      "dateAdded": "2026-07-08",
+      "deadline": "",
+      "decision": "apply",
+      "fitScore": "5",
+      "elig": "",
+      "hide": "",
+      "why": "WEB3 • React+TS wallet/AA dApps • APAC-remote ⭐",
+      "notes": "Loc: Japan/Remote/Singapore | TS + TanStack Start/Query + Zustand + React + Playwright | 2-4y | elig: East-Asia-pref (overridden)",
+      "preparation": {
+        "aiDisclaimer": "",
+        "cvPath": "cv-default.pdf",
+        "date": "2026-07-08",
+        "hide": "",
+        "jobUrl": "https://job-boards.greenhouse.io/startale/jobs/5026706008",
+        "notes": "",
+        "qa": "",
+        "submissionStatus": "Not submitted",
+        "videoNotes": "",
+        "videoRequired": "",
+        "videoStatus": ""
+      },
+      "application": null
+    },
+    {
+      "num": 134,
+      "company": {
+        "num": 108,
+        "company": "Startale Group",
+        "enabled": "Yes",
+        "careersUrl": "https://job-boards.greenhouse.io/startale",
+        "status": "",
+        "notes": "Web3. Sony/SBI-backed (Strium DeFi L1 + Startale super-app). Tokyo/NY/Singapore, English-operating. LinkedIn: East-Asia-preferred (user override: apply anyway)."
+      },
+      "role": "TypeScript Backend Engineer",
+      "url": "https://job-boards.greenhouse.io/startale/jobs/5291409008",
+      "source": "career-ops scan (Greenhouse)",
+      "dateAdded": "2026-07-08",
+      "deadline": "",
+      "decision": "apply",
+      "fitScore": "5",
+      "elig": "",
+      "hide": "",
+      "why": "WEB3 • Senior TS backend • Sony/SBI-backed DeFi L1 ⭐",
+      "notes": "Loc: Japan/Remote/Singapore | TS APIs + data pipelines + blockchain indexers + wallet | senior IC | elig: East-Asia-pref (overridden)",
+      "preparation": {
+        "aiDisclaimer": "",
+        "cvPath": "cv-default.pdf",
+        "date": "2026-07-08",
+        "hide": "",
+        "jobUrl": "https://job-boards.greenhouse.io/startale/jobs/5291409008",
+        "notes": "",
+        "qa": "",
+        "submissionStatus": "Not submitted",
+        "videoNotes": "",
+        "videoRequired": "",
+        "videoStatus": ""
+      },
+      "application": null
     }
   ]
 }

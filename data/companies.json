@@ -855,6 +855,14 @@
       "enabled": "No",
       "notes": "$75M Series B (Lightspeed, Atomico, Allianz, Hitachi). AI energy transaction platform (Stripe of energy). Fully remote; 90+ global team. Engineering distributed across Europe — TZ overlap unverified for GMT+7. Verify before applying.",
       "status": "Evaluated"
+    },
+    {
+      "num": 108,
+      "company": "Startale Group",
+      "enabled": "Yes",
+      "careersUrl": "https://job-boards.greenhouse.io/startale",
+      "status": "",
+      "notes": "Web3. Sony/SBI-backed (Strium DeFi L1 + Startale super-app). Tokyo/NY/Singapore, English-operating. LinkedIn: East-Asia-preferred (user override: apply anyway)."
     }
   ]
 }
