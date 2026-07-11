@@ -344,6 +344,7 @@ export function SheetDataGrid({ sheetName }) {
           onCellValueChanged={onCellValueChanged}
           onColumnResized={onColumnResized}
           onColumnMoved={saveColState}
+          onSortChanged={saveColState}
           rowClassRules={rowClassRules}
           suppressPaginationPanel
           defaultColDef={{ resizable: true, sortable: true }}
