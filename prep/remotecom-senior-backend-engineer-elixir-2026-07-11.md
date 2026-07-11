@@ -101,3 +101,5 @@ Remote is heavily values-driven (expect values-based interview questions). Value
 | **Ambition** (pursue ambitious goals with energy) | Reach, grow, push | Pivoted from geophysics → software; self-directed learner (Korean to reading-fluency, now Elixir); 3rd place DeFi hackathon; targeting a senior remote role at a global company. |
 
 **Interview tip:** If asked "which value resonates most?", lead with **Ownership** (your indexer redesign story is the cleanest proof) or **Kindness** (their #1 — the code-review-as-questions framing). Avoid claiming all five equally; pick two you can defend with a story.
+
+- **CV enhancement (later):** bullets are descriptive but lack metrics — the one gap vs. reviewed ATS examples. When you have rough numbers (indexer throughput/day, payment volume, automation time saved, uptime/latency), tell me and I'll quantify them. NOT fabricating any.
