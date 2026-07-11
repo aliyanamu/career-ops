@@ -81,6 +81,7 @@ function parseGreenhouse(json, companyName) {
     url: j.absolute_url || '',
     company: companyName,
     location: j.location?.name || '',
+    posted: j.first_published || null,
   }));
 }
 
@@ -91,6 +92,7 @@ function parseAshby(json, companyName) {
     url: j.jobUrl || '',
     company: companyName,
     location: j.location || '',
+    posted: j.publishedAt || null,
   }));
 }
 
@@ -101,6 +103,7 @@ function parseLever(json, companyName) {
     url: j.hostedUrl || '',
     company: companyName,
     location: j.categories?.location || '',
+    posted: j.createdAt ? new Date(j.createdAt).toISOString() : null,
   }));
 }
 
@@ -265,6 +268,11 @@ async function main() {
   const companies = config.tracked_companies || [];
   const titleFilter = buildTitleFilter(config.title_filter);
 
+  // Age gate: only keep jobs posted within max_age_days (default 30).
+  // Jobs with no posted date are kept (can't age-check them).
+  const maxAgeDays = config.max_age_days ?? 30;
+  const cutoffMs = Date.now() - maxAgeDays * 86_400_000;
+
   // 2. Filter to enabled companies with detectable APIs
   const targets = companies
     .filter(c => c.enabled !== false)
@@ -285,6 +293,7 @@ async function main() {
   const date = new Date().toISOString().slice(0, 10);
   let totalFound = 0;
   let totalFiltered = 0;
+  let totalStale = 0;
   let totalDupes = 0;
   const newOffers = [];
   const errors = [];
@@ -299,6 +308,10 @@ async function main() {
       for (const job of jobs) {
         if (!titleFilter(job.title)) {
           totalFiltered++;
+          continue;
+        }
+        if (job.posted && new Date(job.posted).getTime() < cutoffMs) {
+          totalStale++;
           continue;
         }
         if (seenUrls.has(job.url)) {
@@ -335,6 +348,7 @@ async function main() {
   console.log(`Companies scanned:     ${targets.length}`);
   console.log(`Total jobs found:      ${totalFound}`);
   console.log(`Filtered by title:     ${totalFiltered} removed`);
+  console.log(`Older than ${maxAgeDays}d:         ${totalStale} skipped`);
   console.log(`Duplicates:            ${totalDupes} skipped`);
   console.log(`New offers added:      ${newOffers.length}`);
 
