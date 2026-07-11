@@ -103,3 +103,58 @@ Remote is heavily values-driven (expect values-based interview questions). Value
 **Interview tip:** If asked "which value resonates most?", lead with **Ownership** (your indexer redesign story is the cleanest proof) or **Kindness** (their #1 — the code-review-as-questions framing). Avoid claiming all five equally; pick two you can defend with a story.
 
 - **CV enhancement (later):** bullets are descriptive but lack metrics — the one gap vs. reviewed ATS examples. When you have rough numbers (indexer throughput/day, payment volume, automation time saved, uptime/latency), tell me and I'll quantify them. NOT fabricating any.
+
+---
+
+## FULL APPLICATION FORM — all 24 questions (answer key)
+
+> ⚠️ Rewrite every free-text answer in your own voice before pasting. Remote screens hard for authentic, non-AI answers — Q21 is literally a test of that. Q17/Q21/Q20 must reflect YOUR real memory; the drafts below are scaffolding, not final copy. Confirm the ⚠️ selects.
+
+### Contact & basics (Q1–7)
+1. **First Name:** Hana
+2. **Last Name:** Aliyah Mufidah
+3. **Email:** _(config/profile.yml)_
+4. **Phone:** _(config/profile.yml)_
+5. **Resume/CV:** upload `output/cv-hana-aliyah-mufidah-remotecom-2026-07-11.pdf`
+6. **Cover Letter (optional):** skip — Q14/Q15 cover it. (Or paste a 4-line note if you want.)
+7. **LinkedIn (optional):** ⚠️ your LinkedIn URL, or leave blank. (Note: form asks LinkedIn, not GitHub — add GitHub in the cover note or Q14 if you want it seen: github.com/aliyanamu)
+
+### Selects (Q8–13)
+8. **How did you hear about Remote?** ⚠️ pick truthfully (LinkedIn job posting / Other). 
+9. **Non-compete preventing you working for us?** No ⚠️ confirm.
+10. **Country located in:** Indonesia
+11. **Legally eligible to work where you'll work from?** Yes
+12. **Status:** "I am a Citizen/Permanent Resident of the Country where I plan to live and work from"
+13. **Pronouns:** she/her/hers ⚠️ confirm.
+
+### Backend experience selects (Q16, Q18)
+16. **Delivered production backend professionally?** → **"Yes, with other languages"** (Node.js/NestJS/TypeScript — honest; not Elixir/Ruby/functional).
+18. **Non-technical stakeholder conversations?** Yes.
+
+### Compliance (Q22–24)
+22. **Consent to brighthire.ai interview recording?** Yes (recommended; declining is allowed and doesn't hurt) ⚠️ your call.
+23. **Privacy notice:** Acknowledge/Confirm.
+24. **California applicant notice:** "I am not a California resident".
+
+---
+
+### Free-text answers (DRAFTS — make them yours)
+
+**Q14 — What makes you interested in working with Remote?**
+Two things. First, the mission: I'm based in Indonesia, and Remote is the reason a company can hire someone like me anywhere, compliantly. I've felt the friction of global employment from the candidate side, so building the platform that removes it is genuinely motivating. Second, how Remote works — fully async, high-ownership, low ceremony. That's already how I operate: I own my payments backend end to end and organize my own work without standups. And the stack lines up with mine (React/Next.js, PostgreSQL, AWS, CI/CD), with Elixir as the one piece I'm excited to grow into. (GitHub: github.com/aliyanamu)
+
+**Q15 — You've seen our values page. What resonates most?**
+Yes, I read it. **Ownership** resonates most. My best work happens when I own an outcome, not a ticket — with our payments indexer I noticed the single detection loop was missing and mistiming deposits, and rather than just flagging it I redesigned it into separate forward, backfill, and confirmation workers so settlement was correct and recoverable. **Kindness** (your #1) is a close second: I try to run code reviews as questions rather than verdicts — assuming good intent and asking what someone was going for before assuming a mistake.
+
+**Q17 — Elixir experience / how you'd learn it / what appeals about FP?**
+I'll be transparent: I haven't shipped Elixir in production — my backend is Node.js/NestJS/TypeScript. But the way Elixir thinks is already how I build. My payments indexer is essentially independent, message-passing workers with supervision and recovery — which is the OTP/GenServer/supervision-tree model. To learn it I'd start exactly there: Elixir + pattern matching, then Phoenix and Ecto (which map onto my current Postgres/API work), and I'd rebuild a small version of that indexer in idiomatic OTP so I'm learning the paradigm on a problem I already understand. What appeals to me about FP is immutability and explicitness — fewer hidden-state bugs and correctness you can reason about, which matters a lot when you move real money. Happy to do a take-home or pairing in Elixir to show how fast I ramp.
+
+**Q19 — A product/project you led through collaboration with stakeholders, product, design.**
+At ION I led improvements to the employee time-off and work-timeline system on our work-management platform. It began as a product problem: managers were drowning in one-by-one approvals, and time-off ignored public holidays and team objectives, so plans clashed. I worked with product to define the real need, with design on how bulk approvals and the timeline should feel, and with HR/managers to validate edge cases — then built bulk approvals and integrated time-off with public holidays and objectives so the timeline reflected reality. It turned a manual, error-prone flow into something managers could act on at a glance. My takeaway: the engineering was the easy part — the value came from getting the spec right with non-technical stakeholders first.
+
+**Q20 — Proudest achievement from your last two years. Why?**
+The multi-chain settlement indexer I built at Nespay. Our B2B payments platform settles invoices from on-chain USDT deposits across five chains, and a naive single detection loop was missing deposits and settling at the wrong time. I redesigned it into three coordinated workers — a forward worker polling recent blocks every ~5s, a backfill worker closing gaps, and a confirmation worker that waits for chain-specific finality before anything settles — behind an RPC layer, with Redis for dedup and Postgres for crash recovery, firing webhooks that reconcile each transfer to the open invoice by amount. I'm proud of it because it moves real money and it's correct: verification and recovery are built in, and it went from fragile to something I trust. It's my clearest example of owning a system end to end and improving it through deliberate iteration.
+
+**Q21 — Do you use AI assistants? Describe a time you rejected/rewrote AI output — what did it miss, how did you catch it?**
+⚠️ REPLACE with a true incident if this isn't exactly right — but this one fits your indexer work:
+Yes, I use AI assistants (Claude/Copilot) daily to move faster. One specific case: while building the settlement indexer, I had an assistant draft the deposit-detection logic and it treated a transaction as settled the moment it appeared in a block. That's wrong for money movement — it ignored chain finality and reorganizations, so a deposit could be "settled" and then disappear in a reorg. I caught it because I know finality semantics: different chains need different confirmation depths, and you can't settle on first sight. I rewrote it to split detection from confirmation — detect on appearance, settle only after chain-specific confirmations — which became the confirmation worker. My rule: AI is great for scaffolding, but I stay the gatekeeper on anything correctness- or money-critical, because it optimizes for plausible code, not for a domain's real failure modes.
