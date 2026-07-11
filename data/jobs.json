@@ -2488,6 +2488,25 @@
       },
       "preparation": null,
       "application": null
+    },
+    {
+      "num": 142,
+      "dateAdded": "2026-07-11",
+      "url": "https://jobs.ashbyhq.com/imagineart/d0fbd7bd-d333-4f73-bd85-ee08d35bf10f",
+      "source": "User-added (Ashby)",
+      "elig": "Indonesia · remote",
+      "why": "REMOTE-ID • Weaker than #141: requires strong Go + C/C++, under-levels her",
+      "fitScore": "2.5",
+      "deadline": "",
+      "decision": "saved",
+      "hide": false,
+      "notes": "Vyro/ImagineArt Go role. Same location as #141 but REQUIRES strong Go (she: 6mo) + C/C++ systems (she: none), 2-4yr = under-leveled/lower pay. Senior Backend (#141) is the better target here. Report 015.",
+      "role": "Go Lang Developer",
+      "company": {
+        "company": "ImagineArt / Vyro"
+      },
+      "preparation": null,
+      "application": null
     }
   ]
 }
