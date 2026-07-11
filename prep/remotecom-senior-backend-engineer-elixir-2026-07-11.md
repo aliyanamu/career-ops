@@ -33,16 +33,16 @@ Remote's **must-haves gate on transferable strengths, not Elixir.** Their asks m
 - **First name:** Hana
 - **Last name:** Aliyah Mufidah
 - **Email / Phone:** _(private — see config/profile.yml)_
-- **Resume/CV:** ⚠️ TODO — generate tailored `output/cv-hana-aliyah-mufidah-remotecom-2026-07-11.pdf` (see PDF step)
-- **GitHub URL:** ⚠️ TODO — required, provide it
+- **Resume/CV:** output/cv-hana-aliyah-mufidah-remotecom-2026-07-11.pdf
+- **GitHub URL:** https://github.com/aliyanamu
 - **City:** Yogyakarta, Indonesia
 
 ## Pre-screen selects
 
 - **Years of professional backend/full-stack experience:** 6+ years
 - **Years of Elixir:** 0 — learning (see plan). Frame: functional paradigm transferable from JS/TS.
-- **Base salary expectation (USD):** ⚠️ TODO — decide a number/range before submitting
-- **Availability to start:** ~1 month (confirm Nespay notice period)
+- **Base salary expectation (USD):** $60,000
+- **Availability to start:** Immediately
 - **Legally authorized to work where domiciled?** Yes (Indonesian citizen, working remotely)
 - **Require visa sponsorship?** No (fully remote from Indonesia)
 
@@ -82,5 +82,21 @@ I work fully async and self-directed (no daily standups needed) and I lean on AI
 - **AWS Certified Cloud Practitioner** (2024). **EDU Chain Hackathon** — 3rd, DeFi track (2025).
 
 ## Before submitting — you must provide
-- **GitHub URL** · **base salary expectation (USD)** · confirm **availability** · tailored **CV PDF** (next step)
+- ✅ GitHub · ✅ salary ($60k) · ✅ available immediately · ✅ CV PDF generated
 - Rewrite the free-text drafts in your own voice (Remote values authentic, non-AI-pasted answers).
+
+---
+
+## Values match — Remote's 5 values
+
+Remote is heavily values-driven (expect values-based interview questions). Values: **Kindness, Ownership, Excellence, Transparency, Ambition** — Kindness is #1. Your honest proof for each:
+
+| Value | What Remote means | Your proof (use in interviews) |
+|-------|-------------------|-------------------------------|
+| **Kindness** (#1 — give benefit of the doubt, ask don't assume) | Assume good intent, clarify instead of accusing | Peer code reviews framed as questions, not verdicts; collaborated across Support/Infra/Eng at ION to ship work-management features. "I default to asking what was intended before assuming a mistake." |
+| **Ownership** (invested, take initiative, drive solutions) | Own outcomes, not tickets | Own the Nespay payments backend end-to-end; **noticed the single detection loop was gappy and drove the redesign myself** into forward/backfill/confirmation workers. Set up AWS + CI/CD unprompted; led core architecture. |
+| **Excellence** (exceptional quality) | Correctness, reliability, high bar | Indexer built correctness-first: verification (confirmation worker) + crash recovery + reconciliation by amount, moving real money. Stabilized validation across the app. AWS Certified. |
+| **Transparency** (open comms, clear info, build trust) | Write things down, share openly | Async, documented, webhook/event-driven observability; and — meta — I'm openly transparent about the Elixir gap and my plan to close it, rather than hiding it. |
+| **Ambition** (pursue ambitious goals with energy) | Reach, grow, push | Pivoted from geophysics → software; self-directed learner (Korean to reading-fluency, now Elixir); 3rd place DeFi hackathon; targeting a senior remote role at a global company. |
+
+**Interview tip:** If asked "which value resonates most?", lead with **Ownership** (your indexer redesign story is the cleanest proof) or **Kindness** (their #1 — the code-review-as-questions framing). Avoid claiming all five equally; pick two you can defend with a story.
