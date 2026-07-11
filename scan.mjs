@@ -17,6 +17,7 @@
 
 import { readFileSync, writeFileSync, appendFileSync, existsSync, mkdirSync } from 'fs';
 import yaml from 'js-yaml';
+import { classifyLiveness, isDeadLink } from './liveness-core.mjs';
 const parseYaml = yaml.load;
 
 // ── Config ──────────────────────────────────────────────────────────
@@ -135,6 +136,31 @@ function buildTitleFilter(titleFilter) {
     const hasNegative = negative.some(k => lower.includes(k));
     return hasPositive && !hasNegative;
   };
+}
+
+// ── Liveness gate ───────────────────────────────────────────────────
+// Greenhouse/Ashby/Lever APIs can list roles whose PUBLIC posting was
+// already pulled (404 / redirect-to-dead). Fetch the real URL and drop
+// hard-dead ones. Only run on new offers (the small final set), not all jobs.
+
+async function checkLive(url) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, {
+      signal: controller.signal,
+      redirect: 'follow',
+      headers: { 'User-Agent': 'Mozilla/5.0 (career-ops liveness check)' },
+    });
+    const html = await res.text().catch(() => '');
+    const bodyText = html.replace(/<[^>]+>/g, ' ');
+    return classifyLiveness({ status: res.status, finalUrl: res.url, bodyText });
+  } catch (err) {
+    // Our own timeout/network failure — never drop the offer on that.
+    return { result: 'uncertain', reason: `fetch failed: ${err.message}` };
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 // ── Dedup ───────────────────────────────────────────────────────────
@@ -273,6 +299,9 @@ async function main() {
   const maxAgeDays = config.max_age_days ?? 30;
   const cutoffMs = Date.now() - maxAgeDays * 86_400_000;
 
+  // Liveness gate on by default; set check_liveness: false in portals.yml to skip.
+  const checkLiveness = config.check_liveness !== false;
+
   // 2. Filter to enabled companies with detectable APIs
   const targets = companies
     .filter(c => c.enabled !== false)
@@ -335,6 +364,25 @@ async function main() {
 
   await parallelFetch(tasks, CONCURRENCY);
 
+  // 4b. Liveness gate — drop offers whose public posting is dead (404/redirect/expired)
+  let totalDead = 0;
+  if (checkLiveness && newOffers.length > 0) {
+    const checks = await parallelFetch(
+      newOffers.map(o => async () => ({ o, live: await checkLive(o.url) })),
+      CONCURRENCY,
+    );
+    const alive = [];
+    for (const { o, live } of checks) {
+      if (isDeadLink(live)) {
+        totalDead++;
+        continue;
+      }
+      alive.push(o);
+    }
+    newOffers.length = 0;
+    newOffers.push(...alive);
+  }
+
   // 5. Write results
   if (!dryRun && newOffers.length > 0) {
     appendToPipeline(newOffers);
@@ -350,6 +398,7 @@ async function main() {
   console.log(`Filtered by title:     ${totalFiltered} removed`);
   console.log(`Older than ${maxAgeDays}d:         ${totalStale} skipped`);
   console.log(`Duplicates:            ${totalDupes} skipped`);
+  if (checkLiveness) console.log(`Dead postings:         ${totalDead} dropped`);
   console.log(`New offers added:      ${newOffers.length}`);
 
   if (errors.length > 0) {

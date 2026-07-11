@@ -2469,44 +2469,6 @@
         "company": "OKX"
       },
       "notes": "Live but unfinished JD (placeholder template, no reqs). Likely trading-backend, uncertain fit. Monitor / ask recruiter. Report 013."
-    },
-    {
-      "dateAdded": "2026-07-11",
-      "source": "career-ops scan (Greenhouse)",
-      "elig": "",
-      "deadline": "",
-      "hide": false,
-      "preparation": null,
-      "application": null,
-      "num": 139,
-      "url": "https://job-boards.greenhouse.io/okx/jobs/7786389003",
-      "fitScore": "2.0",
-      "decision": "saved",
-      "why": "SKIP • Actually mobile iOS/Android; US location",
-      "role": "Senior SWE, AI Trading (San Jose)",
-      "company": {
-        "company": "OKX"
-      },
-      "notes": "Title misleading — body is a Mobile (iOS/Android) engineer role. Wrong stack. No report."
-    },
-    {
-      "dateAdded": "2026-07-11",
-      "source": "career-ops scan (Greenhouse)",
-      "elig": "",
-      "deadline": "",
-      "hide": true,
-      "preparation": null,
-      "application": null,
-      "num": 140,
-      "url": "https://job-boards.greenhouse.io/okx/jobs/7795773003",
-      "fitScore": "2.0",
-      "decision": "saved",
-      "why": "SKIP • Data-eng (Hadoop/Spark/Flink) + Staff",
-      "role": "Staff/Senior Staff Web3 Big Data Engineer (HK/SG)",
-      "company": {
-        "company": "OKX"
-      },
-      "notes": "Big-data platform role, 7+yr big data, Java/Scala. Wrong specialization despite APAC+Web3. No report."
     }
   ]
 }

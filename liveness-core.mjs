@@ -46,6 +46,14 @@ function hasApplyControl(controls = []) {
   return controls.some((control) => APPLY_PATTERNS.some((pattern) => pattern.test(control)));
 }
 
+// Decide whether a classified result should be dropped from a scan.
+// Conservative: drop only hard-dead signals (404/410, expired patterns,
+// redirect-to-listing). KEEP 'uncertain' and thin-content pages — those are
+// usually JS SPAs, not dead roles, and we don't want false drops.
+export function isDeadLink({ result, reason = '' } = {}) {
+  return result === 'expired' && !/insufficient content/i.test(reason);
+}
+
 export function classifyLiveness({ status = 0, finalUrl = '', bodyText = '', applyControls = [] } = {}) {
   if (status === 404 || status === 410) {
     return { result: 'expired', reason: `HTTP ${status}` };
