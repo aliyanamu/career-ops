@@ -2507,6 +2507,25 @@
       },
       "preparation": null,
       "application": null
+    },
+    {
+      "num": 143,
+      "dateAdded": "2026-07-11",
+      "url": "https://job-boards.greenhouse.io/remotecom/jobs/7774669003",
+      "source": "User-added (Greenhouse)",
+      "elig": "Remote SE-Asia (Indonesia)",
+      "why": "TOP PICK • Indonesia-eligible, strong co + stock, React/Next/PG/AWS stack; Elixir gap NOT a must-have",
+      "fitScore": "4.0",
+      "deadline": "",
+      "decision": "apply",
+      "hide": false,
+      "notes": "Remote.com Sr Backend (Elixir). Best lead: Remote-SE Asia (no visa), reputable co + stock options. Surrounding stack is hers (React/Next/Postgres/AWS/CI-CD). Only gap = Elixir, which is NOT in must-haves (they train polyglots). Must-haves (AI/automation/fundamentals/PG/CI-CD) she meets. Report 016.",
+      "role": "Senior Backend Engineer (Elixir)",
+      "company": {
+        "company": "Remote.com"
+      },
+      "preparation": null,
+      "application": null
     }
   ]
 }
