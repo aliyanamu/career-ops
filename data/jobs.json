@@ -2551,7 +2551,7 @@
       "source": "career-ops scan (Greenhouse)",
       "elig": "",
       "deadline": "",
-      "hide": false,
+      "hide": true,
       "preparation": null,
       "application": null,
       "num": 140,
