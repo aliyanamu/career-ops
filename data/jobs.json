@@ -2524,7 +2524,19 @@
       "company": {
         "company": "Remote.com"
       },
-      "preparation": null,
+      "preparation": {
+        "date": "2026-07-11",
+        "jobUrl": "https://job-boards.greenhouse.io/remotecom/jobs/7774669003",
+        "cvPath": "",
+        "qa": "",
+        "videoRequired": "no",
+        "videoNotes": "",
+        "videoStatus": "",
+        "aiDisclaimer": "no",
+        "submissionStatus": "pending",
+        "notes": "Score 4.0/5 — reports/016-remotecom-2026-07-11.md. Lead: automation/AI + React/Next/PG/AWS; address Elixir as learning plan (not a must-have).",
+        "hide": ""
+      },
       "application": null
     }
   ]
