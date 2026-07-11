@@ -41,7 +41,8 @@ Remote's **must-haves gate on transferable strengths, not Elixir.** Their asks m
 
 - **Years of professional backend/full-stack experience:** 6+ years
 - **Years of Elixir:** 0 — learning (see plan). Frame: functional paradigm transferable from JS/TS.
-- **Base salary expectation (USD):** $60,000
+- **Base salary expectation (USD):** $75,000
+  - Backed by Remote's OWN published band for this role in **Indonesia (Bandung): $51,850–$116,650**. $75k = mid-band, defensible, still easy-approve. Negotiate from here; do NOT anchor at $60k (near floor). Remote policy: pays above in-location rates.
 - **Availability to start:** Immediately
 - **Legally authorized to work where domiciled?** Yes (Indonesian citizen, working remotely)
 - **Require visa sponsorship?** No (fully remote from Indonesia)
@@ -82,7 +83,7 @@ I work fully async and self-directed (no daily standups needed) and I lean on AI
 - **AWS Certified Cloud Practitioner** (2024). **EDU Chain Hackathon** — 3rd, DeFi track (2025).
 
 ## Before submitting — you must provide
-- ✅ GitHub · ✅ salary ($60k) · ✅ available immediately · ✅ CV PDF generated
+- ✅ GitHub · ✅ salary ($75k, mid-band) · ✅ available immediately · ✅ CV PDF generated
 - Rewrite the free-text drafts in your own voice (Remote values authentic, non-AI-pasted answers).
 
 ---
