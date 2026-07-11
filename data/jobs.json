@@ -2469,6 +2469,25 @@
         "company": "OKX"
       },
       "notes": "Live but unfinished JD (placeholder template, no reqs). Likely trading-backend, uncertain fit. Monitor / ask recruiter. Report 013."
+    },
+    {
+      "num": 141,
+      "dateAdded": "2026-07-11",
+      "url": "https://jobs.ashbyhq.com/imagineart/be92b6af-3442-4a9e-b26e-7760882664d0",
+      "source": "User-added (Ashby)",
+      "elig": "Indonesia · remote",
+      "why": "REMOTE-ID • Perfect location BUT distributed-systems/architect stretch",
+      "fitScore": "3.5",
+      "deadline": "",
+      "decision": "saved",
+      "hide": false,
+      "notes": "Fully remote from Indonesia, $35M ARR GenAI. Asks 5+yr (fits). GAP: role core = Kafka/queues/distributed workers/Go — not her product-fullstack/Web3 depth. Apply IF she has real async/systems story. Report 014.",
+      "role": "Senior Backend Engineer / Architect",
+      "company": {
+        "company": "ImagineArt"
+      },
+      "preparation": null,
+      "application": null
     }
   ]
 }
