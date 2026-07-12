@@ -42,7 +42,7 @@ Remote's **must-haves gate on transferable strengths, not Elixir.** Their asks m
 ## Pre-screen selects
 
 - **Years of professional backend/full-stack experience:** 6+ years
-- **Years of Elixir:** 0 — learning (see plan). Frame: functional paradigm transferable from JS/TS.
+- **Years of Elixir:** 0 (no experience). If the form asks how you'd approach it, use Q4 (honest, conditional). Do NOT claim you are currently learning it.
 - **Base salary expectation (USD):** $75,000
   - Backed by Remote's OWN published band for this role in **Indonesia (Bandung): **$51,850–$**116,650**. $75k = mid-band, defensible, still easy-approve. Negotiate from here; do NOT anchor at$60k (near floor). Remote policy: pays above in-location rates.
 - **Availability to start:** Immediately
