@@ -2538,25 +2538,6 @@
         "hide": ""
       },
       "application": null
-    },
-    {
-      "num": 144,
-      "dateAdded": "2026-07-12",
-      "url": "https://apply.workable.com/coinlist/j/FB4052F8B9/",
-      "source": "User-added (Workable)",
-      "elig": "US only (remote)",
-      "why": "Best STACK fit (TS/Next+Elixir+AWS+crypto) BUT US-only location, confirm ID eligibility",
-      "fitScore": "3.0",
-      "deadline": "",
-      "decision": "saved",
-      "hide": false,
-      "notes": "CoinList product engineer, greenfield crypto. Stack ~4.5 (TS/Next core + Elixir/Phoenix + AWS, same as Remote.com so prep transfers). Blocker: US-only remote, likely needs US work auth. Confirm they hire intl contractors from Indonesia before prepping. Report 017.",
-      "role": "Senior Software Engineer (Product)",
-      "company": {
-        "company": "CoinList"
-      },
-      "preparation": null,
-      "application": null
     }
   ]
 }
