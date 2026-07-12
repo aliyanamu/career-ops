@@ -25,14 +25,15 @@ This file accumulates your best interview stories over time. Each evaluation (Bl
 **Best for questions about:** [list of question types this story answers]
 -->
 
-### [Systems / Reliability] The multi-chain settlement indexer
+### [Systems / Reliability] The multi-chain block indexer (relay service)
 **Source:** Report #016 — Remote.com — Senior Backend Engineer (Elixir)
-**S:** B2B crypto payments needed to settle invoices from on-chain USDT deposits across 5 chains; a naive single loop missed and mis-timed detections.
-**T:** Detect deposits reliably in real time and only settle when truly final, without double-counting or losing state on crashes.
-**A:** Split into three coordinated workers — forward (5s polling of recent blocks), backfill (gap closing), confirmation (chain-specific finality) — behind an RPC layer, Redis for dedup, PostgreSQL for crash recovery, webhooks reconciling each transfer to the open invoice by amount.
-**R:** Correct, real-time settlement moving real money; verification and recovery built in.
-**Reflection:** Started as one loop; the worker separation came from instrumenting where detection was slow/gappy and closing those gaps deliberately.
-**Best for:** systems thinking, reliability, worker/queue design, "close the loop on quality", handling scale/correctness tradeoffs.
+**S:** A B2B crypto payments backend needed a service to watch the chain and tell other services when a transaction had been paid. The first version tried to store everything it scanned, and PostgreSQL kept bloating with data we didn't need.
+**T:** Relay on-chain payment data reliably, recover from gaps and outages, and stay cheap to run without hoarding data.
+**A:** Redesigned it around what the service actually needs: a forward indexer for real-time block scanning, a configurable backward indexer that fills gaps and can re-scan more than a week back after an outage, and a periodic cleanup job that prunes data older than a few days. Redis dedup so each transaction only reports once (the backward indexer re-scans overlapping ranges on purpose).
+**R:** A lean relay that does one job well, recovers from outages via configurable backfill, and keeps the database healthy.
+**Reflection:** The win was scoping it down. It only needs to relay and forget, not store forever, and designing to that kept it simple and cheap.
+**Best for:** systems thinking, reliability, worker/job design, resource-conscious design, "keep it simple on purpose", outage recovery.
+**Do NOT say:** settlement, chain finality, confirmation worker, reorgs, "moves real money" — that framing is inaccurate. See memory `nespay-indexer-architecture`.
 
 ### [Automation] HRIS→platform integration sync
 **Source:** Report #016 — Remote.com — Senior Backend Engineer (Elixir)
