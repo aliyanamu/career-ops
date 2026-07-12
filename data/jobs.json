@@ -2365,7 +2365,7 @@
       "decision": "apply",
       "fitScore": "5",
       "elig": "",
-      "hide": "",
+      "hide": true,
       "why": "WEB3 • React+TS wallet/AA dApps • APAC-remote ⭐",
       "notes": "Loc: Japan/Remote/Singapore | TS + TanStack Start/Query + Zustand + React + Playwright | 2-4y | elig: East-Asia-pref (overridden)",
       "preparation": {
@@ -2417,7 +2417,7 @@
       "decision": "apply",
       "fitScore": "5",
       "elig": "",
-      "hide": "",
+      "hide": true,
       "why": "WEB3 • Senior TS backend • Sony/SBI-backed DeFi L1 ⭐",
       "notes": "Loc: Japan/Remote/Singapore | TS APIs + data pipelines + blockchain indexers + wallet | senior IC | elig: East-Asia-pref (overridden)",
       "preparation": {
@@ -2518,7 +2518,7 @@
       "fitScore": "4.0",
       "deadline": "",
       "decision": "apply",
-      "hide": false,
+      "hide": true,
       "notes": "Remote.com Sr Backend (Elixir). Best lead: Remote-SE Asia (no visa), reputable co + stock options. Surrounding stack is hers (React/Next/Postgres/AWS/CI-CD). Only gap = Elixir, which is NOT in must-haves (they train polyglots). Must-haves (AI/automation/fundamentals/PG/CI-CD) she meets. Report 016.",
       "role": "Senior Backend Engineer (Elixir)",
       "company": {
@@ -2535,9 +2535,25 @@
         "aiDisclaimer": "no",
         "submissionStatus": "pending",
         "notes": "Score 4.0/5 — reports/016-remotecom-2026-07-11.md. Lead: automation/AI + React/Next/PG/AWS; address Elixir as learning plan (not a must-have).",
-        "hide": ""
+        "hide": true
       },
-      "application": null
+      "application": {
+        "dateApplied": "2026-07-12",
+        "location": "",
+        "source": "User-added (Greenhouse)",
+        "jobUrl": "https://job-boards.greenhouse.io/remotecom/jobs/7774669003",
+        "status": "applied",
+        "lastUpdate": "2026-07-12",
+        "cvUsed": "output/cv-hana-aliyah-mufidah-remotecom-2026-07-11.pdf",
+        "coverLetter": "",
+        "appLink": "",
+        "salary": "",
+        "contact": "",
+        "nextAction": "Wait for recruiter response",
+        "followUpDate": "",
+        "notes": "Promoted from Preparations",
+        "hide": ""
+      }
     }
   ]
 }
