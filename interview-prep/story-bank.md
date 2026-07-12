@@ -29,11 +29,11 @@ This file accumulates your best interview stories over time. Each evaluation (Bl
 **Source:** Report #016 — Remote.com — Senior Backend Engineer (Elixir)
 **S:** A B2B crypto payments backend needed a service to watch the chain and tell other services when a transaction had been paid. The first version tried to store everything it scanned, and PostgreSQL kept bloating with data we didn't need.
 **T:** Relay on-chain payment data reliably, recover from gaps and outages, and stay cheap to run without hoarding data.
-**A:** Redesigned it around what the service actually needs: a forward indexer for real-time block scanning, a configurable backward indexer that fills gaps and can re-scan more than a week back after an outage, and a periodic cleanup job that prunes data older than a few days. Redis dedup so each transaction only reports once (the backward indexer re-scans overlapping ranges on purpose).
+**A:** Built it in Go. Redesigned it around what the service actually needs: a forward indexer for real-time block scanning, a configurable backward indexer that fills gaps and can re-scan more than a week back after an outage, and a periodic cleanup job that prunes data older than a few days. Redis dedup so each transaction only reports once (the backward indexer re-scans overlapping ranges on purpose). A separate NestJS backend consumes its webhooks and powers the dashboard.
 **R:** A lean relay that does one job well, recovers from outages via configurable backfill, and keeps the database healthy.
 **Reflection:** The win was scoping it down. It only needs to relay and forget, not store forever, and designing to that kept it simple and cheap.
 **Best for:** systems thinking, reliability, worker/job design, resource-conscious design, "keep it simple on purpose", outage recovery.
-**Do NOT say:** settlement, chain finality, confirmation worker, reorgs, "moves real money" — that framing is inaccurate. See memory `nespay-indexer-architecture`.
+**Do NOT say:** settlement, chain finality, confirmation worker, reorgs, "moves real money" — that framing is inaccurate. Indexer = **Go**; the consumer backend = NestJS (don't tag the indexer as Node/Nest). See memory `nespay-indexer-architecture`.
 
 ### [Automation] HRIS→platform integration sync
 **Source:** Report #016 — Remote.com — Senior Backend Engineer (Elixir)
