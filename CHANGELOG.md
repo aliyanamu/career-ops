@@ -1,5 +1,57 @@
 # Changelog
 
+## [1.8.0](https://github.com/aliyanamu/career-ops/compare/career-ops-v1.7.0...career-ops-v1.8.0) (2026-07-12)
+
+
+### Features
+
+* add scan freshness gate; Japan pivot plan; OKX/Fireblocks evals ([706adda](https://github.com/aliyanamu/career-ops/commit/706addacc5304f5f5929293566b0f2f5d7337a3a))
+* auto-create Applications/Preparations rows on decision/status change ([3c3259b](https://github.com/aliyanamu/career-ops/commit/3c3259bf80c7b784d225ba0cc69896abc1bb65f8))
+* CV Summary — click any tailored CV to preview it in the viewer ([aa424d0](https://github.com/aliyanamu/career-ops/commit/aa424d05b030915b46407d0b430cd4bfc25dbd17))
+* CV Summary — embed cv-default.pdf via GitHub API as native PDF viewer ([abddd4d](https://github.com/aliyanamu/career-ops/commit/abddd4d34ca2b2d33aa689f91915a44df36b5a8e))
+* CV Summary — paste/edit/copy CV stored in localStorage ([cbd5de5](https://github.com/aliyanamu/career-ops/commit/cbd5de570bf8154400b4d11d18983c9d984ffa6d))
+* dropdown cells show labels, store canonical values ([418791a](https://github.com/aliyanamu/career-ops/commit/418791abec58558add6c77c8e4db23de3606d47a))
+* dropdown id/value split for Jobs.decision ([87d429b](https://github.com/aliyanamu/career-ops/commit/87d429b909068e4795228aca7efdfbcf12482662))
+* evaluate ImagineArt Senior Backend (remote Indonesia) — 3.5/5 ([f471aa9](https://github.com/aliyanamu/career-ops/commit/f471aa98a60ea592c4e2cc569d26a214138ac41a))
+* evaluate ImagineArt/Vyro Go Lang Developer — 2.5/5 (vs Senior Backend) ([857c1e4](https://github.com/aliyanamu/career-ops/commit/857c1e47cab6e4c3fd0cf9fd9c1d44de405f5366))
+* evaluate Remote.com Sr Backend (Elixir) — 4.0/5, TOP PICK ([c1e598d](https://github.com/aliyanamu/career-ops/commit/c1e598d90c33d12f5f1c25852e5f8bf702ac4c1a))
+* evaluate Sumsub Senior Frontend (VueJS) Developer, add to Jobs list ([8420f21](https://github.com/aliyanamu/career-ops/commit/8420f21b017626cdcbc4f4dde90788d92abb803e))
+* id/value split for Preparations and Applications dropdowns ([a3de925](https://github.com/aliyanamu/career-ops/commit/a3de92531e5d921cb952a9657b364d25b808327e))
+* liveness gate in scan + prune hard-blocked jobs from dashboard ([6f18735](https://github.com/aliyanamu/career-ops/commit/6f18735f7259759ecef6258dfa7fe6ef1f8f0b83))
+* migrate web editor to JSON source of truth ([8e4fd9b](https://github.com/aliyanamu/career-ops/commit/8e4fd9b5160e4a02b9c6e8877e1ad2ba823facee))
+* migrate web tracker to React + MUI DataGrid ([78f14cf](https://github.com/aliyanamu/career-ops/commit/78f14cf36927fe0eeba66aa2242daf066233d165))
+* replace MUI DataGrid with AG Grid Community — no row limit ([0e5069e](https://github.com/aliyanamu/career-ops/commit/0e5069ee4db0519bf19d997a90ead43cae678fa9))
+* replace tab state with React Router hash routes ([7c523ae](https://github.com/aliyanamu/career-ops/commit/7c523ae4da91514d58ce93d18bf2ffd1f9d56634))
+* sync active tab to URL hash (#sheet=Jobs) ([a16ba6c](https://github.com/aliyanamu/career-ops/commit/a16ba6cbee9f5453b2c79f4320268a4ee6dc9784))
+* use stable job index as num across Jobs/Preparations/Applications ([24d065f](https://github.com/aliyanamu/career-ops/commit/24d065fe4d85d08aad68085e4137547f60cdf634))
+
+
+### Bug Fixes
+
+* auto-recover from GitHub 409 SHA conflict on save ([698665b](https://github.com/aliyanamu/career-ops/commit/698665b90390baba3206a126ee93cf7f49a29c98))
+* dashboard counts, column persistence, remove cvStatus, rename Q&A ([904a2db](https://github.com/aliyanamu/career-ops/commit/904a2db8890e363c398d9ca1b673a10bc97e2b9a))
+* decode GitHub API response as UTF-8 to preserve Unicode characters ([88a427e](https://github.com/aliyanamu/career-ops/commit/88a427e505fc99a3e8134f8b0d74b3a73cbcf784))
+* default videoStatus to empty on new preparation; clear stale 'Not required' value on job 119 ([a8f781e](https://github.com/aliyanamu/career-ops/commit/a8f781e13cd6932113f0d16df60c662e0a80ab5e))
+* dropdown cell editor not committing value on change ([4abbb52](https://github.com/aliyanamu/career-ops/commit/4abbb520d5e406da5e347a793676a3f072699a3d))
+* hide column as checkbox; fix Dashboard counts; restore 7 companies ([14b0356](https://github.com/aliyanamu/career-ops/commit/14b0356cab15c78986d9fe912ce38b84ba1b99dd))
+* hide column shows nothing when false, checkmark only when hidden ([fc00865](https://github.com/aliyanamu/career-ops/commit/fc00865aa392810f0b534eaf72316e548564ea14))
+* migrate AG Grid to v33 Theming API, drop legacy CSS file themes ([70fc378](https://github.com/aliyanamu/career-ops/commit/70fc3788c2a4e6ec4705e43353e150f5dbe1ee17))
+* MUI Community pageSize limit + sort reset to page 1 ([a144ddc](https://github.com/aliyanamu/career-ops/commit/a144ddcae0fd507e72f41073f393cea6d08e32dd))
+* persist grid sort across refresh; rebuild docs bundle ([a5c0196](https://github.com/aliyanamu/career-ops/commit/a5c01960c562a00b77c1856be859bca31127f7f8))
+* re-number visible rows sequentially after hide filter ([7cfbfed](https://github.com/aliyanamu/career-ops/commit/7cfbfede358dfddf995f1c3dde0288830a4eb4c8))
+* register AllCommunityModule for AG Grid v33+ ([d4c9805](https://github.com/aliyanamu/career-ops/commit/d4c98050f4717f3edf008da0f2cbcb8bad25b83e))
+* remove pageSize to avoid MUI X 100-row limit in community DataGrid ([b2ac6c2](https://github.com/aliyanamu/career-ops/commit/b2ac6c27f3224a864fce08bac9b2774b68ff193c))
+* remove pageSizeOptions/paginationModel exceeding MUI X 100-row limit ([93bbacd](https://github.com/aliyanamu/career-ops/commit/93bbacdc381ca25e6e12d0588158bdb1855673d5))
+* repair 7 tracker regressions in React migration ([77a699a](https://github.com/aliyanamu/career-ops/commit/77a699ab1dc105c428618354051803629d68a1cb))
+* rewrite DashboardView to read from JSON instead of exceljs workbook ([e60eff3](https://github.com/aliyanamu/career-ops/commit/e60eff33f78b5bbffbdac1c003c94fd28cb14e3c))
+* Rules of Hooks violation in SheetDataGrid ([641d71f](https://github.com/aliyanamu/career-ops/commit/641d71fcd4d8448351d5fabc3c72f46ceee48b15))
+* sort across all rows, wire CV Summary + Dashboard, drop pagination ([dc16e92](https://github.com/aliyanamu/career-ops/commit/dc16e929e86c8457e9654fb023607d41cd2c9f41))
+
+
+### Reverts
+
+* remove Fireblocks roles — postings pulled (stale Greenhouse API) ([5dd4f21](https://github.com/aliyanamu/career-ops/commit/5dd4f21219e1333ea2be209f440f988a43c5a850))
+
 ## [1.7.0](https://github.com/santifer/career-ops/compare/career-ops-v1.6.0...career-ops-v1.7.0) (2026-05-06)
 
 
