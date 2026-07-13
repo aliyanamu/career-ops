@@ -54,9 +54,9 @@ compensation:
 
 # -- Logistics --
 logistics:
-  notice_period: "1 month"             # TODO: confirm — most Indonesian contracts default to 1 month
-  earliest_start: ""                   # blank = "as agreed"
-  current_employer: "Nespay"
+  notice_period: "None — available immediately"
+  earliest_start: "Immediate"
+  current_employer: ""                  # contract with Nespay ended 1 Jul 2026; most recent employer was Nespay
   current_employer_visible_to_recruiters: true   # if false, agent will use "Confidential"
 
 # -- Languages --
@@ -78,7 +78,7 @@ education:
 common_prompts:
   how_did_you_hear_about_role: "Online Job Ad or Job Board"
   how_did_you_hear_specifics: "Through my own job-search workflow that scans Ashby/Greenhouse/Lever public APIs."
-  why_are_you_looking: "Looking for the next step in Web3 / fullstack engineering — production stablecoin and wallet infrastructure aligns with what I've been shipping at Nespay."
+  why_are_you_looking: "Looking for the next step in Web3 / fullstack engineering. Production stablecoin and wallet infrastructure aligns with what I shipped at Nespay."
 
 # -- AI policy stance (Zapier-style "do you use AI?" forms) --
 ai_policy:
