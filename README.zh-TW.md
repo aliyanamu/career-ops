@@ -168,17 +168,16 @@ career-ops 是一個具有多種模式的單一斜線指令：
 
 **搜尋的求職平台：** Ashby、Greenhouse、Lever、Wellfound、Workable、RemoteFront
 
-## 儀表板 TUI
+## Web Tracker
 
-內建的終端機儀表板讓你以視覺化方式瀏覽求職管道：
+一個用於瀏覽、篩選和排序求職管道的 React 應用。原始碼位於 `tracker/`，讀取 `data/jobs.json`：
 
 ```bash
-cd dashboard
-go build -o career-dashboard .
-./career-dashboard --path ..
+cd tracker
+npm install
+npm run dev      # 本機開發伺服器
+npm run build    # 靜態建置 -> ../dashboard/（透過 CI 部署到 Pages）
 ```
-
-功能：6 個篩選分頁、4 種排序模式、分組/平鋪檢視、延遲載入預覽、內嵌狀態修改。
 
 ## 專案結構
 
@@ -203,7 +202,8 @@ career-ops/
 ├── batch/
 │   ├── batch-prompt.md          # 自包含工作器提示
 │   └── batch-runner.sh          # 協調器腳本
-├── dashboard/                   # Go TUI 管道檢視器
+├── tracker/                     # React Web Tracker（原始碼）
+├── dashboard/                   # 建置後的 Web Tracker（已 gitignore；Vite 輸出）
 ├── data/                        # 你的追蹤資料（已 gitignore）
 ├── reports/                     # 評估報告（已 gitignore）
 ├── output/                      # 生成的 PDF（已 gitignore）
@@ -217,13 +217,13 @@ career-ops/
 ![Claude Code](https://img.shields.io/badge/Claude_Code-000?style=flat&logo=anthropic&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
 ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat&logo=playwright&logoColor=white)
-![Go](https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white)
-![Bubble Tea](https://img.shields.io/badge/Bubble_Tea-FF75B5?style=flat&logo=go&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
 
 - **代理**：Claude Code，附自訂技能與模式
 - **PDF**：Playwright/Puppeteer + HTML 範本
 - **掃描器**：Playwright + Greenhouse API + WebSearch
-- **儀表板**：Go + Bubble Tea + Lipgloss（Catppuccin Mocha 主題）
+- **Web tracker**：React + Vite（部署到 GitHub Pages）
 - **資料**：Markdown 表格 + YAML 設定 + TSV 批次檔案
 
 ## 同樣開源

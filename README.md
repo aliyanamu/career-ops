@@ -3,7 +3,7 @@
 [English](README.md) | [한국어](README.ko-KR.md) | [日本語](README.ja.md) | [简体中文](README.cn.md) | [繁體中文](README.zh-TW.md)
 
 <p align="center">
-  <img src="docs/hero-banner.jpg" alt="Career-Ops — Multi-Agent Job Search System" width="800">
+  <img src="docs/assets/hero-banner.jpg" alt="Career-Ops — Multi-Agent Job Search System" width="800">
 </p>
 
 <p align="center">
@@ -57,7 +57,7 @@ Career-ops is agentic: Claude Code navigates career pages with Playwright, evalu
 | **ATS PDF Generation** | Keyword-injected CVs with Space Grotesk + DM Sans design |
 | **Portal Scanner** | 45+ companies pre-configured (Anthropic, OpenAI, ElevenLabs, Retool, n8n...) + custom queries across Ashby, Greenhouse, Lever, Wellfound |
 | **Batch Processing** | Parallel evaluation with `claude -p` workers |
-| **Dashboard TUI** | Terminal UI to browse, filter, and sort your pipeline |
+| **Web Tracker** | React app (`tracker/`) to browse, filter, and sort your pipeline; deployed to GitHub Pages |
 | **Human-in-the-Loop** | AI evaluates and recommends, you decide and act. The system never submits an application -- you always have the final call |
 | **Pipeline Integrity** | Automated merge, dedup, status normalization, health checks |
 
@@ -168,17 +168,18 @@ npm run dev
 
 > **How scanning, Firecrawl discovery, and the data-expansion loop fit together:** see [docs/SCAN-WORKFLOW.md](docs/SCAN-WORKFLOW.md) — mermaid diagrams of the full flow.
 
-## Dashboard TUI
+## Web Tracker
 
-A terminal alternative to the web tracker:
+A React app to browse, filter, and sort your pipeline. Source in `tracker/`, reads `data/jobs.json`:
 
 ```bash
-cd dashboard
-go build -o career-dashboard .
-./career-dashboard --path ..
+cd tracker
+npm install
+npm run dev      # local dev
+npm run build    # outputs to ../dashboard/ (deployed to GitHub Pages via CI)
 ```
 
-Features: 6 filter tabs, 4 sort modes, grouped/flat view, lazy-loaded previews, inline status changes.
+Features: filter tabs, multiple sort modes, grouped/flat view, inline status changes.
 
 ## Project Structure
 
@@ -204,7 +205,8 @@ career-ops/
 ├── batch/
 │   ├── batch-prompt.md          # Self-contained worker prompt
 │   └── batch-runner.sh          # Orchestrator script
-├── dashboard/                   # Go TUI pipeline viewer
+├── tracker/                     # React web tracker (source)
+├── dashboard/                   # Built web tracker (gitignored; Vite output → Pages)
 ├── data/                        # Your tracking data (gitignored)
 ├── reports/                     # Evaluation reports (gitignored)
 ├── output/                      # Generated PDFs (gitignored)
@@ -218,13 +220,13 @@ career-ops/
 ![Claude Code](https://img.shields.io/badge/Claude_Code-000?style=flat&logo=anthropic&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
 ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat&logo=playwright&logoColor=white)
-![Go](https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white)
-![Bubble Tea](https://img.shields.io/badge/Bubble_Tea-FF75B5?style=flat&logo=go&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
 
 - **Agent**: Claude Code with custom skills and modes
 - **PDF**: Playwright/Puppeteer + HTML template
 - **Scanner**: Playwright + Greenhouse API + WebSearch
-- **Dashboard**: Go + Bubble Tea + Lipgloss (Catppuccin Mocha theme)
+- **Web tracker**: React + Vite (deployed to GitHub Pages)
 - **Data**: Markdown tables + YAML config + TSV batch files
 
 ## Credits

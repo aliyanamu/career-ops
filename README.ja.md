@@ -165,17 +165,16 @@ career-opsは複数のモードを持つ単一のスラッシュコマンドで�
 
 **検索対象の求人ボード:** Ashby、Greenhouse、Lever、Wellfound、Workable、RemoteFront
 
-## ダッシュボードTUI
+## Web Tracker
 
-内蔵のターミナルダッシュボードで、パイプラインを視覚的に閲覧できます:
+パイプラインを閲覧、フィルタリング、ソートするための React アプリです。ソースは `tracker/` にあり、`data/jobs.json` を読み込みます:
 
 ```bash
-cd dashboard
-go build -o career-dashboard .
-./career-dashboard --path ..
+cd tracker
+npm install
+npm run dev      # ローカル開発サーバー
+npm run build    # 静的ビルド -> ../dashboard/（CI 経由で Pages にデプロイ）
 ```
-
-機能: 6つのフィルタータブ、4つのソートモード、グループ表示/フラット表示、遅延読み込みプレビュー、インラインステータス変更。
 
 ## プロジェクト構成
 
@@ -200,7 +199,8 @@ career-ops/
 ├── batch/
 │   ├── batch-prompt.md          # 自己完結型ワーカープロンプト
 │   └── batch-runner.sh          # オーケストレータースクリプト
-├── dashboard/                   # Go製TUIパイプラインビューア
+├── tracker/                     # React製Web Tracker（ソース）
+├── dashboard/                   # ビルド済みWeb Tracker（gitignore対象；Vite出力）
 ├── data/                        # 追跡データ（gitignore対象）
 ├── reports/                     # 評価レポート（gitignore対象）
 ├── output/                      # 生成PDF（gitignore対象）
@@ -214,13 +214,13 @@ career-ops/
 ![Claude Code](https://img.shields.io/badge/Claude_Code-000?style=flat&logo=anthropic&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
 ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat&logo=playwright&logoColor=white)
-![Go](https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white)
-![Bubble Tea](https://img.shields.io/badge/Bubble_Tea-FF75B5?style=flat&logo=go&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
 
 - **エージェント**: Claude Code（カスタムスキルとモード付き）
 - **PDF**: Playwright/Puppeteer + HTMLテンプレート
 - **スキャナー**: Playwright + Greenhouse API + WebSearch
-- **ダッシュボード**: Go + Bubble Tea + Lipgloss（Catppuccin Mochaテーマ）
+- **Web tracker**: React + Vite（GitHub Pages にデプロイ）
 - **データ**: Markdownテーブル + YAML設定 + TSVバッチファイル
 
 ## 同じくオープンソース

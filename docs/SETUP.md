@@ -3,8 +3,7 @@
 ## Prerequisites
 
 - [Claude Code](https://claude.ai/code) installed and configured
-- Node.js 18+ (for PDF generation and utility scripts)
-- (Optional) Go 1.21+ (for the dashboard TUI)
+- Node.js 18+ (for PDF generation, utility scripts, and the web tracker)
 
 ## Quick Start (5 steps)
 
@@ -71,10 +70,11 @@ node cv-sync-check.mjs      # Check configuration
 node verify-pipeline.mjs     # Check pipeline integrity
 ```
 
-## Build Dashboard (Optional)
+## Web Tracker (Optional)
 
 ```bash
-cd dashboard
-go build -o career-dashboard .
-./career-dashboard --path ..  # Opens TUI pipeline viewer
+cd tracker
+npm install
+npm run dev      # local dev server
+npm run build    # static build → ../dashboard/ (deployed to Pages via CI)
 ```

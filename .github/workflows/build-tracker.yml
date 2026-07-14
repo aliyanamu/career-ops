@@ -1,13 +1,22 @@
-name: Build tracker
+name: Build & deploy tracker
 
 on:
   push:
     branches: [main]
     paths:
       - 'tracker/**'
+      - '.github/workflows/build-tracker.yml'
+  workflow_dispatch:
 
+# Pages source must be set to "GitHub Actions" in repo Settings → Pages.
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -23,7 +32,16 @@ jobs:
         working-directory: tracker
       - run: npm run build
         working-directory: tracker
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: actions/upload-pages-artifact@v3
         with:
-          commit_message: 'build: update docs from tracker source'
-          file_pattern: 'docs/**'
+          path: dashboard
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

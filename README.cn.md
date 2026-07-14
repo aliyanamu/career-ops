@@ -72,7 +72,7 @@ career-ops 具备代理式工作能力：Claude Code 会用 Playwright 浏览招
 | **ATS PDF 生成** | 注入关键词的简历，采用 Space Grotesk + DM Sans 设计 |
 | **平台扫描器** | 预配置 45+ 家公司（Anthropic、OpenAI、ElevenLabs、Retool、n8n...），支持跨 Ashby、Greenhouse、Lever、Wellfound 的自定义查询 |
 | **批量处理** | 使用 `claude -p` worker 并行评估 |
-| **Dashboard TUI** | 在终端 UI 中浏览、筛选和排序你的求职管道 |
+| **Web Tracker** | React 应用（`tracker/`），用于浏览、筛选和排序你的求职管道；部署到 GitHub Pages |
 | **人类在环** | AI 负责评估和建议，你负责决定和行动。系统绝不会自动提交申请，最终决定始终在你手上 |
 | **管道完整性** | 自动合并、去重、状态标准化和健康检查 |
 
@@ -168,17 +168,16 @@ career-ops 是一个单一斜杠命令，带有多种模式：
 
 **覆盖的招聘平台：** Ashby、Greenhouse、Lever、Wellfound、Workable、RemoteFront
 
-## Dashboard TUI
+## Web Tracker
 
-内置终端仪表盘可以让你更直观地浏览整个求职管道：
+一个用于浏览、筛选和排序求职管道的 React 应用。源码位于 `tracker/`，读取 `data/jobs.json`：
 
 ```bash
-cd dashboard
-go build -o career-dashboard .
-./career-dashboard --path ..
+cd tracker
+npm install
+npm run dev      # 本地开发服务器
+npm run build    # 静态构建 -> ../dashboard/（通过 CI 部署到 Pages）
 ```
-
-功能包括：6 个筛选标签、4 种排序模式、分组/平铺视图、懒加载预览、行内状态修改。
 
 ## 项目结构
 
@@ -203,7 +202,8 @@ career-ops/
 ├── batch/
 │   ├── batch-prompt.md          # 自包含 worker 提示词
 │   └── batch-runner.sh          # 编排脚本
-├── dashboard/                   # Go TUI 管道查看器
+├── tracker/                     # React Web Tracker（源码）
+├── dashboard/                   # 构建后的 Web Tracker（已 gitignore；Vite 输出）
 ├── data/                        # 你的追踪数据（已 gitignore）
 ├── reports/                     # 评估报告（已 gitignore）
 ├── output/                      # 生成的 PDF（已 gitignore）
@@ -217,13 +217,13 @@ career-ops/
 ![Claude Code](https://img.shields.io/badge/Claude_Code-000?style=flat&logo=anthropic&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
 ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat&logo=playwright&logoColor=white)
-![Go](https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white)
-![Bubble Tea](https://img.shields.io/badge/Bubble_Tea-FF75B5?style=flat&logo=go&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
 
 - **代理**：Claude Code，配合自定义技能与 modes
 - **PDF**：Playwright/Puppeteer + HTML 模板
 - **扫描器**：Playwright + Greenhouse API + WebSearch
-- **Dashboard**：Go + Bubble Tea + Lipgloss（Catppuccin Mocha 主题）
+- **Web tracker**：React + Vite（部署到 GitHub Pages）
 - **数据**：Markdown 表格 + YAML 配置 + TSV 批处理文件
 
 ## 也已开源

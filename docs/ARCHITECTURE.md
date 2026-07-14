@@ -99,12 +99,12 @@ Scripts maintain data consistency:
 | `normalize-statuses.mjs` | Maps status aliases to canonical values |
 | `cv-sync-check.mjs` | Validates setup consistency |
 
-## Dashboard TUI
+## Web Tracker
 
-The `dashboard/` directory contains a standalone Go TUI application that visualizes the pipeline:
+The `tracker/` directory contains a React app (Vite) that visualizes the pipeline, reading `data/jobs.json` directly:
 
-- Filter tabs: All, Evaluada, Aplicado, Entrevista, Top >=4, No Aplicar
-- Sort modes: Score, Date, Company, Status
+- Filter tabs and multiple sort modes
 - Grouped/flat view
-- Lazy-loaded report previews
-- Inline status picker
+- Inline status changes
+
+`npm run build` (in `tracker/`) outputs the static site to `dashboard/` (gitignored). CI (`.github/workflows/build-tracker.yml`) builds and deploys it to GitHub Pages via Actions.

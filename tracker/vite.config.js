@@ -5,10 +5,8 @@ export default defineConfig({
   plugins: [react()],
   base: '/career-ops/',
   build: {
-    outDir: '../docs',
-    // docs/ also holds project documentation + images, so DO NOT wipe it on build.
-    // Only the app's index.html + assets/ get overwritten; stale hashed assets are
-    // pruned manually.
-    emptyOutDir: false,
+    // dashboard/ holds ONLY the built app (gitignored, deployed to Pages via CI).
+    outDir: '../dashboard',
+    emptyOutDir: true,
   },
 })

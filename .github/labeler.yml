@@ -35,11 +35,6 @@
           - "README.*.md"
           - modes/ja/**
 
-"📊 dashboard":
-  - changed-files:
-      - any-glob-to-any-file:
-          - dashboard/**
-
 "📦 dependencies":
   - changed-files:
       - any-glob-to-any-file:
