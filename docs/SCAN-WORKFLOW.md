@@ -1,5 +1,11 @@
 # Scan & Data-Expansion Workflow
 
+> **Keep in sync** — these files describe overlapping facts; change one, check the others:
+> - [`docs/ARCHITECTURE.md`](ARCHITECTURE.md) — full system diagram + output pipeline (report/PDF/tracker)
+> - [`../DATA_CONTRACT.md`](../DATA_CONTRACT.md) — authoritative user/system file lists (the "Sources of truth" table below is a subset)
+> - [`../AGENTS.md`](../AGENTS.md) — "Pipeline Integrity" section: `jobs.json` is source of truth
+> Canonical facts shared with those files: scan writes only `pipeline.md` + `discovered-companies.json`, never `jobs.json`; `jobs.json` is the tracker source of truth; `applications.md` is generated from it.
+
 How career-ops finds roles, how scanning works **with and without Firecrawl**, and how the tracked company list **grows itself** over time.
 
 ## 1. The whole system at a glance
@@ -14,10 +20,10 @@ flowchart TD
     SCAN[["scripts/scan.mjs<br/>(zero-LLM)"]]
     P --> SCAN
 
-    SCAN --> PIPE[data/pipeline.md<br/>inbox of found roles]
+    SCAN --> PIPE[data/pipeline.md<br/>inbox / greppable log]
     SCAN --> DISC[data/discovered-companies.json<br/>new companies found]
+    SCAN -->|"auto-import<br/>(deduped by URL)"| JOBS[(data/jobs.json<br/>tracker source of truth)]
 
-    PIPE -->|"'Import from scan'<br/>(you click, in the web tracker)"| JOBS[(data/jobs.json<br/>tracker source of truth)]
     JOBS --> DASH["Web dashboard<br/>(tracker/, GitHub-backed)"]
 
     JOBS -->|"/career-ops pipeline"| EVAL{{Evaluation<br/>reads profile + career-direction}}
@@ -30,7 +36,7 @@ flowchart TD
     class JOBS,DISC,PIPE sot;
 ```
 
-**Key idea:** `scripts/scan.mjs` never writes to `jobs.json` directly. It fills an **inbox** (`pipeline.md`), and you pull roles into the tracker with **Import from scan**. Evaluation is a separate step that scores them.
+**Key idea:** `scripts/scan.mjs` writes new roles **straight into `jobs.json`** as unevaluated Jobs-stage leads (`fitScore` empty, `decision: pending`), deduped by URL against everything already tracked. It also still logs them to `pipeline.md` (the greppable inbox). Evaluation (`/career-ops pipeline`) is a separate step that scores each lead **in place** — matched by URL, it fills `fitScore`/`decision`/`report` on the same row, never a duplicate. The Jobs → Preparations → Applications funnel is the curation; there's no manual import step.
 
 ## 2. Scan WITHOUT Firecrawl (default — known companies only)
 
@@ -112,15 +118,15 @@ flowchart LR
 | File | What it holds | Written by |
 |------|---------------|-----------|
 | `portals.yml` | scanner config (companies, filters, discovery) | you (gitignored, local) |
-| `data/pipeline.md` | inbox of freshly-scanned roles | `scripts/scan.mjs` |
+| `data/pipeline.md` | greppable log of freshly-scanned roles | `scripts/scan.mjs` |
 | `data/discovered-companies.json` | new companies found via Firecrawl | `scripts/scan.mjs` |
-| `data/jobs.json` | the curated tracker | web tracker + evaluation |
+| `data/jobs.json` | tracker source of truth (scan appends leads; eval scores them) | `scripts/scan.mjs` + web tracker + evaluation |
 | `data/companies.json` | dashboard company list | web tracker |
 
 ## Commands
 
 ```bash
 npm run scan          # ATS scan (+ Firecrawl discovery if enabled in portals.yml)
-# then: open the web tracker → "Import from scan" → roles become pending jobs
-# then: /career-ops pipeline → evaluate & score the pending jobs
+                      # new roles auto-land in the tracker (Jobs tab, fitScore empty)
+# then: /career-ops pipeline → evaluate & score the pending jobs in place
 ```

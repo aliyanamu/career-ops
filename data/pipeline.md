@@ -6,7 +6,7 @@ Pruned 2026-07-13: removed ~74 US / EU-office / UK / India-onsite roles (visa-ga
 for Indonesia). Kept only location-viable, no-visa-gate roles: APAC-remote,
 Jakarta/Bali-local, and worldwide-remote.
 
-## Pendientes
+## Pending
 
 ### Local (Jakarta / Bali) — no visa gate
 - [ ] https://jobs.ashbyhq.com/The-Flex/82eafc9b-c4c0-4310-8b9d-9f5410ff0d53 | The Flex | Full-Stack Product Engineer

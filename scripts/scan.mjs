@@ -27,6 +27,7 @@ const SCAN_HISTORY_PATH = 'data/scan-history.tsv';
 const PIPELINE_PATH = 'data/pipeline.md';
 const APPLICATIONS_PATH = 'data/applications.md';
 const DISCOVERED_PATH = 'data/discovered-companies.json';
+const JOBS_PATH = 'data/jobs.json';
 
 // Ensure required directories exist (fresh setup)
 mkdirSync('data', { recursive: true });
@@ -336,6 +337,16 @@ function loadSeenUrls() {
     }
   }
 
+  // jobs.json — the tracker source of truth (leads auto-added by past scans +
+  // curated/applied jobs). Dedup here so a lead already in the tracker is never
+  // re-added, even after it's been evaluated or applied.
+  if (existsSync(JOBS_PATH)) {
+    try {
+      const data = JSON.parse(readFileSync(JOBS_PATH, 'utf-8'));
+      for (const j of data.jobs || []) if (j.url) seen.add(j.url);
+    } catch { /* malformed jobs.json — skip */ }
+  }
+
   return seen;
 }
 
@@ -362,19 +373,20 @@ function appendToPipeline(offers) {
 
   let text = readFileSync(PIPELINE_PATH, 'utf-8');
 
-  // Find "## Pendientes" section and append after it
-  const marker = '## Pendientes';
+  // Find the "Pending" section and append after it. Accept the legacy Spanish
+  // "Pendientes" header too (older pipeline.md files), but write "Pending".
+  const marker = ['## Pending', '## Pendientes'].find(m => text.includes(m)) || '## Pending';
   const idx = text.indexOf(marker);
   if (idx === -1) {
-    // No Pendientes section — append at end before Procesadas
-    const procIdx = text.indexOf('## Procesadas');
+    // No Pending section — append at end before the Processed section (either language)
+    const procIdx = ['## Processed', '## Procesadas'].map(m => text.indexOf(m)).find(i => i !== -1) ?? -1;
     const insertAt = procIdx === -1 ? text.length : procIdx;
     const block = `\n${marker}\n\n` + offers.map(o =>
       `- [ ] ${o.url} | ${o.company} | ${o.title}`
     ).join('\n') + '\n\n';
     text = text.slice(0, insertAt) + block + text.slice(insertAt);
   } else {
-    // Find the end of existing Pendientes content (next ## or end)
+    // Find the end of existing Pending content (next ## or end)
     const afterMarker = idx + marker.length;
     const nextSection = text.indexOf('\n## ', afterMarker);
     const insertAt = nextSection === -1 ? text.length : nextSection;
@@ -386,6 +398,39 @@ function appendToPipeline(offers) {
   }
 
   writeFileSync(PIPELINE_PATH, text, 'utf-8');
+}
+
+// Auto-import: append new scan leads straight into the tracker (data/jobs.json)
+// as unevaluated Jobs-stage entries. Deduped by URL, sequential `num`. Empty
+// `fitScore` = "not evaluated yet"; evaluation (/career-ops pipeline) fills
+// fitScore/decision on the SAME entry (matched by URL) — it must not add a
+// second row. Shape mirrors the tracker's own import (useTracker.js) so the
+// React grid renders these rows identically. 2-space indent, no trailing
+// newline — matches how the tracker saves the file.
+function appendToJobs(offers, date) {
+  if (offers.length === 0 || !existsSync(JOBS_PATH)) return 0;
+  let data;
+  try { data = JSON.parse(readFileSync(JOBS_PATH, 'utf-8')); }
+  catch { return 0; }
+  const jobs = data.jobs || [];
+  const seen = new Set(jobs.map(j => j.url));
+  let maxNum = jobs.reduce((n, j) => Math.max(n, Number(j.num) || 0), 0);
+  let added = 0;
+  for (const o of offers) {
+    if (!o.url || seen.has(o.url)) continue;
+    seen.add(o.url);
+    jobs.push({
+      num: ++maxNum, dateAdded: date, url: o.url,
+      source: `career-ops scan (${o.source})`, elig: '', why: '',
+      fitScore: '', deadline: '', decision: 'pending', hide: false,
+      notes: `Scanned ${date} — pending evaluation${o.location ? ` | Loc: ${o.location}` : ''}`,
+      role: o.title, company: { company: o.company },
+      preparation: null, application: null,
+    });
+    added++;
+  }
+  if (added > 0) writeFileSync(JOBS_PATH, JSON.stringify({ ...data, jobs }, null, 2), 'utf-8');
+  return added;
 }
 
 function appendToScanHistory(offers, date) {
@@ -637,9 +682,11 @@ async function main() {
   }
 
   // 5. Write results
+  let importedToJobs = 0;
   if (!dryRun && newOffers.length > 0) {
     appendToPipeline(newOffers);
     appendToScanHistory(newOffers, date);
+    importedToJobs = appendToJobs(newOffers, date);   // auto-import into the tracker
   }
   if (!dryRun && newCompanies.size > 0) {
     mergeDiscoveredCompanies(newCompanies, date);
@@ -674,7 +721,8 @@ async function main() {
     if (dryRun) {
       console.log('\n(dry run — run without --dry-run to save results)');
     } else {
-      console.log(`\nResults saved to ${PIPELINE_PATH} and ${SCAN_HISTORY_PATH}`);
+      console.log(`\nResults saved to ${PIPELINE_PATH}, ${SCAN_HISTORY_PATH}, and ${JOBS_PATH}`);
+      console.log(`Auto-imported into tracker: ${importedToJobs} new job(s) (empty fitScore = pending evaluation).`);
     }
   }
 
@@ -685,7 +733,7 @@ async function main() {
     }
   }
 
-  console.log(`\n→ Run /career-ops pipeline to evaluate new offers.`);
+  console.log(`\n→ New offers are already in the tracker (Jobs tab). Run /career-ops pipeline to evaluate them.`);
   console.log('→ Share results and get help: https://discord.gg/8pRpHETxa4');
 }
 

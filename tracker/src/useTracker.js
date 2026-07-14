@@ -239,54 +239,6 @@ export function useTracker() {
   }, [])
 
   // -------------------------------------------------------------------------
-  // Import from scan (data/pipeline.md) — adds new jobs, never overwrites edits
-  // -------------------------------------------------------------------------
-  const importFromPipeline = useCallback(async () => {
-    if (!jobs) { setStatusMessage('Load the tracker first.'); return }
-    let pat = getPat()
-    if (!pat) {
-      pat = promptForPat()
-      if (!pat) { setStatus('error'); setStatusMessage('No PAT provided.'); return }
-    }
-
-    setStatus('loading'); setStatusMessage('Importing from scan…')
-    try {
-      const md = await fetchTextFile('data/pipeline.md', pat)
-      // Lines look like: - [ ] <url> | <company> | <role>
-      const rows = [...md.matchAll(/^- \[ \] (\S+)\s*\|\s*([^|]+?)\s*\|\s*(.+)$/gm)]
-        .map(m => ({ url: m[1].trim(), company: m[2].trim(), role: m[3].trim() }))
-
-      const existing = new Set(jobs.map(j => j.url))          // dedup by url — preserve my edits
-      const today = new Date().toISOString().slice(0, 10)
-      let maxNum = jobs.reduce((n, j) => Math.max(n, Number(j.num) || 0), 0)
-
-      const additions = []
-      for (const r of rows) {
-        if (!r.url || existing.has(r.url)) continue
-        existing.add(r.url)
-        additions.push({
-          num: ++maxNum, dateAdded: today, url: r.url,
-          source: 'career-ops scan (import)', elig: '', why: '',
-          fitScore: '', deadline: '', decision: 'pending', hide: false,
-          notes: 'Imported from pipeline.md — pending evaluation',
-          role: r.role, company: { company: r.company },
-          preparation: null, application: null,
-        })
-      }
-
-      if (additions.length === 0) {
-        setStatus('idle'); setStatusMessage('Import: no new jobs (all already in the tracker).')
-        return
-      }
-      setJobs(prev => [...prev, ...additions])
-      markDirty()
-      setStatus('idle'); setStatusMessage(`Imported ${additions.length} new job(s). Review, then Save.`)
-    } catch (err) {
-      setStatus('error'); setStatusMessage(`Import failed: ${err.message}`)
-    }
-  }, [jobs])
-
-  // -------------------------------------------------------------------------
   // Logout
   // -------------------------------------------------------------------------
   const logout = useCallback(() => {
@@ -309,7 +261,6 @@ export function useTracker() {
     status, statusMessage,
     loadWorkbook,
     saveWorkbook,
-    importFromPipeline,
     updateField,
     logout,
   }

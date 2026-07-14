@@ -1,5 +1,10 @@
 # Data Contract
 
+> **Keep in sync** — these files describe overlapping facts; change one, check the others:
+> - [`docs/SCAN-WORKFLOW.md`](docs/SCAN-WORKFLOW.md) — its "Sources of truth" table is a subset of the file lists below
+> - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — data-flow diagram over these same files
+> - [`AGENTS.md`](AGENTS.md) — "Data Contract (CRITICAL)" + "Pipeline Integrity" sections restate the user/system split and source-of-truth rule
+
 This document defines which files belong to the **system** (auto-updatable) and which belong to the **user** (never touched by updates).
 
 ## User Layer (NEVER auto-updated)
@@ -15,8 +20,8 @@ These files contain your personal data, customizations, and work product. Update
 | `article-digest.md` | Your proof points from portfolio |
 | `interview-prep/story-bank.md` | Your accumulated STAR+R stories |
 | `portals.yml` | Your customized company list |
-| `data/applications.md` | Your application tracker (batch/eval pipeline) |
-| `data/jobs.json` | React dashboard source of truth (nested: each job embeds its `preparation` + `application`) |
+| `data/jobs.json` | Tracker **source of truth** (nested: each job embeds its `preparation` + `application`) |
+| `data/applications.md` | Generated view of `jobs.json` (via `gen-applications-md.mjs`) — do not hand-edit |
 | `data/companies.json` | React dashboard company list |
 | `data/discovered-companies.json` | Companies found via Firecrawl discovery (source of truth for the expansion loop; merge by slug, `status`: new/tracked/dismissed) |
 | `data/pipeline.md` | Your URL inbox |
@@ -65,7 +70,7 @@ These files contain system logic, scripts, templates, and instructions that impr
 
 ## Note — tracker storage (this fork)
 
-The React tracker in `tracker/` reads and writes `data/jobs.json` + `data/companies.json` directly via the GitHub API. `Job_Hunting_Progress.xlsx` and the xlsx-derived scripts (`extract-to-json.mjs`, `sync-tracker.mjs`) were removed; `data/jobs.json` is the tracker's source of truth. The batch/eval pipeline still uses `data/applications.md`. Unifying the two (generate `applications.md` from `jobs.json`, or repoint the batch scripts) is tracked in `docs/plans/2026-07-14-refactor-finish-json-tracker-retire-xlsx-plan.md`.
+The React tracker in `tracker/` reads and writes `data/jobs.json` + `data/companies.json` directly via the GitHub API. `Job_Hunting_Progress.xlsx` and the xlsx-derived scripts (`extract-to-json.mjs`, `sync-tracker.mjs`) were removed; `data/jobs.json` is the tracker's source of truth. `data/applications.md` is now **generated** from `jobs.json` by `scripts/gen-applications-md.mjs` (`npm run gen-tracker`) — do not hand-edit it. The legacy batch TSV → `scripts/merge-tracker.mjs` flow still exists but writes into that generated file.
 
 ## The Rule
 
