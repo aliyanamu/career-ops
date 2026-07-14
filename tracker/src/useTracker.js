@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback } from 'react'
 import { REPO_OWNER, REPO_NAME, BRANCH } from './constants'
+import { DEMO } from './demo'
 
 const JOBS_PATH      = 'data/jobs.json'
 const COMPANIES_PATH = 'data/companies.json'
@@ -88,12 +89,33 @@ export function useTracker() {
   const [statusMessage,  setStatusMessage]  = useState('')
   const [dirtyCount,     setDirtyCount]     = useState(0)
 
-  const markDirty = () => setDirtyCount(c => c + 1)
+  const markDirty = () => { if (!DEMO) setDirtyCount(c => c + 1) }   // no phantom unsaved count in demo
 
   // -------------------------------------------------------------------------
   // Load
   // -------------------------------------------------------------------------
   const loadWorkbook = useCallback(async () => {
+    // Demo mode: load bundled sample data, no PAT, no GitHub. BASE_URL matters —
+    // the app is served under /career-ops/, so a bare relative path would break.
+    if (DEMO) {
+      setStatus('loading'); setStatusMessage('Loading demo…')
+      try {
+        const base = import.meta.env.BASE_URL
+        const [j, c] = await Promise.all([
+          fetch(base + 'sample-jobs.json').then(r => r.json()),
+          fetch(base + 'sample-companies.json').then(r => r.json()),
+        ])
+        setJobs(j.jobs)
+        setCompanies(c.companies)
+        setDirtyCount(0)
+        setStatus('idle')
+        setStatusMessage(`Demo — ${j.jobs.length} sample jobs (read-only).`)
+      } catch (err) {
+        setStatus('error'); setStatusMessage(`Demo load failed: ${err.message}`)
+      }
+      return
+    }
+
     let pat = getPat()
     if (!pat) {
       pat = promptForPat()
@@ -122,6 +144,7 @@ export function useTracker() {
   // Save
   // -------------------------------------------------------------------------
   const saveWorkbook = useCallback(async () => {
+    if (DEMO) return   // read-only demo: never write, never hit the skip-delete confirm
     if (!jobs || !companies) { setStatusMessage('Nothing to save.'); return }
     let pat = getPat()
     if (!pat) {

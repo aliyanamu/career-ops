@@ -6,6 +6,7 @@ import { useWorkbookContext } from './WorkbookContext'
 import { SCHEMA, DROPDOWN_OPTIONS, HEADER_NAMES, REPO_OWNER, REPO_NAME, BRANCH } from './constants'
 import { CvSummaryView } from './CvSummaryView'
 import { DashboardView } from './DashboardView'
+import { GridToolbar } from './GridToolbar'
 
 const gridTheme = themeQuartz.withParams({
   fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
@@ -318,6 +319,10 @@ export function SheetDataGrid({ sheetName }) {
     if (params.finished) saveColState(params)
   }, [saveColState])
 
+  const persistColState = useCallback(() => {
+    if (gridRef.current?.api) saveColState({ api: gridRef.current.api })
+  }, [saveColState])
+
   const onCellValueChanged = useCallback((params) => {
     const { data, colDef, newValue, oldValue } = params
     const field  = colDef.field
@@ -350,6 +355,8 @@ export function SheetDataGrid({ sheetName }) {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 130px)' }}>
+      <GridToolbar gridRef={gridRef} sheetName={sheetName} onColStateChanged={persistColState} />
+
       {hiddenCount > 0 && (
         <Box sx={{ px: 2, py: 0.5, borderBottom: 1, borderColor: 'divider', display: 'flex', alignItems: 'center' }}>
           <FormControlLabel
@@ -381,7 +388,7 @@ export function SheetDataGrid({ sheetName }) {
           suppressPaginationPanel
           enableCellTextSelection
           ensureDomOrder
-          defaultColDef={{ resizable: true, sortable: true }}
+          defaultColDef={{ resizable: true, sortable: true, filter: true, floatingFilter: true }}
         />
       </Box>
 

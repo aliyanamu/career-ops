@@ -1,0 +1,144 @@
+{
+  "jobs": [
+    {
+      "dateAdded": "2026-06-01", "role": "Senior Backend Engineer",
+      "company": { "company": "Acme Robotics", "careersUrl": "https://example.com/acme/careers" },
+      "url": "https://example.com/acme/jobs/be-senior", "source": "greenhouse",
+      "elig": "Remote (EU timezones)", "why": "Rust + distributed systems, strong eng blog",
+      "fitScore": "4.6", "deadline": "2026-07-30", "decision": "recommended",
+      "hide": "", "notes": "Great match on infra background."
+    },
+    {
+      "dateAdded": "2026-06-02", "role": "Platform Engineer",
+      "company": { "company": "Globex Cloud", "careersUrl": "https://example.com/globex/careers" },
+      "url": "https://example.com/globex/jobs/platform", "source": "ashby",
+      "elig": "Remote (worldwide)", "why": "Kubernetes platform team, IaC heavy",
+      "fitScore": "4.2", "deadline": "", "decision": "apply",
+      "hide": "", "notes": "",
+      "preparation": {
+        "date": "2026-06-05", "jobUrl": "https://example.com/globex/jobs/platform",
+        "cvPath": "output/cv-globex.pdf", "coverLetterPath": "output/cover-globex.md",
+        "qa": "reports/002-globex-2026-06-05.md", "videoRequired": "no", "videoNotes": "",
+        "videoStatus": "", "aiDisclaimer": "no", "submissionStatus": "submitted",
+        "notes": "Tailored CV to platform focus.", "hide": ""
+      },
+      "application": {
+        "dateApplied": "2026-06-06", "location": "Remote", "source": "ashby",
+        "jobUrl": "https://example.com/globex/jobs/platform", "status": "interview",
+        "lastUpdate": "2026-06-20", "cvUsed": "cv-globex.pdf", "coverLetter": "cover-globex.md",
+        "appLink": "https://example.com/globex/app/12345", "salary": "€75k–€95k",
+        "contact": "recruiter@example.com", "nextAction": "Prep system design round",
+        "followUpDate": "2026-07-01", "notes": "Recruiter call went well.", "hide": ""
+      }
+    },
+    {
+      "dateAdded": "2026-06-03", "role": "Infrastructure Engineer",
+      "company": { "company": "Initech Systems", "careersUrl": "https://example.com/initech/careers" },
+      "url": "https://example.com/initech/jobs/infra", "source": "lever",
+      "elig": "Hybrid (Lisbon)", "why": "Observability tooling, Go",
+      "fitScore": "3.9", "deadline": "2026-08-15", "decision": "easy_apply",
+      "hide": "", "notes": "",
+      "application": {
+        "dateApplied": "2026-06-04", "location": "Lisbon", "source": "lever",
+        "jobUrl": "https://example.com/initech/jobs/infra", "status": "applied",
+        "lastUpdate": "2026-06-04", "cvUsed": "cv-default.pdf", "coverLetter": "",
+        "appLink": "", "salary": "", "contact": "", "nextAction": "Wait for response",
+        "followUpDate": "2026-06-18", "notes": "", "hide": ""
+      }
+    },
+    {
+      "dateAdded": "2026-06-04", "role": "Site Reliability Engineer",
+      "company": { "company": "Umbrella Data", "careersUrl": "https://example.com/umbrella/careers" },
+      "url": "https://example.com/umbrella/jobs/sre", "source": "greenhouse",
+      "elig": "Remote (Americas)", "why": "On-call maturity, error budgets",
+      "fitScore": "4.1", "deadline": "", "decision": "saved",
+      "hide": "", "notes": "Revisit after Globex outcome."
+    },
+    {
+      "dateAdded": "2026-06-05", "role": "Data Engineer",
+      "company": { "company": "Hooli Analytics", "careersUrl": "https://example.com/hooli/careers" },
+      "url": "https://example.com/hooli/jobs/data-eng", "source": "ashby",
+      "elig": "Remote (EU)", "why": "dbt + Snowflake, strong data culture",
+      "fitScore": "3.7", "deadline": "2026-07-20", "decision": "pending",
+      "hide": "", "notes": "Need to confirm timezone overlap."
+    },
+    {
+      "dateAdded": "2026-06-06", "role": "Backend Engineer (Payments)",
+      "company": { "company": "Wonka Pay", "careersUrl": "https://example.com/wonka/careers" },
+      "url": "https://example.com/wonka/jobs/payments", "source": "greenhouse",
+      "elig": "Remote (worldwide)", "why": "Ledger systems, idempotency",
+      "fitScore": "4.4", "deadline": "", "decision": "apply",
+      "hide": "", "notes": "",
+      "preparation": {
+        "date": "2026-06-08", "jobUrl": "https://example.com/wonka/jobs/payments",
+        "cvPath": "output/cv-wonka.pdf", "coverLetterPath": "", "qa": "",
+        "videoRequired": "yes", "videoNotes": "60s intro, product fit",
+        "videoStatus": "recorded", "aiDisclaimer": "no", "submissionStatus": "not_submitted",
+        "notes": "Record final video take.", "hide": ""
+      }
+    },
+    {
+      "dateAdded": "2026-06-07", "role": "DevOps Engineer",
+      "company": { "company": "Stark Industries", "careersUrl": "https://example.com/stark/careers" },
+      "url": "https://example.com/stark/jobs/devops", "source": "lever",
+      "elig": "On-site (Berlin)", "why": "Interesting stack but on-site only",
+      "fitScore": "2.8", "deadline": "", "decision": "skip",
+      "hide": "", "notes": "On-site — does not fit remote requirement."
+    },
+    {
+      "dateAdded": "2026-06-08", "role": "Staff Software Engineer",
+      "company": { "company": "Cyberdyne Labs", "careersUrl": "https://example.com/cyberdyne/careers" },
+      "url": "https://example.com/cyberdyne/jobs/staff", "source": "greenhouse",
+      "elig": "Remote (worldwide)", "why": "Greenfield ML platform",
+      "fitScore": "4.0", "deadline": "2026-09-01", "decision": "recommended",
+      "hide": "", "notes": "Strong comp band."
+    },
+    {
+      "dateAdded": "2026-06-09", "role": "Backend Engineer",
+      "company": { "company": "Soylent Foods", "careersUrl": "https://example.com/soylent/careers" },
+      "url": "https://example.com/soylent/jobs/backend", "source": "ashby",
+      "elig": "Remote (EU)", "why": "Node + Postgres, small team",
+      "fitScore": "3.5", "deadline": "", "decision": "saved",
+      "hide": "", "notes": ""
+    },
+    {
+      "dateAdded": "2026-06-10", "role": "Cloud Engineer",
+      "company": { "company": "Pied Piper", "careersUrl": "https://example.com/piedpiper/careers" },
+      "url": "https://example.com/piedpiper/jobs/cloud", "source": "lever",
+      "elig": "Remote (Americas)", "why": "Compression-heavy workloads, fun team",
+      "fitScore": "4.3", "deadline": "", "decision": "easy_apply",
+      "hide": "", "notes": "",
+      "application": {
+        "dateApplied": "2026-06-11", "location": "Remote", "source": "lever",
+        "jobUrl": "https://example.com/piedpiper/jobs/cloud", "status": "offer",
+        "lastUpdate": "2026-07-05", "cvUsed": "cv-default.pdf", "coverLetter": "",
+        "appLink": "https://example.com/piedpiper/app/9001", "salary": "$130k + equity",
+        "contact": "hiring@example.com", "nextAction": "Review offer letter",
+        "followUpDate": "2026-07-12", "notes": "Verbal offer received.", "hide": ""
+      }
+    },
+    {
+      "dateAdded": "2026-06-11", "role": "Backend Engineer (Go)",
+      "company": { "company": "Massive Dynamic", "careersUrl": "https://example.com/massive/careers" },
+      "url": "https://example.com/massive/jobs/go", "source": "greenhouse",
+      "elig": "Remote (EU)", "why": "gRPC microservices",
+      "fitScore": "3.8", "deadline": "", "decision": "pending",
+      "hide": "", "notes": ""
+    },
+    {
+      "dateAdded": "2026-06-12", "role": "Senior SRE",
+      "company": { "company": "Tyrell Corp", "careersUrl": "https://example.com/tyrell/careers" },
+      "url": "https://example.com/tyrell/jobs/senior-sre", "source": "ashby",
+      "elig": "Remote (worldwide)", "why": "Applied but not a fit in the end",
+      "fitScore": "3.2", "deadline": "", "decision": "easy_apply",
+      "hide": "", "notes": "",
+      "application": {
+        "dateApplied": "2026-05-20", "location": "Remote", "source": "ashby",
+        "jobUrl": "https://example.com/tyrell/jobs/senior-sre", "status": "rejected",
+        "lastUpdate": "2026-06-15", "cvUsed": "cv-default.pdf", "coverLetter": "",
+        "appLink": "", "salary": "", "contact": "", "nextAction": "",
+        "followUpDate": "", "notes": "Rejected after screen — role paused.", "hide": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "companies": [
+    { "company": "Acme Robotics",   "careersUrl": "https://example.com/acme/careers",     "enabled": "yes", "notes": "Rust infra team",        "status": "active" },
+    { "company": "Globex Cloud",     "careersUrl": "https://example.com/globex/careers",   "enabled": "yes", "notes": "Ashby board",            "status": "active" },
+    { "company": "Initech Systems",  "careersUrl": "https://example.com/initech/careers",  "enabled": "yes", "notes": "Lisbon hybrid",          "status": "active" },
+    { "company": "Umbrella Data",    "careersUrl": "https://example.com/umbrella/careers", "enabled": "yes", "notes": "Americas timezones",     "status": "active" },
+    { "company": "Hooli Analytics",  "careersUrl": "https://example.com/hooli/careers",    "enabled": "yes", "notes": "Data platform",          "status": "active" },
+    { "company": "Wonka Pay",        "careersUrl": "https://example.com/wonka/careers",    "enabled": "yes", "notes": "Payments / ledger",      "status": "active" },
+    { "company": "Stark Industries", "careersUrl": "https://example.com/stark/careers",    "enabled": "no",  "notes": "On-site only — skip",    "status": "paused" },
+    { "company": "Cyberdyne Labs",   "careersUrl": "https://example.com/cyberdyne/careers","enabled": "yes", "notes": "ML platform",            "status": "active" },
+    { "company": "Soylent Foods",    "careersUrl": "https://example.com/soylent/careers",  "enabled": "yes", "notes": "Small Node team",        "status": "active" },
+    { "company": "Pied Piper",       "careersUrl": "https://example.com/piedpiper/careers","enabled": "yes", "notes": "Compression startup",    "status": "active" },
+    { "company": "Massive Dynamic",  "careersUrl": "https://example.com/massive/careers",  "enabled": "yes", "notes": "gRPC microservices",     "status": "active" },
+    { "company": "Tyrell Corp",      "careersUrl": "https://example.com/tyrell/careers",   "enabled": "no",  "notes": "Role paused",            "status": "paused" }
+  ]
+}

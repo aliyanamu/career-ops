@@ -5,6 +5,7 @@ import SaveIcon   from '@mui/icons-material/Save'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { useWorkbookContext } from './WorkbookContext'
 import { SheetDataGrid } from './SheetDataGrid'
+import { DEMO } from './demo'
 
 const TABS = [
   { label: 'CV Summary',   path: '/cv-summary',   sheet: 'CV Summary'   },
@@ -40,21 +41,26 @@ export default function App() {
       <AppBar position="static" color="primary">
         <Toolbar variant="dense">
           <Typography variant="h6" sx={{ flexGrow: 0, mr: 2 }}>Career Ops Tracker</Typography>
+          {DEMO && <Chip label="Demo · read-only" color="secondary" size="small" sx={{ mr: 1 }} />}
           <StatusChip status={status} message={statusMessage} />
           <Box sx={{ flexGrow: 1 }} />
-          {dirtyCount > 0 && (
+          {!DEMO && dirtyCount > 0 && (
             <Typography variant="caption" sx={{ mr: 1, color: 'warning.light' }}>
               {dirtyCount} unsaved change{dirtyCount !== 1 ? 's' : ''}
             </Typography>
           )}
-          <Button color="inherit" startIcon={<SaveIcon />} onClick={saveWorkbook}
-            disabled={status === 'saving' || status === 'loading' || dirtyCount === 0}
-            size="small" sx={{ mr: 1 }}>
-            Save
-          </Button>
-          <Button color="inherit" startIcon={<LogoutIcon />} onClick={logout} size="small">
-            Logout
-          </Button>
+          {!DEMO && (
+            <Button color="inherit" startIcon={<SaveIcon />} onClick={saveWorkbook}
+              disabled={status === 'saving' || status === 'loading' || dirtyCount === 0}
+              size="small" sx={{ mr: 1 }}>
+              Save
+            </Button>
+          )}
+          {!DEMO && (
+            <Button color="inherit" startIcon={<LogoutIcon />} onClick={logout} size="small">
+              Logout
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
 
