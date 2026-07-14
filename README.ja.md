@@ -174,7 +174,7 @@ career-opsは複数のモードを持つ単一のスラッシュコマンドで�
 cd tracker
 npm install
 npm run dev      # ローカル開発サーバー
-npm run build    # 静的ビルド -> ../dashboard/（CI 経由で Pages にデプロイ）
+npm run build    # dist/ -> deployed to Pages via CI
 ```
 
 ## プロジェクト構成
@@ -201,7 +201,7 @@ career-ops/
 │   ├── batch-prompt.md          # 自己完結型ワーカープロンプト
 │   └── batch-runner.sh          # オーケストレータースクリプト
 ├── tracker/                     # React製Web Tracker（ソース）
-├── dashboard/                   # ビルド済みWeb Tracker（gitignore対象；Vite出力）
+├── tracker/dist/                   # ビルド済みWeb Tracker（gitignore対象；Vite出力）
 ├── data/                        # 追跡データ（gitignore対象）
 ├── reports/                     # 評価レポート（gitignore対象）
 ├── output/                      # 生成PDF（gitignore対象）

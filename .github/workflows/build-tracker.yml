@@ -34,7 +34,7 @@ jobs:
         working-directory: tracker
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dashboard
+          path: tracker/dist
 
   deploy:
     needs: build

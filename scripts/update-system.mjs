@@ -3,7 +3,7 @@
 /**
  * update-system.mjs — Safe auto-updater for career-ops
  *
- * Updates ONLY system layer files (modes, scripts, dashboard, templates).
+ * Updates ONLY system layer files (modes, scripts, tracker, templates).
  * NEVER touches user data (cv.md, profile.yml, _profile.md, data/, reports/).
  *
  * Usage:

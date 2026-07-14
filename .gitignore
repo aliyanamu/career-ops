@@ -47,5 +47,5 @@ bun.lock
 .claude/settings.local.json
 .claude/memory/
 package-lock.json
-# built React tracker (Vite outputs here; deployed to Pages via CI)
-dashboard/
+# built React tracker (Vite outputs to tracker/dist; deployed to Pages via CI)
+tracker/dist/

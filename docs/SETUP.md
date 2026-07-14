@@ -76,5 +76,5 @@ node scripts/verify-pipeline.mjs     # Check pipeline integrity
 cd tracker
 npm install
 npm run dev      # local dev server
-npm run build    # static build → ../dashboard/ (deployed to Pages via CI)
+npm run build    # static build → dist/ (deployed to Pages via CI)
 ```

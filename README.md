@@ -177,7 +177,7 @@ A React app to browse, filter, and sort your pipeline. Source in `tracker/`, rea
 cd tracker
 npm install
 npm run dev      # local dev
-npm run build    # outputs to ../dashboard/ (deployed to GitHub Pages via CI)
+npm run build    # outputs to dist/ (deployed to GitHub Pages via CI)
 ```
 
 Features: filter tabs, multiple sort modes, grouped/flat view, inline status changes.
@@ -207,7 +207,7 @@ career-ops/
 │   ├── batch-prompt.md          # Self-contained worker prompt
 │   └── batch-runner.sh          # Orchestrator script
 ├── tracker/                     # React web tracker (source)
-├── dashboard/                   # Built web tracker (gitignored; Vite output → Pages)
+├── tracker/dist/                # Built web tracker (gitignored; Vite output → Pages)
 ├── data/                        # Your tracking data (gitignored)
 ├── reports/                     # Evaluation reports (gitignored)
 ├── output/                      # Generated PDFs (gitignored)

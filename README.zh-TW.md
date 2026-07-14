@@ -177,7 +177,7 @@ career-ops 是一個具有多種模式的單一斜線指令：
 cd tracker
 npm install
 npm run dev      # 本機開發伺服器
-npm run build    # 靜態建置 -> ../dashboard/（透過 CI 部署到 Pages）
+npm run build    # dist/ -> deployed to Pages via CI
 ```
 
 ## 專案結構
@@ -204,7 +204,7 @@ career-ops/
 │   ├── batch-prompt.md          # 自包含工作器提示
 │   └── batch-runner.sh          # 協調器腳本
 ├── tracker/                     # React Web Tracker（原始碼）
-├── dashboard/                   # 建置後的 Web Tracker（已 gitignore；Vite 輸出）
+├── tracker/dist/                   # 建置後的 Web Tracker（已 gitignore；Vite 輸出）
 ├── data/                        # 你的追蹤資料（已 gitignore）
 ├── reports/                     # 評估報告（已 gitignore）
 ├── output/                      # 生成的 PDF（已 gitignore）

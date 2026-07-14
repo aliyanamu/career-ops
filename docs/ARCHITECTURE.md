@@ -107,4 +107,4 @@ The `tracker/` directory contains a React app (Vite) that visualizes the pipelin
 - Grouped/flat view
 - Inline status changes
 
-`npm run build` (in `tracker/`) outputs the static site to `dashboard/` (gitignored). CI (`.github/workflows/build-tracker.yml`) builds and deploys it to GitHub Pages via Actions.
+`npm run build` (in `tracker/`) outputs the static site to `tracker/dist/` (gitignored). CI (`.github/workflows/build-tracker.yml`) builds and deploys it to GitHub Pages via Actions.

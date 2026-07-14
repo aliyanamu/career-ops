@@ -174,7 +174,7 @@ Career-ops는 다양한 모드를 가진 하나의 슬래시 커맨드입니다:
 cd tracker
 npm install
 npm run dev      # 로컬 개발 서버
-npm run build    # 정적 빌드 -> ../dashboard/ (CI를 통해 Pages에 배포)
+npm run build    # dist/ -> deployed to Pages via CI
 ```
 
 ## 프로젝트 구조
@@ -201,7 +201,7 @@ career-ops/
 │   ├── batch-prompt.md          # 독립형 워커 프롬프트(Self-contained)
 │   └── batch-runner.sh          # 오케스트레이터 스크립트
 ├── tracker/                     # React Web Tracker (소스)
-├── dashboard/                   # 빌드된 Web Tracker (gitignored; Vite 출력)
+├── tracker/dist/                   # 빌드된 Web Tracker (gitignored; Vite 출력)
 ├── data/                        # 트래킹 데이터 (gitignored)
 ├── reports/                     # 평가 리포트 (gitignored)
 ├── output/                      # 생성된 PDF (gitignored)
