@@ -23,7 +23,31 @@ const GITHUB_BLOB = `https://github.com/${REPO_OWNER}/${REPO_NAME}/blob/${BRANCH
 const URL_FIELDS         = new Set(['url', 'jobUrl', 'appLink'])
 const GITHUB_PATH_FIELDS = new Set(['qa', 'cvPath', 'coverLetterPath', 'cvUsed', 'coverLetter'])
 const BOOLEAN_FIELDS     = new Set(['hide'])
-const NON_EDITABLE       = new Set(['num'])
+
+// Editability policy. Locked columns are either derived or identity fields that,
+// if hand-edited, break the pipeline or write orphan data:
+//   - num: derived row number (not stored).
+//   - url: the job's dedup / update-in-place key (scan + eval match on it). Editing
+//          it silently detaches the job from its scanned/evaluated identity.
+const READONLY_ALWAYS = new Set(['num', 'url'])
+//   - dateAdded / source are set at scan (or manual add) time — provenance, not for
+//     dashboard users to edit. (fitScore / decision stay editable: those are eval
+//     outputs you may legitimately want to override by hand.)
+const READONLY_ON_JOBS = new Set(['dateAdded', 'source'])
+//   - company / role / jobUrl on Preparations & Applications are copies of the job.
+//     company/role re-render from the job (edits are ignored); jobUrl is a copy of
+//     job.url set when the sub-record is created — editing it just desyncs from the
+//     canonical URL. Edit company/role on the Jobs sheet; the URL is fixed identity.
+const READONLY_MIRRORS = new Set(['company', 'role', 'jobUrl'])
+const MIRROR_SHEETS    = new Set(['Preparations', 'Applications'])
+
+function isFieldEditable(field, sheetName) {
+  if (READONLY_ALWAYS.has(field)) return false
+  if (sheetName === 'Jobs' && READONLY_ON_JOBS.has(field)) return false
+  if (READONLY_MIRRORS.has(field) && MIRROR_SHEETS.has(sheetName)) return false
+  return true
+}
+
 const colStateKey = (sheetName) => `career-ops-col-state-${sheetName}`
 
 const toHideBool = (v) => v === true || v === 'Hidden' || v === 'Yes' || v === 'yes'
@@ -206,15 +230,20 @@ export function SheetDataGrid({ sheetName }) {
       const isPath     = GITHUB_PATH_FIELDS.has(field)
       const isBool     = BOOLEAN_FIELDS.has(field)
 
+      const editable = isFieldEditable(field, sheetName)
+      const baseCellStyle = { lineHeight: '1.6', paddingTop: '4px', paddingBottom: '4px' }
+
       const colDef = {
         field,
         headerName: HEADER_NAMES[field] ?? field.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()).trim(),
-        editable:   !NON_EDITABLE.has(field),
+        editable,
         minWidth:   isBool ? 70 : (MIN_WIDTHS[field] ?? 120),
         flex:       WIDE_FIELDS.has(field) ? 2 : 1,
         wrapText:   true,
         autoHeight: true,
-        cellStyle:  { lineHeight: '1.6', paddingTop: '4px', paddingBottom: '4px' },
+        // Faint tint + no text cursor on locked cells so it's obvious they're read-only.
+        cellStyle:  editable ? baseCellStyle : { ...baseCellStyle, background: 'rgba(0,0,0,0.03)', cursor: 'default' },
+        headerTooltip: editable ? undefined : 'Read-only (identity / derived field)',
         resizable:  true,
         sortable:   true,
       }
@@ -240,7 +269,7 @@ export function SheetDataGrid({ sheetName }) {
 
       return colDef
     })
-  }, [schema, dropdownOpts])
+  }, [schema, dropdownOpts, sheetName])
 
   // Build rows
   const rows = useMemo(() => {
@@ -291,11 +320,12 @@ export function SheetDataGrid({ sheetName }) {
   const onCellValueChanged = useCallback((params) => {
     const { data, colDef, newValue, oldValue } = params
     const field  = colDef.field
+    if (!isFieldEditable(field, sheetName)) return   // never persist locked columns
     const isBool = BOOLEAN_FIELDS.has(field)
     const oldVal = isBool ? Boolean(oldValue) : String(oldValue ?? '')
     const newVal = isBool ? Boolean(newValue)  : String(newValue ?? '')
     if (newVal !== oldVal) updateField(data._entity, data._idx, field, newVal)
-  }, [updateField])
+  }, [updateField, sheetName])
 
   const rowClassRules = useMemo(() => ({
     'row-recommended': ({ data }) => data?.decision?.toLowerCase() === 'recommended',
