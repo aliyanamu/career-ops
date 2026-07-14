@@ -160,12 +160,13 @@ Integration rules (the make-or-break for signal quality):
 - [x] `test-all.mjs` grepped for Preparations column assertions (none) and updated if needed; suite green (68/68)
 
 ### Phase 2 — Loop
-- [ ] `modes/loop.md` runs scan → liveness → score unattended and updates jobs.json + applications.md
-- [ ] Already-scored roles (`report` present) skipped; already-drafted roles (`coverLetterPath` present) skipped
-- [ ] Review queue = `decision==='pending'`; loop sets `pending` only for fitScore≥4.0 OR source starts with "User-added"; loop never writes `apply`
-- [ ] Drafting gated on human-set `decision:'apply'`; loop never sets `submissionStatus` / never submits
-- [ ] Queue survives session restart (re-derived from `decision`), no checkpoint file, no `loop.mjs`
-- [ ] `loop.md` composes `modes/pipeline.md` rather than re-specifying JD extraction / report numbering / PDF
+- [x] `modes/loop.md` runs scan → liveness → score unattended and updates jobs.json + applications.md (composes `modes/pipeline.md`)
+- [x] Already-scored roles (`report` present) skipped; already-drafted roles (`coverLetterPath` present) skipped
+- [x] Review queue = **scored (`report`) AND (`fitScore≥4.0` OR source matches `/user/i`) AND not already actioned**. *(Revised from "decision==='pending'": pending is the default state for 85 jobs, so it can't mark the queue — `report` is the real "scored" marker.)*
+- [x] Drafting gated on human-set `decision:'apply'`; loop never writes `apply`, never sets `submissionStatus` / never submits (invariants stated in `modes/loop.md`)
+- [x] Queue survives session restart (re-derived from `report`/`fitScore`/`decision`), no checkpoint file
+- [x] **Reversal — added a minimal `loop.mjs`** (not the rejected orchestrator): ~55 lines owning *only* the review/draft queue selection + a `--self-check`. Single source of truth for the rule beats drift-prone mode prose; wired into `test-all.mjs`.
+- [x] `loop.md` composes `modes/pipeline.md` rather than re-specifying JD extraction / report numbering / PDF
 
 ### Phase 3 — Discovery
 - [ ] `discovery.enabled:false` → `scan.mjs` output byte-identical to today (no new npm dependency in package.json)
