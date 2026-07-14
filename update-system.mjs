@@ -45,11 +45,7 @@ const SYSTEM_PATHS = [
   'modes/tracker.md',
   'modes/training.md',
   'modes/latex.md',
-  'modes/de/',
-  'modes/fr/',
   'modes/ja/',
-  'modes/pt/',
-  'modes/ru/',
   'CLAUDE.md',
   'AGENTS.md',
   'GEMINI.md',
@@ -146,6 +142,10 @@ function addPaths(paths) {
 // ── CHECK ───────────────────────────────────────────────────────
 
 async function check() {
+  // ponytail: upstream (santifer) updates are locked off in this fork — never pull their commits.
+  console.log(JSON.stringify({ status: 'up-to-date' }));
+  return;
+
   // Respect dismiss flag
   if (existsSync(join(ROOT, '.update-dismissed'))) {
     console.log(JSON.stringify({ status: 'dismissed' }));
@@ -238,6 +238,10 @@ async function check() {
 // ── APPLY ───────────────────────────────────────────────────────
 
 async function apply() {
+  // ponytail: upstream updates are locked off in this fork. Refuse to apply santifer's commits.
+  console.error('Upstream updates are disabled in this fork. Nothing applied.');
+  return;
+
   const local = localVersion();
   const initialStatusPaths = new Set(gitStatusEntries().map(entry => entry.path));
 
