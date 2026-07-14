@@ -868,9 +868,9 @@
       "num": 109,
       "company": "Sharefull",
       "enabled": "Yes",
-      "careersUrl": "https://cs.gittap.jp",
+      "careersUrl": "https://herp.careers/v1/sharefull",
       "status": "",
-      "notes": "Auto-added from Jobs (2026-07-14)."
+      "notes": "Japanese gig-work app. Herp ATS (not auto-scannable by scan.mjs). Was surfaced via gittap.jp aggregator."
     },
     {
       "num": 110,
@@ -883,14 +883,6 @@
     {
       "num": 111,
       "company": "ImagineArt",
-      "enabled": "Yes",
-      "careersUrl": "https://jobs.ashbyhq.com/imagineart",
-      "status": "",
-      "notes": "Auto-added from Jobs (2026-07-14)."
-    },
-    {
-      "num": 112,
-      "company": "ImagineArt / Vyro",
       "enabled": "Yes",
       "careersUrl": "https://jobs.ashbyhq.com/imagineart",
       "status": "",
