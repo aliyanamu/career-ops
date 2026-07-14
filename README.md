@@ -166,6 +166,8 @@ npm run dev
 
 `data/jobs.json` is the source of truth; `data/applications.md` is regenerated from it with `npm run gen-tracker`.
 
+> **How scanning, Firecrawl discovery, and the data-expansion loop fit together:** see [docs/SCAN-WORKFLOW.md](docs/SCAN-WORKFLOW.md) — mermaid diagrams of the full flow.
+
 ## Dashboard TUI
 
 A terminal alternative to the web tracker:
