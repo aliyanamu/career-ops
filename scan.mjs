@@ -32,6 +32,8 @@ mkdirSync('data', { recursive: true });
 
 const CONCURRENCY = 10;
 const FETCH_TIMEOUT_MS = 10_000;
+// Firecrawl web search crawls/scrapes pages — much slower than ATS JSON. Give it room.
+const FIRECRAWL_TIMEOUT_MS = 60_000;
 
 // ── API detection ───────────────────────────────────────────────────
 
@@ -193,7 +195,7 @@ async function checkLive(url) {
 
 async function firecrawlSearch(query, limit, key) {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  const timer = setTimeout(() => controller.abort(), FIRECRAWL_TIMEOUT_MS);
   try {
     const res = await fetch('https://api.firecrawl.dev/v2/search', {
       method: 'POST',
@@ -400,7 +402,7 @@ function runSelfCheck() {
 
   const locFilter = buildLocationFilter({
     allow: ['remote', 'japan', 'tokyo', 'apac'],
-    block: ['remote - us', 'remote - canada', 'us only'],
+    block: ['united states', 'usa', 'canada'],
   });
   assert(buildLocationFilter(null) === null, 'no location_filter → null (disabled)');
   assert(locFilter('Remote'), 'plain remote passes');
@@ -409,7 +411,10 @@ function runSelfCheck() {
   assert(!locFilter('San Francisco, CA'), 'on-site elsewhere dropped');
   assert(!locFilter('Berlin, Germany'), 'on-site elsewhere dropped (2)');
   assert(!locFilter('Remote - Canada'), 'region-locked remote dropped');
-  assert(!locFilter('Remote - US'), 'US-region-locked remote dropped despite "remote"');
+  assert(!locFilter('United States - Remote Opportunity'),
+    'country-first US-remote dropped (both orderings)');
+  assert(!locFilter('United States and Canada - Remote Opportunity'),
+    'US+Canada remote dropped');
   console.log('scan.mjs self-check ok');
 }
 
