@@ -29,16 +29,17 @@ const BOOLEAN_FIELDS     = new Set(['hide'])
 //   - num: derived row number (not stored).
 //   - url: the job's dedup / update-in-place key (scan + eval match on it). Editing
 //          it silently detaches the job from its scanned/evaluated identity.
-const READONLY_ALWAYS = new Set(['num', 'url'])
+//   - num: derived. url: dedup / update-in-place key. company / role: the job's
+//     identity, set from the posting at scan/eval time (edit these in the source data,
+//     not the dashboard).
+const READONLY_ALWAYS = new Set(['num', 'url', 'company', 'role'])
 //   - dateAdded / source are set at scan (or manual add) time — provenance, not for
 //     dashboard users to edit. (fitScore / decision stay editable: those are eval
 //     outputs you may legitimately want to override by hand.)
 const READONLY_ON_JOBS = new Set(['dateAdded', 'source'])
-//   - company / role / jobUrl on Preparations & Applications are copies of the job.
-//     company/role re-render from the job (edits are ignored); jobUrl is a copy of
-//     job.url set when the sub-record is created — editing it just desyncs from the
-//     canonical URL. Edit company/role on the Jobs sheet; the URL is fixed identity.
-const READONLY_MIRRORS = new Set(['company', 'role', 'jobUrl'])
+//   - jobUrl on Preparations & Applications is a copy of job.url set when the
+//     sub-record is created — editing it just desyncs from the canonical URL.
+const READONLY_MIRRORS = new Set(['jobUrl'])
 const MIRROR_SHEETS    = new Set(['Preparations', 'Applications'])
 
 function isFieldEditable(field, sheetName) {
@@ -230,20 +231,20 @@ export function SheetDataGrid({ sheetName }) {
       const isPath     = GITHUB_PATH_FIELDS.has(field)
       const isBool     = BOOLEAN_FIELDS.has(field)
 
-      const editable = isFieldEditable(field, sheetName)
-      const baseCellStyle = { lineHeight: '1.6', paddingTop: '4px', paddingBottom: '4px' }
+      const editable  = isFieldEditable(field, sheetName)
+      const baseName  = HEADER_NAMES[field] ?? field.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()).trim()
 
       const colDef = {
         field,
-        headerName: HEADER_NAMES[field] ?? field.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()).trim(),
+        // Lock icon in the header marks read-only columns (no cell tint).
+        headerName: editable ? baseName : `🔒 ${baseName}`,
         editable,
         minWidth:   isBool ? 70 : (MIN_WIDTHS[field] ?? 120),
         flex:       WIDE_FIELDS.has(field) ? 2 : 1,
         wrapText:   true,
         autoHeight: true,
-        // Faint tint + no text cursor on locked cells so it's obvious they're read-only.
-        cellStyle:  editable ? baseCellStyle : { ...baseCellStyle, background: 'rgba(0,0,0,0.03)', cursor: 'default' },
-        headerTooltip: editable ? undefined : 'Read-only (identity / derived field)',
+        cellStyle:  { lineHeight: '1.6', paddingTop: '4px', paddingBottom: '4px' },
+        headerTooltip: editable ? undefined : 'Read-only (identity / provenance field)',
         resizable:  true,
         sortable:   true,
       }
