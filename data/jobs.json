@@ -2884,7 +2884,7 @@
         "company": "Hercules"
       },
       "application": null,
-      "hide": false,
+      "hide": true,
       "deadline": ""
     }
   ]
