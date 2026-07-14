@@ -20,6 +20,14 @@
 
 ---
 
+## Demo
+
+<p align="center">
+  <a href="https://www.loom.com/share/33afba5fa3ba4ce4883662bed6cf3e60">
+    <img src="https://img.shields.io/badge/▶_Watch_the_demo-Loom-625DF5?style=for-the-badge&logo=loom&logoColor=white" alt="Watch the Career-Ops demo on Loom">
+  </a>
+</p>
+
 ## What Is This
 
 Career-Ops is an AI-assisted job search command center. You drive it two ways: run the commands through an AI coding assistant (Claude Code), and browse or edit the pipeline in the web tracker dashboard. Instead of a spreadsheet you get an AI-powered pipeline that:
