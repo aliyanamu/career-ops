@@ -2563,7 +2563,7 @@
         "location": "",
         "source": "User-added (Greenhouse)",
         "jobUrl": "https://job-boards.greenhouse.io/remotecom/jobs/7774669003",
-        "status": "applied",
+        "status": "rejected",
         "lastUpdate": "2026-07-12",
         "cvUsed": "output/cv-hana-aliyah-mufidah-remotecom-2026-07-11.pdf",
         "coverLetter": "",
@@ -2573,7 +2573,7 @@
         "nextAction": "Wait for recruiter response",
         "followUpDate": "",
         "notes": "Promoted from Preparations",
-        "hide": ""
+        "hide": true
       },
       "appNum": 18,
       "report": "reports/016-remotecom-2026-07-11.md"
