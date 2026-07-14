@@ -2865,6 +2865,114 @@
       "application": null,
       "hide": true,
       "deadline": ""
+    },
+    {
+      "url": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4919950101",
+      "role": "Software Engineer, Treasury",
+      "source": "career-ops scan",
+      "elig": "✅ Jakarta, no visa",
+      "why": "Stablecoin treasury/reconciliation ~ Nespay payments",
+      "fitScore": "3.6",
+      "decision": "recommended",
+      "notes": "Evaluated 3.6/5 — reports/018-straitsx-treasury-2026-07-13.md. Jakarta-local; JD scoped entry-level",
+      "num": 148,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "StraitsX"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": "",
+      "appNum": 22,
+      "report": "reports/018-straitsx-treasury-2026-07-13.md"
+    },
+    {
+      "url": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4905659101",
+      "role": "Software Engineer, Engineering Excellence",
+      "source": "career-ops scan",
+      "elig": "⚠️ Singapore — confirm Jakarta seat/visa",
+      "why": "Platform/dev-productivity + CI-CD fit",
+      "fitScore": "3.9",
+      "decision": "recommended",
+      "notes": "Evaluated 3.9/5 — reports/020-straitsx-eng-excellence-2026-07-13.md. Singapore visa flag",
+      "num": 150,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "StraitsX"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": "",
+      "appNum": 20,
+      "report": "reports/020-straitsx-eng-excellence-2026-07-13.md"
+    },
+    {
+      "num": 159,
+      "dateAdded": "2026-07-12",
+      "url": "",
+      "source": "career-ops",
+      "elig": "❌ US-only remote, US work-auth required",
+      "why": "Best stack fit but not viable from Indonesia",
+      "fitScore": "3.0",
+      "deadline": "",
+      "decision": "skip",
+      "hide": true,
+      "appNum": 19,
+      "report": "reports/017-coinlist-2026-07-12.md",
+      "notes": "Best stack fit (TS/Next+Elixir+AWS+crypto) but US-only remote; CONFIRMED US-work-auth required — not viable from Indonesia",
+      "role": "Senior Software Engineer (Product)",
+      "company": {
+        "company": "CoinList"
+      },
+      "preparation": null,
+      "application": null
+    },
+    {
+      "num": 160,
+      "dateAdded": "2026-07-14",
+      "url": "",
+      "source": "career-ops",
+      "elig": "⚠️ Location list excludes Indonesia — verify eligibility",
+      "why": "Strong Node.js/backend stack fit; contractor 5-week gig",
+      "fitScore": "",
+      "deadline": "",
+      "decision": "apply",
+      "hide": false,
+      "appNum": 24,
+      "report": "",
+      "notes": "Turing platform (no public URL). Node.js backend contractor, remote, 5 weeks, 20/30/40 hrs/wk, 4hr PST overlap. Location list excludes Indonesia — check eligibility. Prep Q&A saved.",
+      "role": "Node.js Developer",
+      "company": {
+        "company": "Turing"
+      },
+      "preparation": {
+        "date": "2026-07-14",
+        "jobUrl": "",
+        "cvPath": "",
+        "qa": "prep/turing-nodejs-developer-2026-07-14.md",
+        "notes": "Backend Node.js contractor. Prep Q&A grounded in cv.md.",
+        "submissionStatus": "submitted",
+        "submissionDate": "2026-07-14"
+      },
+      "application": {
+        "dateApplied": "2026-07-14",
+        "location": "",
+        "source": "Turing platform",
+        "jobUrl": "",
+        "status": "applied",
+        "lastUpdate": "2026-07-14",
+        "cvUsed": "",
+        "coverLetter": "",
+        "appLink": "",
+        "salary": "",
+        "contact": "",
+        "nextAction": "Wait for recruiter response",
+        "followUpDate": "",
+        "notes": "",
+        "hide": ""
+      }
     }
   ]
 }

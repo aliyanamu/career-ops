@@ -201,6 +201,7 @@ Default modes are in `modes/` (English). Additional language-specific modes are 
 | Asks for company research | `deep` |
 | Preps for interview at specific company | `interview-prep` |
 | Wants to generate CV/PDF | `pdf` |
+| Wants a cover letter for a role | `cover` |
 | Evaluates a course/cert | `training` |
 | Evaluates portfolio project | `project` |
 | Asks about application status | `tracker` |
@@ -208,6 +209,7 @@ Default modes are in `modes/` (English). Additional language-specific modes are 
 | Searches for new offers | `scan` |
 | Processes pending URLs | `pipeline` |
 | Batch processes offers | `batch` |
+| Wants an unattended scan→score run with a review checkpoint | `loop` |
 | Asks about rejection patterns or wants to improve targeting | `patterns` |
 | Asks about follow-ups or application cadence | `followup` |
 

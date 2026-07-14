@@ -189,7 +189,7 @@ export function useTracker() {
                 ...next[idx],
                 preparation: {
                   date: today, jobUrl: job.url ?? '',
-                  cvPath: '',
+                  cvPath: '', coverLetterPath: '',
                   qa: '', videoRequired: 'no', videoNotes: '',
                   videoStatus: '', aiDisclaimer: 'no',
                   submissionStatus: 'pending', notes: '', hide: '',
@@ -223,7 +223,7 @@ export function useTracker() {
                 source: job.source ?? '', jobUrl: job.url ?? '',
                 status: 'applied', lastUpdate: today,
                 cvUsed: job.preparation?.cvPath || 'cv-default.pdf',
-                coverLetter: '', appLink: '', salary: '',
+                coverLetter: job.preparation?.coverLetterPath || '', appLink: '', salary: '',
                 contact: '', nextAction: '', followUpDate: '',
                 notes: 'Promoted from Preparations', hide: '',
               },

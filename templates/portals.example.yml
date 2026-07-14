@@ -20,6 +20,17 @@
 #   4. Adjust search_queries for your preferred job boards
 #   5. Set enabled: false on companies you don't care about
 
+# -- Broad web discovery (opt-in) --
+# Finds roles on portals NOT in tracked_companies via Firecrawl web search.
+# OFF by default. To use: set enabled: true and export FIRECRAWL_API_KEY.
+# Results pass through the same title filter + dedup + liveness gate as ATS scans.
+discovery:
+  enabled: false
+  max_results: 20            # total per run (free-tier guard), split across queries
+  queries:
+    - 'site:boards.greenhouse.io "your target role" remote'
+    - 'remote your-stack engineer job'
+
 # -- Title filter --
 # The scanner uses these keywords to decide if a title is relevant.
 # At least 1 positive must match AND 0 negatives must match (case-insensitive).

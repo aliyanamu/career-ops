@@ -163,6 +163,85 @@ async function checkLive(url) {
   }
 }
 
+// ── Broad discovery (opt-in Firecrawl web search) ───────────────────
+// Off by default. Enable with `discovery.enabled: true` in portals.yml + a
+// FIRECRAWL_API_KEY env var. Finds roles on portals NOT in tracked_companies.
+// Results are dependency-free REST (Firecrawl v2) and flow through the same
+// title filter + dedup + liveness gate as ATS results.
+
+async function firecrawlSearch(query, limit, key) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch('https://api.firecrawl.dev/v2/search', {
+      method: 'POST',
+      signal: controller.signal,
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, limit, sources: [{ type: 'web' }], tbs: 'qdr:w' }), // qdr:w = past week
+    });
+    if (!res.ok) {
+      console.warn(`  Firecrawl "${query}": HTTP ${res.status}${res.status === 429 ? ' (rate/credit limit)' : ''}`);
+      return [];
+    }
+    const { data } = await res.json();
+    return data?.web ?? [];
+  } catch (err) {
+    console.warn(`  Firecrawl "${query}": ${err.message}`);
+    return [];
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// Firecrawl gives no company field — derive it from the ATS host slug, else the hostname.
+function deriveCompanyFromHost(url) {
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, '');
+    let m;
+    if ((m = url.match(/(?:boards|job-boards)(?:\.eu)?\.greenhouse\.io\/([^/?#]+)/))) return m[1];
+    if ((m = url.match(/jobs\.ashbyhq\.com\/([^/?#]+)/))) return m[1];
+    if ((m = host.match(/^([^.]+)\.ashbyhq\.com$/))) return m[1];
+    if ((m = url.match(/jobs\.lever\.co\/([^/?#]+)/))) return m[1];
+    return host;
+  } catch {
+    return '';
+  }
+}
+
+async function discoverViaFirecrawl(discovery, { titleFilter, seenUrls, seenCompanyRoles }) {
+  const key = process.env.FIRECRAWL_API_KEY;
+  if (!key) {
+    console.warn('Discovery enabled but FIRECRAWL_API_KEY is not set — skipping broad discovery.');
+    return [];
+  }
+  const queries = discovery.queries || [];
+  const maxResults = discovery.max_results ?? 20;
+  if (queries.length === 0) return [];
+
+  const perQuery = Math.max(1, Math.floor(maxResults / queries.length));
+  const offers = [];
+
+  for (const query of queries) {
+    if (offers.length >= maxResults) break;
+    const results = await firecrawlSearch(query, perQuery, key);
+    for (const r of results) {
+      if (offers.length >= maxResults) break;
+      const url = r.url;
+      const title = r.title || '';
+      if (!url || !title) continue;
+      if (!titleFilter(title)) continue;         // search surfaces aggregators/blogs — filter hard
+      if (seenUrls.has(url)) continue;
+      const company = deriveCompanyFromHost(url);
+      const roleKey = `${company.toLowerCase()}::${title.toLowerCase()}`;
+      if (seenCompanyRoles.has(roleKey)) continue;
+      seenUrls.add(url);
+      seenCompanyRoles.add(roleKey);
+      offers.push({ title, url, company, location: '', posted: null, source: 'firecrawl' });
+    }
+  }
+  return offers;
+}
+
 // ── Dedup ───────────────────────────────────────────────────────────
 
 function loadSeenUrls() {
@@ -278,8 +357,30 @@ async function parallelFetch(tasks, limit) {
 
 // ── Main ────────────────────────────────────────────────────────────
 
+function runSelfCheck() {
+  const cases = [
+    ['https://boards.greenhouse.io/acme/jobs/123', 'acme'],
+    ['https://job-boards.eu.greenhouse.io/beta/jobs/9', 'beta'],
+    ['https://jobs.ashbyhq.com/gamma/abc-def', 'gamma'],
+    ['https://delta.ashbyhq.com/careers', 'delta'],
+    ['https://jobs.lever.co/epsilon/xyz', 'epsilon'],
+    ['https://careers.zeta.com/roles/1', 'careers.zeta.com'],
+    ['not-a-url', ''],
+  ];
+  const filter = buildTitleFilter({ positive: ['engineer'], negative: ['intern'] });
+  const assert = (c, m) => { if (!c) { console.error('FAIL:', m); process.exit(1); } };
+  for (const [url, want] of cases) {
+    const got = deriveCompanyFromHost(url);
+    assert(got === want, `deriveCompanyFromHost(${url}) → ${got}, want ${want}`);
+  }
+  assert(filter('Senior Engineer') && !filter('Engineer Intern') && !filter('Designer'),
+    'title filter applies to discovery results');
+  console.log('scan.mjs self-check ok');
+}
+
 async function main() {
   const args = process.argv.slice(2);
+  if (args.includes('--self-check')) { runSelfCheck(); return; }
   const dryRun = args.includes('--dry-run');
   const companyFlag = args.indexOf('--company');
   const filterCompany = companyFlag !== -1 ? args[companyFlag + 1]?.toLowerCase() : null;
@@ -364,6 +465,14 @@ async function main() {
 
   await parallelFetch(tasks, CONCURRENCY);
 
+  // 4a2. Broad discovery (opt-in) — feed into the same liveness gate + writers below
+  let totalDiscovered = 0;
+  if (config.discovery?.enabled) {
+    const discovered = await discoverViaFirecrawl(config.discovery, { titleFilter, seenUrls, seenCompanyRoles });
+    totalDiscovered = discovered.length;
+    newOffers.push(...discovered);
+  }
+
   // 4b. Liveness gate — drop offers whose public posting is dead (404/redirect/expired)
   let totalDead = 0;
   if (checkLiveness && newOffers.length > 0) {
@@ -398,6 +507,7 @@ async function main() {
   console.log(`Filtered by title:     ${totalFiltered} removed`);
   console.log(`Older than ${maxAgeDays}d:         ${totalStale} skipped`);
   console.log(`Duplicates:            ${totalDupes} skipped`);
+  if (config.discovery?.enabled) console.log(`Broad discovery:       ${totalDiscovered} found (Firecrawl)`);
   if (checkLiveness) console.log(`Dead postings:         ${totalDead} dropped`);
   console.log(`New offers added:      ${newOffers.length}`);
 
