@@ -379,6 +379,8 @@ export function SheetDataGrid({ sheetName }) {
           onSortChanged={saveColState}
           rowClassRules={rowClassRules}
           suppressPaginationPanel
+          enableCellTextSelection
+          ensureDomOrder
           defaultColDef={{ resizable: true, sortable: true }}
         />
       </Box>
