@@ -16,8 +16,8 @@ import { readFileSync, existsSync, readdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = __dirname;
+const __dirname = dirname(fileURLToPath(import.meta.url));  // scripts/
+const ROOT = join(__dirname, '..');  // project root
 const QUICK = process.argv.includes('--quick');
 
 let passed = 0;
@@ -48,9 +48,9 @@ console.log('\n🧪 career-ops test suite\n');
 
 console.log('1. Syntax checks');
 
-const mjsFiles = readdirSync(ROOT).filter(f => f.endsWith('.mjs'));
+const mjsFiles = readdirSync(__dirname).filter(f => f.endsWith('.mjs'));
 for (const f of mjsFiles) {
-  const result = run('node', ['--check', f]);
+  const result = run('node', ['--check', join('scripts', f)]);
   if (result !== null) {
     pass(`${f} syntax OK`);
   } else {
@@ -63,14 +63,14 @@ for (const f of mjsFiles) {
 console.log('\n2. Script execution (graceful on empty data)');
 
 const scripts = [
-  { name: 'cv-sync-check.mjs', expectExit: 1, allowFail: true }, // fails without cv.md (normal in repo)
-  { name: 'verify-pipeline.mjs', expectExit: 0 },
-  { name: 'normalize-statuses.mjs', expectExit: 0 },
-  { name: 'dedup-tracker.mjs', expectExit: 0 },
-  { name: 'merge-tracker.mjs', expectExit: 0 },
-  { name: 'update-system.mjs check', expectExit: 0 },
-  { name: 'loop.mjs --self-check', expectExit: 0 }, // review/draft queue selection invariant
-  { name: 'scan.mjs --self-check', expectExit: 0 }, // discovery host-parsing + title-filter invariant
+  { name: 'scripts/cv-sync-check.mjs', expectExit: 1, allowFail: true }, // fails without cv.md (normal in repo)
+  { name: 'scripts/verify-pipeline.mjs', expectExit: 0 },
+  { name: 'scripts/normalize-statuses.mjs', expectExit: 0 },
+  { name: 'scripts/dedup-tracker.mjs', expectExit: 0 },
+  { name: 'scripts/merge-tracker.mjs', expectExit: 0 },
+  { name: 'scripts/update-system.mjs check', expectExit: 0 },
+  { name: 'scripts/loop.mjs --self-check', expectExit: 0 }, // review/draft queue selection invariant
+  { name: 'scripts/scan.mjs --self-check', expectExit: 0 }, // discovery host-parsing + title-filter invariant
 ];
 
 for (const { name, allowFail } of scripts) {
@@ -89,7 +89,7 @@ for (const { name, allowFail } of scripts) {
 console.log('\n3. Liveness classification');
 
 try {
-  const { classifyLiveness } = await import(pathToFileURL(join(ROOT, 'liveness-core.mjs')).href);
+  const { classifyLiveness } = await import(pathToFileURL(join(__dirname, 'liveness-core.mjs')).href);
 
   const expiredChromeApply = classifyLiveness({
     finalUrl: 'https://example.com/jobs/closed-role',

@@ -6,10 +6,10 @@ System-layer template files used by career-ops scripts and modes. These files ar
 
 | File | Used By | Purpose |
 |------|---------|---------|
-| `cv-template.html` | `generate-pdf.mjs` | HTML/CSS template for ATS-optimized CV PDFs |
-| `cv-template.tex` | `generate-latex.mjs` | LaTeX/Overleaf template for ATS-optimized CV PDFs |
+| `cv-template.html` | `scripts/generate-pdf.mjs` | HTML/CSS template for ATS-optimized CV PDFs |
+| `cv-template.tex` | `scripts/generate-latex.mjs` | LaTeX/Overleaf template for ATS-optimized CV PDFs |
 | `portals.example.yml` | Onboarding | Example portal scanner configuration (copy to `portals.yml` to activate) |
-| `states.yml` | `verify-pipeline.mjs`, `normalize-statuses.mjs`, `merge-tracker.mjs` | Canonical application states and their aliases |
+| `states.yml` | `scripts/verify-pipeline.mjs`, `scripts/normalize-statuses.mjs`, `scripts/merge-tracker.mjs` | Canonical application states and their aliases |
 
 ### cv-template.html
 
@@ -28,10 +28,10 @@ LaTeX template for Overleaf-compatible CV generation. Based on the [sb2nov/resum
 **Usage:**
 ```bash
 # Validate and compile .tex → .pdf (requires pdflatex on PATH)
-node generate-latex.mjs output/cv-name-company-date.tex
+node scripts/generate-latex.mjs output/cv-name-company-date.tex
 
 # Or specify a custom output path
-node generate-latex.mjs output/cv-name-company-date.tex output/custom-name.pdf
+node scripts/generate-latex.mjs output/cv-name-company-date.tex output/custom-name.pdf
 ```
 
 **Prerequisites:** `pdflatex` via [MiKTeX](https://miktex.org/) (Windows) or TeX Live (Linux/macOS). First compilation may auto-install missing LaTeX packages. Alternatively, upload the `.tex` file directly to [Overleaf](https://www.overleaf.com) — no local install needed.

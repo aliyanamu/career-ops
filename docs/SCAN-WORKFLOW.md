@@ -11,7 +11,7 @@ flowchart TD
         PROF[modes/_profile.md<br/>+ career-direction/<br/>+ cv.md]
     end
 
-    SCAN[["scan.mjs<br/>(zero-LLM)"]]
+    SCAN[["scripts/scan.mjs<br/>(zero-LLM)"]]
     P --> SCAN
 
     SCAN --> PIPE[data/pipeline.md<br/>inbox of found roles]
@@ -30,7 +30,7 @@ flowchart TD
     class JOBS,DISC,PIPE sot;
 ```
 
-**Key idea:** `scan.mjs` never writes to `jobs.json` directly. It fills an **inbox** (`pipeline.md`), and you pull roles into the tracker with **Import from scan**. Evaluation is a separate step that scores them.
+**Key idea:** `scripts/scan.mjs` never writes to `jobs.json` directly. It fills an **inbox** (`pipeline.md`), and you pull roles into the tracker with **Import from scan**. Evaluation is a separate step that scores them.
 
 ## 2. Scan WITHOUT Firecrawl (default — known companies only)
 
@@ -112,8 +112,8 @@ flowchart LR
 | File | What it holds | Written by |
 |------|---------------|-----------|
 | `portals.yml` | scanner config (companies, filters, discovery) | you (gitignored, local) |
-| `data/pipeline.md` | inbox of freshly-scanned roles | `scan.mjs` |
-| `data/discovered-companies.json` | new companies found via Firecrawl | `scan.mjs` |
+| `data/pipeline.md` | inbox of freshly-scanned roles | `scripts/scan.mjs` |
+| `data/discovered-companies.json` | new companies found via Firecrawl | `scripts/scan.mjs` |
 | `data/jobs.json` | the curated tracker | web tracker + evaluation |
 | `data/companies.json` | dashboard company list | web tracker |
 

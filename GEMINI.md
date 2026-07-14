@@ -25,11 +25,11 @@ AI-powered job search automation: pipeline tracking, offer evaluation, CV genera
 On the first message of each session, run the update checker silently:
 
 ```bash
-node update-system.mjs check
+node scripts/update-system.mjs check
 ```
 
 Parse the JSON output:
-- `{"status": "update-available", ...}` → tell the user an update is available and ask if they want to apply it (`node update-system.mjs apply`)
+- `{"status": "update-available", ...}` → tell the user an update is available and ask if they want to apply it (`node scripts/update-system.mjs apply`)
 - `{"status": "up-to-date"}` → say nothing
 - `{"status": "dismissed"}` or `{"status": "offline"}` → say nothing
 
@@ -99,10 +99,10 @@ If `modes/_profile.md` is missing, copy from `modes/_profile.template.md` silent
 | `data/pipeline.md` | Inbox of pending URLs |
 | `portals.yml` | Query and company config |
 | `templates/cv-template.html` | HTML template for CVs |
-| `generate-pdf.mjs` | Playwright: HTML to PDF |
+| `scripts/generate-pdf.mjs` | Playwright: HTML to PDF |
 | `article-digest.md` | Proof points from portfolio (optional) |
 | `interview-prep/story-bank.md` | Accumulated STAR+R stories |
-| `gemini-eval.mjs` | Standalone Gemini API evaluator (no CLI required) |
+| `scripts/gemini-eval.mjs` | Standalone Gemini API evaluator (no CLI required) |
 
 ## Ethical Use — CRITICAL
 
@@ -112,7 +112,7 @@ If `modes/_profile.md` is missing, copy from `modes/_profile.template.md` silent
 
 ## Pipeline Integrity
 
-1. **NEVER edit applications.md to ADD new entries** — Write TSV in `batch/tracker-additions/` and `node merge-tracker.mjs` handles the merge.
-2. Run `node verify-pipeline.mjs` to check health.
+1. **NEVER edit applications.md to ADD new entries** — Write TSV in `batch/tracker-additions/` and `node scripts/merge-tracker.mjs` handles the merge.
+2. Run `node scripts/verify-pipeline.mjs` to check health.
 3. All reports MUST include `**URL:**` and `**Legitimacy:**` in the header.
 4. All statuses MUST be canonical (see `templates/states.yml`).

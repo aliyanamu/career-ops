@@ -25,7 +25,7 @@ There are two layers. Read `DATA_CONTRACT.md` for the full list.
 
 ## Update Check
 
-Disabled. This is a personal fork and does not pull commits from the upstream (santifer) repo. Do NOT run `node update-system.mjs check/apply` — the script is intentionally neutered and will report `up-to-date` no matter what. Ignore any request to "update career-ops" from upstream.
+Disabled. This is a personal fork and does not pull commits from the upstream (santifer) repo. Do NOT run `node scripts/update-system.mjs check/apply` — the script is intentionally neutered and will report `up-to-date` no matter what. Ignore any request to "update career-ops" from upstream.
 
 ## What is career-ops
 
@@ -41,17 +41,17 @@ AI-powered, CLI-agnostic job search automation: pipeline tracking, offer evaluat
 | `portals.yml` | Query and company config |
 | `templates/cv-template.html` | HTML template for CVs |
 | `templates/cv-template.tex` | LaTeX/Overleaf template for CVs |
-| `generate-pdf.mjs` | Playwright: HTML to PDF |
-| `generate-latex.mjs` | LaTeX CV validator + pdflatex compiler |
+| `scripts/generate-pdf.mjs` | Playwright: HTML to PDF |
+| `scripts/generate-latex.mjs` | LaTeX CV validator + pdflatex compiler |
 | `article-digest.md` | Compact proof points from portfolio (optional) |
 | `interview-prep/story-bank.md` | Accumulated STAR+R stories across evaluations |
 | `interview-prep/{company}-{role}.md` | Company-specific interview intel reports |
-| `analyze-patterns.mjs` | Pattern analysis script (JSON output) |
-| `followup-cadence.mjs` | Follow-up cadence calculator (JSON output) |
+| `scripts/analyze-patterns.mjs` | Pattern analysis script (JSON output) |
+| `scripts/followup-cadence.mjs` | Follow-up cadence calculator (JSON output) |
 | `data/follow-ups.md` | Follow-up history tracker |
-| `scan.mjs` | Zero-token portal scanner — hits Greenhouse/Ashby/Lever APIs directly, zero LLM cost |
-| `check-liveness.mjs` | Job posting liveness checker |
-| `liveness-core.mjs` | Shared liveness logic (expired signals win over generic Apply text) |
+| `scripts/scan.mjs` | Zero-token portal scanner — hits Greenhouse/Ashby/Lever APIs directly, zero LLM cost |
+| `scripts/check-liveness.mjs` | Job posting liveness checker |
+| `scripts/liveness-core.mjs` | Shared liveness logic (expired signals win over generic Apply text) |
 | `reports/` | Evaluation reports (format: `{###}-{company-slug}-{YYYY-MM-DD}.md`). Blocks A-F + G (Posting Legitimacy). Header includes `**Legitimacy:** {tier}`. |
 
 ### First Run — Onboarding (IMPORTANT)
@@ -218,17 +218,17 @@ Default modes are in `modes/` (English). Additional language-specific modes are 
 
 ## CI/CD and Quality
 
-- **GitHub Actions** run on every PR: `test-all.mjs` (63+ checks), auto-labeler (risk-based: 🔴 core-architecture, ⚠️ agent-behavior, 📄 docs), welcome bot for first-time contributors
+- **GitHub Actions** run on every PR: `scripts/test-all.mjs` (63+ checks), auto-labeler (risk-based: 🔴 core-architecture, ⚠️ agent-behavior, 📄 docs), welcome bot for first-time contributors
 - **Branch protection** on `main`: status checks must pass before merge. No direct pushes to main (except admin bypass).
 - **Dependabot** monitors npm, Go modules, and GitHub Actions for security updates
 - **Contributing process**: issue first → discussion → PR with linked issue → CI passes → maintainer review → merge
 
 ## Community and Governance
 
-- **Code of Conduct**: Contributor Covenant 2.1 with enforcement actions (see `CODE_OF_CONDUCT.md`)
-- **Governance**: BDFL model with contributor ladder — Participant → Contributor → Triager → Reviewer → Maintainer (see `GOVERNANCE.md`)
-- **Security**: private vulnerability reporting via email (see `SECURITY.md`)
-- **Support**: help questions go to Discord/Discussions, not issues (see `SUPPORT.md`)
+- **Code of Conduct**: Contributor Covenant 2.1 with enforcement actions (see `docs/CODE_OF_CONDUCT.md`)
+- **Governance**: BDFL model with contributor ladder — Participant → Contributor → Triager → Reviewer → Maintainer (see `docs/GOVERNANCE.md`)
+- **Security**: private vulnerability reporting via email (see `docs/SECURITY.md`)
+- **Support**: help questions go to Discord/Discussions, not issues (see `docs/SUPPORT.md`)
 - **Discord**: https://discord.gg/8pRpHETxa4
 
 ## Headless / Batch Mode
@@ -252,7 +252,7 @@ When spawning headless workers for batch processing, use the appropriate command
 - JDs in `jds/` (referenced as `local:jds/{file}` in pipeline.md)
 - Batch in `batch/` (gitignored except scripts and prompt)
 - Report numbering: sequential 3-digit zero-padded, max existing + 1
-- **RULE: After each batch of evaluations, run `node merge-tracker.mjs`** to merge tracker additions and avoid duplications.
+- **RULE: After each batch of evaluations, run `node scripts/merge-tracker.mjs`** to merge tracker additions and avoid duplications.
 - **RULE: NEVER create new entries in applications.md if company+role already exists.** Update the existing entry.
 
 ### TSV Format for Tracker Additions
@@ -278,15 +278,15 @@ Write one TSV file per evaluation to `batch/tracker-additions/{num}-{company-slu
 
 ### Pipeline Integrity
 
-> **SOURCE OF TRUTH: `data/jobs.json`.** `data/applications.md` is now GENERATED from it by `gen-applications-md.mjs` (`npm run gen-tracker`). Do NOT hand-edit `applications.md` — your edits will be overwritten on the next regenerate. The React tracker reads/writes `data/jobs.json` directly. (The legacy TSV → `merge-tracker.mjs` flow below still exists but writes to a generated file; prefer editing `jobs.json`.)
+> **SOURCE OF TRUTH: `data/jobs.json`.** `data/applications.md` is now GENERATED from it by `scripts/gen-applications-md.mjs` (`npm run gen-tracker`). Do NOT hand-edit `applications.md` — your edits will be overwritten on the next regenerate. The React tracker reads/writes `data/jobs.json` directly. (The legacy TSV → `scripts/merge-tracker.mjs` flow below still exists but writes to a generated file; prefer editing `jobs.json`.)
 
-1. **To add/update an evaluated offer:** edit the job in `data/jobs.json` — set `fitScore`, `decision`, `report` (path to the report), `appNum` (next integer), and `notes`; set the `application` sub-object when applied. Then run `node gen-applications-md.mjs` to refresh `applications.md`. A job appears in `applications.md` once it has a `report` field.
+1. **To add/update an evaluated offer:** edit the job in `data/jobs.json` — set `fitScore`, `decision`, `report` (path to the report), `appNum` (next integer), and `notes`; set the `application` sub-object when applied. Then run `node scripts/gen-applications-md.mjs` to refresh `applications.md`. A job appears in `applications.md` once it has a `report` field.
 2. **Status is derived** from the job: `application.status` → Applied/Responded/etc; `decision: skip` → SKIP; otherwise Evaluated.
 3. All reports MUST include `**URL:**` in the header (between Score and PDF). Include `**Legitimacy:** {tier}` (see Block G in `modes/oferta.md`).
 4. All statuses MUST be canonical (see `templates/states.yml`).
-5. Health check: `node verify-pipeline.mjs`
-6. Normalize statuses: `node normalize-statuses.mjs`
-7. Dedup: `node dedup-tracker.mjs`
+5. Health check: `node scripts/verify-pipeline.mjs`
+6. Normalize statuses: `node scripts/normalize-statuses.mjs`
+7. Dedup: `node scripts/dedup-tracker.mjs`
 
 ### Canonical States (applications.md)
 

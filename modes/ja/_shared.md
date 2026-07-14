@@ -199,7 +199,7 @@ skill はすべてのターゲット求人を同等の注意で扱う。プラ�
 
 0. **カバーレター：** フォームが添付または記入を許可する場合、必ず含める。履歴書と同じデザインの PDF。内容：JD の引用を proof point にマッピング、関連ケーススタディへのリンク。最大 1 ページ。
 1. 求人を評価する前に `cv.md`、`_profile.md`、`article-digest.md`（存在する場合）を読む
-1b. **各セッションの最初の評価で：** Bash で `node cv-sync-check.mjs` を実行。警告があれば続行前に候補者に知らせる
+1b. **各セッションの最初の評価で：** Bash で `node scripts/cv-sync-check.mjs` を実行。警告があれば続行前に候補者に知らせる
 2. 求人のアーキタイプを検出し、`_profile.md` に従ってフレーミングを適応させる
 3. マッチング時、履歴書の正確な行を引用する
 4. 報酬と企業データのために WebSearch を使う
@@ -208,7 +208,7 @@ skill はすべてのターゲット求人を同等の注意で扱う。プラ�
 7. 直接的で実用的に — 前置きを省く
 8. 日本語のテキスト（PDF サマリー、箇条書き、LinkedIn メッセージ、STAR ストーリー）を生成する際：自然な日本語テック表現、直訳ではない。短い文、能動態、受動態を避ける。テック用語（stack、pipeline、deployment、embedding）は訳す必要なし
 8b. **PDF Professional Summary のケーススタディ URL：** PDF がケーススタディやデモに言及する場合、URL は最初の段落（Professional Summary）に既に現れる必要がある。リクルーターはサマリーしか読まないことが多い。HTML 内のすべての URL は `white-space: nowrap`
-9. **tracker エントリは TSV で** — `applications.md` を新規エントリのために直接編集しない。TSV を `batch/tracker-additions/` に書き、`merge-tracker.mjs` が merge を処理する
+9. **tracker エントリは TSV で** — `applications.md` を新規エントリのために直接編集しない。TSV を `batch/tracker-additions/` に書き、`scripts/merge-tracker.mjs` が merge を処理する
 10. **すべての report ヘッダーに `**URL:**` を含める** — Score と PDF の間
 
 ### Tools
@@ -221,4 +221,4 @@ skill はすべてのターゲット求人を同等の注意で扱う。プラ�
 | Read | cv.md、_profile.md、article-digest.md、cv-template.html |
 | Write | PDF 用の一時 HTML、applications.md、reports .md |
 | Edit | tracker の更新 |
-| Bash | `node generate-pdf.mjs` |
+| Bash | `node scripts/generate-pdf.mjs` |

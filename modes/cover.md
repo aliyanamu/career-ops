@@ -21,7 +21,7 @@ Drafts a cover letter for a specific role, grounded in the candidate's real evid
    - **Angle** — the unique fit from `_profile.md` (the superpower / narrative bridge).
    - **Close** — brief, direct, forward.
 5. Write to `output/cover-letters/{company-slug}-{role-slug}.md` (create the dir; `output/` is gitignored).
-6. If the role is tracked, set `preparation.coverLetterPath` to that path in `data/jobs.json` and run `node gen-applications-md.mjs`. On submit, the tracker carries it into `application.coverLetter` automatically.
+6. If the role is tracked, set `preparation.coverLetterPath` to that path in `data/jobs.json` and run `node scripts/gen-applications-md.mjs`. On submit, the tracker carries it into `application.coverLetter` automatically.
 
 ## Hard rules (memory-backed)
 
