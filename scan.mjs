@@ -217,6 +217,27 @@ async function firecrawlSearch(query, limit, key) {
   }
 }
 
+// Firecrawl web search surfaces job-BOARD/aggregator index pages ("Remote X Jobs
+// (July 2026)") alongside real single postings. Drop the index pages: they aren't
+// applyable roles, and the user's rule is to track source/ATS URLs, not aggregators.
+const AGGREGATOR_HOSTS = [
+  'arc.dev', 'indeed.com', 'ziprecruiter.com', 'glassdoor.', 'linkedin.com',
+  'dynamitejobs.com', 'remoterocketship.com', 'wellfound.com', 'remoteok.com',
+  'weworkremotely.com', 'builtin.com', 'dice.com', 'monster.com', 'simplyhired.com',
+  'remote.co', 'workingnomads.com', 'nodesk.co', 'jobspresso.co', 'web3.career',
+  'cryptojobslist.com', 'cryptocurrencyjobs.co', 'wpremotework.com',
+];
+function isAggregatorResult(url, title) {
+  const host = (() => { try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return ''; } })();
+  if (AGGREGATOR_HOSTS.some(h => host.includes(h))) return true;
+  // Listing-page titles: plural "Jobs" + a year/count/recency marker, or "Jobs in/for/near".
+  const t = title.toLowerCase();
+  if (/\bjobs\b/.test(t) && /(20\d\d|month|weekly|daily|latest|\d+\+?\s)/.test(t)) return true;
+  if (/\bjobs\s+(in|for|near|at\s+\d)/.test(t)) return true;
+  if (/\bremote\b[\w\s./-]*\bjobs\b/.test(t)) return true;
+  return false;
+}
+
 // Firecrawl gives no company field — derive it from the ATS host slug, else the hostname.
 function deriveCompanyFromHost(url) {
   try {
@@ -253,6 +274,7 @@ async function discoverViaFirecrawl(discovery, { titleFilter, seenUrls, seenComp
       const url = r.url;
       const title = r.title || '';
       if (!url || !title) continue;
+      if (isAggregatorResult(url, title)) continue; // drop job-board/aggregator index pages
       if (!titleFilter(title)) continue;         // search surfaces aggregators/blogs — filter hard
       if (seenUrls.has(url)) continue;
       const company = deriveCompanyFromHost(url);
@@ -415,6 +437,15 @@ function runSelfCheck() {
     'country-first US-remote dropped (both orderings)');
   assert(!locFilter('United States and Canada - Remote Opportunity'),
     'US+Canada remote dropped');
+
+  assert(isAggregatorResult('https://arc.dev/remote-defi-jobs', 'Remote DeFi Jobs (July 2026) - Arc.dev'),
+    'aggregator host dropped');
+  assert(isAggregatorResult('https://example.com/x', '🧨 Remote Node.JS Jobs in July 2026'),
+    'listing-page title dropped');
+  assert(!isAggregatorResult('https://jobs.ashbyhq.com/nametag/abc', 'Senior Backend Engineer at Nametag'),
+    'real ATS single posting kept');
+  assert(!isAggregatorResult('https://job-boards.greenhouse.io/komatsu/jobs/1', 'AI Senior Software Engineer'),
+    'real posting without "jobs" listing markers kept');
   console.log('scan.mjs self-check ok');
 }
 
