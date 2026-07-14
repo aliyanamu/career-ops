@@ -1,0 +1,15 @@
+{
+  "companies": [
+    {
+      "name": "nametag",
+      "slug": "nametag",
+      "careersUrl": "https://job-boards.greenhouse.io/nametag",
+      "ats": "greenhouse",
+      "firstSeen": "2026-07-14",
+      "discoveredVia": "firecrawl",
+      "exampleRole": "Job Application for Senior Backend Engineer at Nametag",
+      "exampleUrl": "http://job-boards.greenhouse.io/nametag/jobs/4307559009",
+      "status": "new"
+    }
+  ]
+}

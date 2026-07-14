@@ -18,6 +18,7 @@ These files contain your personal data, customizations, and work product. Update
 | `data/applications.md` | Your application tracker (batch/eval pipeline) |
 | `data/jobs.json` | React dashboard source of truth (nested: each job embeds its `preparation` + `application`) |
 | `data/companies.json` | React dashboard company list |
+| `data/discovered-companies.json` | Companies found via Firecrawl discovery (source of truth for the expansion loop; merge by slug, `status`: new/tracked/dismissed) |
 | `data/pipeline.md` | Your URL inbox |
 | `data/scan-history.tsv` | Your scan history |
 | `data/follow-ups.md` | Your follow-up history |

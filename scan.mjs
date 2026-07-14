@@ -26,6 +26,7 @@ const PORTALS_PATH = 'portals.yml';
 const SCAN_HISTORY_PATH = 'data/scan-history.tsv';
 const PIPELINE_PATH = 'data/pipeline.md';
 const APPLICATIONS_PATH = 'data/applications.md';
+const DISCOVERED_PATH = 'data/discovered-companies.json';
 
 // Ensure required directories exist (fresh setup)
 mkdirSync('data', { recursive: true });
@@ -238,6 +239,23 @@ function isAggregatorResult(url, title) {
   return false;
 }
 
+// Parse a clean ATS careers URL + slug from any posting URL, or null if it's not
+// on greenhouse/ashby/lever. Used to report NEW companies worth tracking (report-only —
+// the user adds the good ones to portals.yml; we never auto-mutate that commented file).
+function atsCareersUrl(url) {
+  if (!url) return null;
+  let m;
+  if ((m = url.match(/(?:boards|job-boards)(?:\.eu)?\.greenhouse\.io\/([^/?#]+)/)))
+    return { ats: 'greenhouse', slug: m[1].toLowerCase(), careersUrl: `https://job-boards.greenhouse.io/${m[1]}` };
+  if ((m = url.match(/boards-api\.greenhouse\.io\/v1\/boards\/([^/?#]+)/)))
+    return { ats: 'greenhouse', slug: m[1].toLowerCase(), careersUrl: `https://job-boards.greenhouse.io/${m[1]}` };
+  if ((m = url.match(/(?:jobs|api)\.ashbyhq\.com\/(?:posting-api\/job-board\/)?([^/?#]+)/)))
+    return { ats: 'ashby', slug: m[1].toLowerCase(), careersUrl: `https://jobs.ashbyhq.com/${m[1]}` };
+  if ((m = url.match(/(?:jobs|api)\.lever\.co\/(?:v0\/postings\/)?([^/?#]+)/)))
+    return { ats: 'lever', slug: m[1].toLowerCase(), careersUrl: `https://jobs.lever.co/${m[1]}` };
+  return null;
+}
+
 // Firecrawl gives no company field — derive it from the ATS host slug, else the hostname.
 function deriveCompanyFromHost(url) {
   try {
@@ -381,6 +399,35 @@ function appendToScanHistory(offers, date) {
   ).join('\n') + '\n';
 
   appendFileSync(SCAN_HISTORY_PATH, lines, 'utf-8');
+}
+
+// Persist companies found via Firecrawl discovery into a tracked source-of-truth
+// JSON (shape mirrors companies.json: { companies: [...] }). Merges by slug and
+// never overwrites an existing entry's `status` — so promoting/dismissing a lead
+// in the file survives the next scan. This is the "expansion" layer: discovery
+// finds new companies → they land here for review → you add good ones to portals.yml.
+function mergeDiscoveredCompanies(newCompanies, date) {
+  let existing = [];
+  if (existsSync(DISCOVERED_PATH)) {
+    try { existing = JSON.parse(readFileSync(DISCOVERED_PATH, 'utf-8')).companies || []; }
+    catch { existing = []; }
+  }
+  const bySlug = new Map(existing.map(c => [c.slug, c]));
+  let added = 0;
+  for (const c of newCompanies.values()) {
+    if (bySlug.has(c.slug)) continue;               // keep the existing entry (+ its status edits)
+    bySlug.set(c.slug, {
+      name: c.name, slug: c.slug, careersUrl: c.careersUrl, ats: c.ats,
+      firstSeen: date, discoveredVia: 'firecrawl',
+      exampleRole: c.exampleRole, exampleUrl: c.exampleUrl,
+      status: 'new',                                 // new | tracked | dismissed (you set this)
+    });
+    added++;
+  }
+  if (added > 0) {
+    const companies = [...bySlug.values()];
+    writeFileSync(DISCOVERED_PATH, JSON.stringify({ companies }, null, 2) + '\n', 'utf-8');
+  }
 }
 
 // ── Parallel fetch with concurrency limit ───────────────────────────
@@ -569,10 +616,33 @@ async function main() {
     newOffers.push(...alive);
   }
 
+  // 4c. Harvest NEW companies found on a clean ATS via discovery (report-only —
+  // the user adds the good ones to portals.yml; we never auto-mutate that file).
+  const trackedSlugs = new Set();
+  for (const c of companies) {
+    const a = atsCareersUrl(c.api) || atsCareersUrl(c.careers_url);
+    if (a) trackedSlugs.add(a.slug);
+    if (c.name) trackedSlugs.add(c.name.toLowerCase());
+  }
+  const newCompanies = new Map();
+  for (const o of newOffers) {
+    if (o.source !== 'firecrawl') continue;
+    const a = atsCareersUrl(o.url);
+    if (a && !trackedSlugs.has(a.slug) && !newCompanies.has(a.slug)) {
+      newCompanies.set(a.slug, {
+        name: o.company || a.slug, slug: a.slug, careersUrl: a.careersUrl, ats: a.ats,
+        exampleRole: o.title, exampleUrl: o.url,
+      });
+    }
+  }
+
   // 5. Write results
   if (!dryRun && newOffers.length > 0) {
     appendToPipeline(newOffers);
     appendToScanHistory(newOffers, date);
+  }
+  if (!dryRun && newCompanies.size > 0) {
+    mergeDiscoveredCompanies(newCompanies, date);
   }
 
   // 6. Print summary
@@ -605,6 +675,13 @@ async function main() {
       console.log('\n(dry run — run without --dry-run to save results)');
     } else {
       console.log(`\nResults saved to ${PIPELINE_PATH} and ${SCAN_HISTORY_PATH}`);
+    }
+  }
+
+  if (newCompanies.size > 0) {
+    console.log(`\nNew companies discovered${dryRun ? '' : ` → saved to ${DISCOVERED_PATH}`} (add good ones to portals.yml to scan their full board for free):`);
+    for (const c of newCompanies.values()) {
+      console.log(`  • ${c.name} — ${c.careersUrl} (${c.ats})`);
     }
   }
 

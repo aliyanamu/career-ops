@@ -43,3 +43,7 @@ Jakarta/Bali-local, and worldwide-remote.
 - [ ] https://job-boards.greenhouse.io/temporaltechnologies/jobs/5178158007 | Temporal | Senior Software Engineer, Nexus SDK
 - [ ] https://job-boards.greenhouse.io/temporaltechnologies/jobs/5184712007 | Temporal | Staff Software Engineer, AI Foundations (Agent Optimization)
 - [ ] https://job-boards.greenhouse.io/temporaltechnologies/jobs/5183565007 | Temporal | Software Engineer II, AI Developer Experience
+
+- [ ] http://job-boards.greenhouse.io/nametag/jobs/4307559009 | nametag | Job Application for Senior Backend Engineer at Nametag
+- [ ] https://www.facebook.com/groups/robinsworks/posts/1540315423592115/ | facebook.com | What software engineering jobs are available for new ...
+- [ ] https://komatsu.jobs/job/AI-Senior-Software-Engineer/35901-en_US/ | komatsu.jobs | AI Senior Software Engineer - Komatsu Jobs
