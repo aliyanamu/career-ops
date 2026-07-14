@@ -201,7 +201,7 @@ career-ops/
 │   ├── batch-prompt.md          # 自己完結型ワーカープロンプト
 │   └── batch-runner.sh          # オーケストレータースクリプト
 ├── tracker/                     # React製Web Tracker（ソース）
-├── tracker/dist/                   # ビルド済みWeb Tracker（gitignore対象；Vite出力）
+│   └── dist/                    # ビルド済みWeb Tracker（gitignore対象；Vite出力）
 ├── data/                        # 追跡データ（gitignore対象）
 ├── reports/                     # 評価レポート（gitignore対象）
 ├── output/                      # 生成PDF（gitignore対象）

@@ -201,7 +201,7 @@ career-ops/
 │   ├── batch-prompt.md          # 독립형 워커 프롬프트(Self-contained)
 │   └── batch-runner.sh          # 오케스트레이터 스크립트
 ├── tracker/                     # React Web Tracker (소스)
-├── tracker/dist/                   # 빌드된 Web Tracker (gitignored; Vite 출력)
+│   └── dist/                    # 빌드된 Web Tracker (gitignored; Vite 출력)
 ├── data/                        # 트래킹 데이터 (gitignored)
 ├── reports/                     # 평가 리포트 (gitignored)
 ├── output/                      # 생성된 PDF (gitignored)

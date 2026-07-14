@@ -207,7 +207,7 @@ career-ops/
 │   ├── batch-prompt.md          # Self-contained worker prompt
 │   └── batch-runner.sh          # Orchestrator script
 ├── tracker/                     # React web tracker (source)
-├── tracker/dist/                # Built web tracker (gitignored; Vite output → Pages)
+│   └── dist/                    # Built app (gitignored; Vite output → Pages)
 ├── data/                        # Your tracking data (gitignored)
 ├── reports/                     # Evaluation reports (gitignored)
 ├── output/                      # Generated PDFs (gitignored)
