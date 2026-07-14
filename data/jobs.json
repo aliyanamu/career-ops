@@ -2642,27 +2642,6 @@
       "deadline": ""
     },
     {
-      "url": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4919950101",
-      "role": "Software Engineer, Treasury",
-      "source": "career-ops scan",
-      "elig": "✅ Jakarta, no visa",
-      "why": "Stablecoin treasury/reconciliation ~ Nespay payments",
-      "fitScore": "3.6",
-      "decision": "recommended",
-      "notes": "Evaluated 3.6/5 — reports/018-straitsx-treasury-2026-07-13.md. Jakarta-local; JD scoped entry-level",
-      "num": 148,
-      "dateAdded": "2026-07-13",
-      "company": {
-        "company": "StraitsX"
-      },
-      "preparation": null,
-      "application": null,
-      "hide": false,
-      "deadline": "",
-      "appNum": 22,
-      "report": "reports/018-straitsx-treasury-2026-07-13.md"
-    },
-    {
       "url": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4925745101",
       "role": "Backend Engineer, Card Issuing",
       "source": "career-ops scan",
@@ -2822,7 +2801,7 @@
       "elig": "⚠️ SF in-office; remote only for exceptional (US TZ + travel)",
       "why": "TS/React/Postgres/Redis core match; AI-native builder",
       "fitScore": "3.5",
-      "decision": "apply",
+      "decision": "pending",
       "notes": "SF gate. Lead with AI-pipeline. prep/hercules-full-stack-engineer-2026-07-13.md",
       "preparation": {
         "date": "2026-07-13",
@@ -2853,7 +2832,7 @@
       "elig": "⚠️ SF in-office; remote only for exceptional (US TZ + travel)",
       "why": "React/Next/Tailwind + AI-native product",
       "fitScore": "3.5",
-      "decision": "apply",
+      "decision": "pending",
       "notes": "SF gate; design bar is the stretch. prep/hercules-frontend-engineer-2026-07-13.md",
       "preparation": {
         "date": "2026-07-13",
@@ -2884,7 +2863,7 @@
       "elig": "⚠️ Careers scoped NA/WEU/E-Australia; offer overlap hours",
       "why": "Automation/AI-forward = her AI-pipeline edge; TS/web/auth core",
       "fitScore": "3.8",
-      "decision": "apply",
+      "decision": "recommended",
       "notes": "URGENT. Region flag. prep/hercules-technical-customer-support-engineer-2026-07-13.md",
       "preparation": {
         "date": "2026-07-13",
@@ -2907,27 +2886,6 @@
       "application": null,
       "hide": false,
       "deadline": ""
-    },
-    {
-      "num": 159,
-      "dateAdded": "2026-07-12",
-      "url": "",
-      "source": "career-ops",
-      "elig": "❌ US-only remote, US work-auth required",
-      "why": "Best stack fit but not viable from Indonesia",
-      "fitScore": "3.0",
-      "deadline": "",
-      "decision": "skip",
-      "hide": true,
-      "appNum": 19,
-      "report": "reports/017-coinlist-2026-07-12.md",
-      "notes": "Best stack fit (TS/Next+Elixir+AWS+crypto) but US-only remote; CONFIRMED US-work-auth required — not viable from Indonesia",
-      "role": "Senior Software Engineer (Product)",
-      "company": {
-        "company": "CoinList"
-      },
-      "preparation": null,
-      "application": null
     }
   ]
 }
