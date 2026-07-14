@@ -863,6 +863,102 @@
       "careersUrl": "https://job-boards.greenhouse.io/startale",
       "status": "",
       "notes": "Web3. Sony/SBI-backed (Strium DeFi L1 + Startale super-app). Tokyo/NY/Singapore, English-operating. LinkedIn: East-Asia-preferred (user override: apply anyway)."
+    },
+    {
+      "num": 109,
+      "company": "Sharefull",
+      "enabled": "Yes",
+      "careersUrl": "https://cs.gittap.jp",
+      "status": "",
+      "notes": "Auto-added from Jobs (2026-07-14)."
+    },
+    {
+      "num": 110,
+      "company": "OKX",
+      "enabled": "Yes",
+      "careersUrl": "https://job-boards.greenhouse.io/okx",
+      "status": "",
+      "notes": "Auto-added from Jobs (2026-07-14)."
+    },
+    {
+      "num": 111,
+      "company": "ImagineArt",
+      "enabled": "Yes",
+      "careersUrl": "https://jobs.ashbyhq.com/imagineart",
+      "status": "",
+      "notes": "Auto-added from Jobs (2026-07-14)."
+    },
+    {
+      "num": 112,
+      "company": "ImagineArt / Vyro",
+      "enabled": "Yes",
+      "careersUrl": "https://jobs.ashbyhq.com/imagineart",
+      "status": "",
+      "notes": "Auto-added from Jobs (2026-07-14)."
+    },
+    {
+      "num": 113,
+      "company": "Remote.com",
+      "enabled": "Yes",
+      "careersUrl": "https://job-boards.greenhouse.io/remotecom",
+      "status": "",
+      "notes": "Auto-added from Jobs (2026-07-14)."
+    },
+    {
+      "num": 114,
+      "company": "The Flex",
+      "enabled": "Yes",
+      "careersUrl": "https://jobs.ashbyhq.com/The-Flex",
+      "status": "",
+      "notes": "Auto-added from Jobs (2026-07-14)."
+    },
+    {
+      "num": 115,
+      "company": "Alchemy",
+      "enabled": "Yes",
+      "careersUrl": "https://jobs.ashbyhq.com/alchemy",
+      "status": "",
+      "notes": "Auto-added from Jobs (2026-07-14)."
+    },
+    {
+      "num": 116,
+      "company": "Hercules",
+      "enabled": "Yes",
+      "careersUrl": "https://hercules.app",
+      "status": "",
+      "notes": "Auto-added from Jobs (2026-07-14)."
+    },
+    {
+      "num": 117,
+      "company": "Turing",
+      "enabled": "Yes",
+      "careersUrl": "",
+      "status": "",
+      "notes": "Auto-added from Jobs (2026-07-14)."
+    },
+    {
+      "num": 118,
+      "company": "Invisible",
+      "enabled": "Yes",
+      "careersUrl": "https://job-boards.eu.greenhouse.io/agency",
+      "status": "",
+      "notes": "Meridial Marketplace / AI-trainer freelance platform. Greenhouse board \"agency\"."
+    },
+    {
+      "num": 119,
+      "company": "Hupo",
+      "enabled": "Yes",
+      "careersUrl": "https://hupocareers.teamtailor.com",
+      "status": "",
+      "notes": "Coaching platform. Teamtailor ATS (not auto-scannable by scan.mjs)."
+    },
+    {
+      "num": 120,
+      "company": "Hopper",
+      "enabled": "Yes",
+      "careersUrl": "https://jobs.ashbyhq.com/hopper",
+      "status": "",
+      "notes": "Travel-tech app. Ashby board."
     }
   ]
 }

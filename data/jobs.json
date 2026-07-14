@@ -2952,6 +2952,60 @@
         "notes": "",
         "hide": ""
       }
+    },
+    {
+      "num": 161,
+      "dateAdded": "2026-07-14",
+      "url": "https://job-boards.eu.greenhouse.io/agency/jobs/4593862101",
+      "source": "User-added",
+      "elig": "Indonesia-based, Indonesian fluency required — strong eligibility fit",
+      "why": "",
+      "fitScore": "",
+      "deadline": "",
+      "decision": "pending",
+      "hide": false,
+      "report": "",
+      "notes": "Meridial Marketplace by Invisible (AI-trainer freelance platform). Freelance AI Trainer project. Location: Indonesia.",
+      "role": "Coding Specialist (Fluent in Indonesian) - Freelance AI Trainer Project",
+      "company": {
+        "company": "Invisible"
+      }
+    },
+    {
+      "num": 162,
+      "dateAdded": "2026-07-14",
+      "url": "https://hupocareers.teamtailor.com/jobs/7926194-full-stack-engineer",
+      "source": "User-added",
+      "elig": "Location unverified — confirm remote eligibility",
+      "why": "",
+      "fitScore": "",
+      "deadline": "",
+      "decision": "pending",
+      "hide": false,
+      "report": "",
+      "notes": "Teamtailor ATS (not auto-scannable by scan.mjs). Full-stack role.",
+      "role": "Full Stack Engineer",
+      "company": {
+        "company": "Hupo"
+      }
+    },
+    {
+      "num": 163,
+      "dateAdded": "2026-07-14",
+      "url": "https://jobs.ashbyhq.com/hopper/08d74197-a649-4238-9efa-062041446ca8",
+      "source": "User-added",
+      "elig": "Japan - Remote; verify Indonesia eligibility",
+      "why": "",
+      "fitScore": "",
+      "deadline": "",
+      "decision": "pending",
+      "hide": false,
+      "report": "",
+      "notes": "Travel-tech (Hopper). 100% remote, Japan region. Commerce / Partner Success team.",
+      "role": "Full-Stack Software Engineer - Commerce/Partner Success (100% Remote - Japan)",
+      "company": {
+        "company": "Hopper"
+      }
     }
   ]
 }
