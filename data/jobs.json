@@ -2554,6 +2554,343 @@
         "notes": "Promoted from Preparations",
         "hide": ""
       }
+    },
+    {
+      "url": "https://jobs.ashbyhq.com/The-Flex/82eafc9b-c4c0-4310-8b9d-9f5410ff0d53",
+      "role": "Full-Stack Product Engineer",
+      "source": "career-ops scan",
+      "elig": "✅ Remote Bali/Jakarta, no visa",
+      "why": "Perfect location fit — remote SE-Asia",
+      "fitScore": "",
+      "decision": "pending",
+      "notes": "From scan. Jakarta/Bali remote. Pending evaluation",
+      "num": 144,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "The Flex"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": ""
+    },
+    {
+      "url": "https://jobs.ashbyhq.com/The-Flex/806abd84-e07a-4ffc-9823-39fa097896a4",
+      "role": "Founding Software Engineer",
+      "source": "career-ops scan",
+      "elig": "✅ Remote Bali/Jakarta, no visa",
+      "why": "Perfect location fit — remote SE-Asia",
+      "fitScore": "",
+      "decision": "pending",
+      "notes": "From scan. Jakarta/Bali remote. Pending evaluation",
+      "num": 145,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "The Flex"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": ""
+    },
+    {
+      "url": "https://jobs.ashbyhq.com/The-Flex/e8178837-0319-460c-8a51-6f9d5a6f36fa",
+      "role": "Full-Stack Engineering Lead",
+      "source": "career-ops scan",
+      "elig": "✅ Remote Bali/Jakarta, no visa",
+      "why": "Perfect location fit — remote SE-Asia",
+      "fitScore": "",
+      "decision": "pending",
+      "notes": "From scan. Jakarta/Bali remote. Pending evaluation",
+      "num": 146,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "The Flex"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": ""
+    },
+    {
+      "url": "https://jobs.ashbyhq.com/The-Flex/51693fcc-7a24-4a4c-9c87-84130b72c751",
+      "role": "Software Engineer",
+      "source": "career-ops scan",
+      "elig": "✅ Remote Bali/Jakarta, no visa",
+      "why": "Perfect location fit — remote SE-Asia",
+      "fitScore": "",
+      "decision": "pending",
+      "notes": "From scan. Jakarta/Bali remote. Pending evaluation",
+      "num": 147,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "The Flex"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": ""
+    },
+    {
+      "url": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4919950101",
+      "role": "Software Engineer, Treasury",
+      "source": "career-ops scan",
+      "elig": "✅ Jakarta, no visa",
+      "why": "Stablecoin treasury/reconciliation ~ Nespay payments",
+      "fitScore": "3.6",
+      "decision": "recommended",
+      "notes": "Evaluated 3.6/5 — reports/018-straitsx-treasury-2026-07-13.md. Jakarta-local; JD scoped entry-level",
+      "num": 148,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "StraitsX"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": ""
+    },
+    {
+      "url": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4925745101",
+      "role": "Backend Engineer, Card Issuing",
+      "source": "career-ops scan",
+      "elig": "✅ Jakarta, no visa",
+      "why": "Zero-to-one card issuing; payments/integration match",
+      "fitScore": "4.3",
+      "decision": "apply",
+      "notes": "Evaluated 4.3/5 — reports/019-straitsx-card-issuing-2026-07-13.md. APPLIED 2026-07-13",
+      "application": {
+        "dateApplied": "2026-07-13",
+        "location": "Jakarta, Indonesia",
+        "source": "career-ops scan / Greenhouse",
+        "jobUrl": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4925745101",
+        "status": "applied",
+        "lastUpdate": "2026-07-13",
+        "cvUsed": "",
+        "coverLetter": "",
+        "appLink": "https://my.greenhouse.io/applications/63920375",
+        "salary": "",
+        "contact": "",
+        "nextAction": "Wait for recruiter response",
+        "followUpDate": "2026-07-27",
+        "notes": "Applied via Greenhouse (app 63920375). Report 019",
+        "hide": ""
+      },
+      "num": 149,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "StraitsX"
+      },
+      "preparation": null,
+      "hide": false,
+      "deadline": ""
+    },
+    {
+      "url": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4905659101",
+      "role": "Software Engineer, Engineering Excellence",
+      "source": "career-ops scan",
+      "elig": "⚠️ Singapore — confirm Jakarta seat/visa",
+      "why": "Platform/dev-productivity + CI-CD fit",
+      "fitScore": "3.9",
+      "decision": "recommended",
+      "notes": "Evaluated 3.9/5 — reports/020-straitsx-eng-excellence-2026-07-13.md. Singapore visa flag",
+      "num": 150,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "StraitsX"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": ""
+    },
+    {
+      "url": "https://job-boards.greenhouse.io/okx/jobs/7774178003",
+      "role": "Senior/Staff Software Engineer, Liquidity Platform",
+      "source": "career-ops scan",
+      "elig": "✅ APAC remote (HK/Singapore)",
+      "why": "APAC exchange, remote-friendly; Web3 depth",
+      "fitScore": "",
+      "decision": "pending",
+      "notes": "From scan. APAC remote. Pending evaluation",
+      "num": 151,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "OKX"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": ""
+    },
+    {
+      "url": "https://job-boards.greenhouse.io/okx/jobs/7795773003",
+      "role": "Staff/Senior Staff Web3 Big Data Engineer",
+      "source": "career-ops scan",
+      "elig": "✅ APAC remote (HK/Singapore)",
+      "why": "APAC exchange, remote-friendly; Web3 depth",
+      "fitScore": "",
+      "decision": "pending",
+      "notes": "From scan. APAC remote. Pending evaluation",
+      "num": 152,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "OKX"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": ""
+    },
+    {
+      "url": "https://job-boards.greenhouse.io/okx/jobs/7786389003",
+      "role": "Senior Software Engineer, AI Trading",
+      "source": "career-ops scan",
+      "elig": "✅ APAC remote (HK/Singapore)",
+      "why": "APAC exchange, remote-friendly; Web3 depth",
+      "fitScore": "",
+      "decision": "pending",
+      "notes": "From scan. APAC remote. Pending evaluation",
+      "num": 153,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "OKX"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": ""
+    },
+    {
+      "url": "https://job-boards.greenhouse.io/okx/jobs/7802448003",
+      "role": "Senior/Staff Java Engineer - Web3 Wallet Defi Earn",
+      "source": "career-ops scan",
+      "elig": "✅ APAC remote (HK/Singapore)",
+      "why": "APAC exchange, remote-friendly; Web3 depth",
+      "fitScore": "",
+      "decision": "pending",
+      "notes": "From scan. APAC remote. Pending evaluation",
+      "num": 154,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "OKX"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": ""
+    },
+    {
+      "url": "https://jobs.ashbyhq.com/alchemy/e9114029-c645-44f8-8f7e-9b718c10ad94",
+      "role": "Backend Software Engineer",
+      "source": "career-ops scan",
+      "elig": "Check eligibility (global remote)",
+      "why": "Web3 dev infra / RPC — direct match to RPC work",
+      "fitScore": "",
+      "decision": "pending",
+      "notes": "From scan. Verify Indonesia eligibility",
+      "num": 155,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "Alchemy"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": ""
+    },
+    {
+      "url": "https://hercules.app/careers/full-stack-engineer",
+      "role": "Full-Stack Engineer",
+      "source": "User pick (hercules.app)",
+      "elig": "⚠️ SF in-office; remote only for exceptional (US TZ + travel)",
+      "why": "TS/React/Postgres/Redis core match; AI-native builder",
+      "fitScore": "3.5",
+      "decision": "pending",
+      "notes": "SF gate. Lead with AI-pipeline. prep/hercules-full-stack-engineer-2026-07-13.md",
+      "preparation": {
+        "date": "2026-07-13",
+        "jobUrl": "https://hercules.app/careers/full-stack-engineer",
+        "cvPath": "",
+        "qa": "prep/hercules-full-stack-engineer-2026-07-13.md",
+        "videoRequired": "no",
+        "videoNotes": "",
+        "videoStatus": "",
+        "aiDisclaimer": "",
+        "submissionStatus": "not_submitted",
+        "notes": "SF in-office gate; lead AI-forward automation",
+        "hide": false
+      },
+      "num": 156,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "Hercules"
+      },
+      "application": null,
+      "hide": false,
+      "deadline": ""
+    },
+    {
+      "url": "https://hercules.app/careers/frontend-engineer",
+      "role": "Frontend Engineer",
+      "source": "User pick (hercules.app)",
+      "elig": "⚠️ SF in-office; remote only for exceptional (US TZ + travel)",
+      "why": "React/Next/Tailwind + AI-native product",
+      "fitScore": "3.5",
+      "decision": "pending",
+      "notes": "SF gate; design bar is the stretch. prep/hercules-frontend-engineer-2026-07-13.md",
+      "preparation": {
+        "date": "2026-07-13",
+        "jobUrl": "https://hercules.app/careers/frontend-engineer",
+        "cvPath": "",
+        "qa": "prep/hercules-frontend-engineer-2026-07-13.md",
+        "videoRequired": "no",
+        "videoNotes": "",
+        "videoStatus": "",
+        "aiDisclaimer": "",
+        "submissionStatus": "not_submitted",
+        "notes": "SF gate; Full-Stack is closer match",
+        "hide": false
+      },
+      "num": 157,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "Hercules"
+      },
+      "application": null,
+      "hide": false,
+      "deadline": ""
+    },
+    {
+      "url": "https://hercules.app/careers/technical-customer-support-engineer",
+      "role": "Technical Customer Support Engineer",
+      "source": "User pick (hercules.app)",
+      "elig": "⚠️ Careers scoped NA/WEU/E-Australia; offer overlap hours",
+      "why": "Automation/AI-forward = her AI-pipeline edge; TS/web/auth core",
+      "fitScore": "3.8",
+      "decision": "recommended",
+      "notes": "URGENT. Region flag. prep/hercules-technical-customer-support-engineer-2026-07-13.md",
+      "preparation": {
+        "date": "2026-07-13",
+        "jobUrl": "https://hercules.app/careers/technical-customer-support-engineer",
+        "cvPath": "",
+        "qa": "prep/hercules-technical-customer-support-engineer-2026-07-13.md",
+        "videoRequired": "no",
+        "videoNotes": "",
+        "videoStatus": "",
+        "aiDisclaimer": "",
+        "submissionStatus": "not_submitted",
+        "notes": "Region flag; lead AI-forward automation; 3 screening answers drafted",
+        "hide": false
+      },
+      "num": 158,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "Hercules"
+      },
+      "application": null,
+      "hide": false,
+      "deadline": ""
     }
   ]
 }
