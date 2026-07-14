@@ -2415,7 +2415,7 @@
       "dateAdded": "2026-07-08",
       "deadline": "",
       "decision": "apply",
-      "fitScore": "5",
+      "fitScore": "4.4",
       "elig": "",
       "hide": true,
       "why": "WEB3 • Senior TS backend • Sony/SBI-backed DeFi L1 ⭐",
@@ -2449,7 +2449,9 @@
         "salary": "$60,000 USD (location-adjusted)",
         "source": "career-ops scan (Greenhouse)",
         "status": "applied"
-      }
+      },
+      "appNum": 21,
+      "report": "reports/021-startale-2026-07-13.md"
     },
     {
       "dateAdded": "2026-07-11",
@@ -2468,7 +2470,9 @@
       "company": {
         "company": "OKX"
       },
-      "notes": "Live but unfinished JD (placeholder template, no reqs). Likely trading-backend, uncertain fit. Monitor / ask recruiter. Report 013."
+      "notes": "Live but unfinished JD (placeholder template, no reqs). Likely trading-backend, uncertain fit. Monitor / ask recruiter. Report 013.",
+      "appNum": 13,
+      "report": "reports/013-okx-2026-07-11.md"
     },
     {
       "num": 141,
@@ -2477,7 +2481,7 @@
       "source": "User-added (Ashby)",
       "elig": "Indonesia · remote",
       "why": "REMOTE-ID • Perfect location BUT distributed-systems/architect stretch",
-      "fitScore": "3.5",
+      "fitScore": "4.0",
       "deadline": "",
       "decision": "saved",
       "hide": false,
@@ -2487,7 +2491,9 @@
         "company": "ImagineArt"
       },
       "preparation": null,
-      "application": null
+      "application": null,
+      "appNum": 16,
+      "report": "reports/014-imagineart-2026-07-11.md"
     },
     {
       "num": 142,
@@ -2506,7 +2512,9 @@
         "company": "ImagineArt / Vyro"
       },
       "preparation": null,
-      "application": null
+      "application": null,
+      "appNum": 17,
+      "report": "reports/015-imagineart-golang-2026-07-11.md"
     },
     {
       "num": 143,
@@ -2553,7 +2561,9 @@
         "followUpDate": "",
         "notes": "Promoted from Preparations",
         "hide": ""
-      }
+      },
+      "appNum": 18,
+      "report": "reports/016-remotecom-2026-07-11.md"
     },
     {
       "url": "https://jobs.ashbyhq.com/The-Flex/82eafc9b-c4c0-4310-8b9d-9f5410ff0d53",
@@ -2648,7 +2658,9 @@
       "preparation": null,
       "application": null,
       "hide": false,
-      "deadline": ""
+      "deadline": "",
+      "appNum": 22,
+      "report": "reports/018-straitsx-treasury-2026-07-13.md"
     },
     {
       "url": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4925745101",
@@ -2683,7 +2695,9 @@
       },
       "preparation": null,
       "hide": false,
-      "deadline": ""
+      "deadline": "",
+      "appNum": 23,
+      "report": "reports/019-straitsx-card-issuing-2026-07-13.md"
     },
     {
       "url": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4905659101",
@@ -2702,7 +2716,9 @@
       "preparation": null,
       "application": null,
       "hide": false,
-      "deadline": ""
+      "deadline": "",
+      "appNum": 20,
+      "report": "reports/020-straitsx-eng-excellence-2026-07-13.md"
     },
     {
       "url": "https://job-boards.greenhouse.io/okx/jobs/7774178003",
@@ -2891,6 +2907,27 @@
       "application": null,
       "hide": false,
       "deadline": ""
+    },
+    {
+      "num": 159,
+      "dateAdded": "2026-07-12",
+      "url": "",
+      "source": "career-ops",
+      "elig": "❌ US-only remote, US work-auth required",
+      "why": "Best stack fit but not viable from Indonesia",
+      "fitScore": "3.0",
+      "deadline": "",
+      "decision": "skip",
+      "hide": true,
+      "appNum": 19,
+      "report": "reports/017-coinlist-2026-07-12.md",
+      "notes": "Best stack fit (TS/Next+Elixir+AWS+crypto) but US-only remote; CONFIRMED US-work-auth required — not viable from Indonesia",
+      "role": "Senior Software Engineer (Product)",
+      "company": {
+        "company": "CoinList"
+      },
+      "preparation": null,
+      "application": null
     }
   ]
 }

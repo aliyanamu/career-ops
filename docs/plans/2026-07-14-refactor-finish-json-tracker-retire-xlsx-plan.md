@@ -1,7 +1,7 @@
 ---
 title: Finish JSON-backed tracker and retire the xlsx path
 type: refactor
-status: active
+status: completed
 date: 2026-07-14
 ---
 
@@ -37,18 +37,16 @@ The React tracker (`tracker/`) is already JSON-backed: `WorkbookContext` → `us
 ### Phase 4 — Retire derived tooling + unify trackers (IN PROGRESS)
 - [x] Delete `extract-to-json.mjs` + `sync-tracker.mjs` (xlsx-derived, would clobber `jobs.json`)
 - [x] Document `jobs.json`/`companies.json` as tracker SoT in `DATA_CONTRACT.md`
-- [ ] **applications.md unification** (the untangle): 9 scripts read `data/applications.md` (`merge-tracker`, `verify-pipeline`, `normalize-statuses`, `dedup-tracker`, `analyze-patterns`, `followup-cadence`, `scan`, `gemini-eval`). Choose:
-  - **(b) Generate `applications.md` from `jobs.json`** — a new `gen-applications-md.mjs` renders the markdown from each job's `application` sub-object. Batch scripts keep working read-only; `jobs.json` stays SoT. (Recommended — least breakage.)
-  - (a) Repoint the batch/eval write-path to `jobs.json` and make `applications.md` fully derived or removed. (Bigger, cleaner long-term.)
-- [ ] **Go dashboard (`dashboard/`) + `data/tracker.json`** fate: keep (documented/tested, in 8 READMEs) or retire. Default: keep; it reads `jobs.json` already.
-- [ ] Update `AGENTS.md` tracker/data-flow references to name `jobs.json` SoT and the generated `applications.md`.
+- [x] **applications.md unification** (option b): `gen-applications-md.mjs` (`npm run gen-tracker`) generates `applications.md` from `jobs.json` (jobs with a `report` field). Backfilled the 9 evaluated offers with `report`/`appNum`, added missing CoinList, fixed the Startale record mismatch. `jobs.json` is SoT; the 9 batch scripts still read the generated `applications.md`.
+- [x] **Go dashboard (`dashboard/`) + `data/tracker.json`** — kept (documented/tested, reads `jobs.json`).
+- [x] Update `AGENTS.md` Pipeline Integrity to name `jobs.json` SoT and the generated `applications.md` flow.
 
 ### Phase 3 — Export fallback (optional)
 - [ ] "Download CSV" per sheet (dependency-free). Skip xlsx export (exceljs removed).
 
 ### Phase 5 — Verify
-- [ ] Reload dashboard: all sheets render ported + imported data; hides correct; one source.
-- [ ] `test-all.mjs` 0 failed; `verify-pipeline.mjs` clean.
+- [x] `verify-pipeline.mjs` clean on generated applications.md; `test-all.mjs` 0 failed.
+- [ ] Reload dashboard to eyeball ported + imported data (user action).
 
 ## Acceptance Criteria
 - [x] Dashboard shows ported jobs after reload.

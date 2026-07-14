@@ -303,8 +303,10 @@ Write one TSV file per evaluation to `batch/tracker-additions/{num}-{company-slu
 
 ### Pipeline Integrity
 
-1. **NEVER edit applications.md to ADD new entries** -- Write TSV in `batch/tracker-additions/` and `merge-tracker.mjs` handles the merge.
-2. **YES you can edit applications.md to UPDATE status/notes of existing entries.**
+> **SOURCE OF TRUTH: `data/jobs.json`.** `data/applications.md` is now GENERATED from it by `gen-applications-md.mjs` (`npm run gen-tracker`). Do NOT hand-edit `applications.md` — your edits will be overwritten on the next regenerate. The React tracker reads/writes `data/jobs.json` directly. (The legacy TSV → `merge-tracker.mjs` flow below still exists but writes to a generated file; prefer editing `jobs.json`.)
+
+1. **To add/update an evaluated offer:** edit the job in `data/jobs.json` — set `fitScore`, `decision`, `report` (path to the report), `appNum` (next integer), and `notes`; set the `application` sub-object when applied. Then run `node gen-applications-md.mjs` to refresh `applications.md`. A job appears in `applications.md` once it has a `report` field.
+2. **Status is derived** from the job: `application.status` → Applied/Responded/etc; `decision: skip` → SKIP; otherwise Evaluated.
 3. All reports MUST include `**URL:**` in the header (between Score and PDF). Include `**Legitimacy:** {tier}` (see Block G in `modes/oferta.md`).
 4. All statuses MUST be canonical (see `templates/states.yml`).
 5. Health check: `node verify-pipeline.mjs`
