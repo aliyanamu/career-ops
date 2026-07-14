@@ -21,7 +21,7 @@ const gridTheme = themeQuartz.withParams({
 const GITHUB_BLOB = `https://github.com/${REPO_OWNER}/${REPO_NAME}/blob/${BRANCH}/`
 
 const URL_FIELDS         = new Set(['url', 'jobUrl', 'appLink'])
-const GITHUB_PATH_FIELDS = new Set(['qa', 'cvPath', 'cvUsed', 'coverLetter'])
+const GITHUB_PATH_FIELDS = new Set(['qa', 'cvPath', 'coverLetterPath', 'cvUsed', 'coverLetter'])
 const BOOLEAN_FIELDS     = new Set(['hide'])
 const NON_EDITABLE       = new Set(['num'])
 const colStateKey = (sheetName) => `career-ops-col-state-${sheetName}`
@@ -90,7 +90,7 @@ const MIN_WIDTHS = {
   decision: 130, status: 120, source: 155,
   url: 180, jobUrl: 180, appLink: 160, careersUrl: 180,
   elig: 190, why: 220, notes: 240, qa: 200, videoNotes: 180,
-  cvPath: 200, cvUsed: 200, coverLetter: 160,
+  cvPath: 200, coverLetterPath: 200, cvUsed: 200, coverLetter: 160,
   contact: 140, nextAction: 155,
 }
 
@@ -136,6 +136,7 @@ function prepToRow(job, jobIdx) {
     role:             job.role ?? '',
     jobUrl:           p.jobUrl ?? '',
     cvPath:           p.cvPath ?? '',
+    coverLetterPath:  p.coverLetterPath ?? '',
     qa:               p.qa ?? '',
     videoRequired:    p.videoRequired ?? '',
     videoNotes:       p.videoNotes ?? '',
