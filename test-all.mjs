@@ -70,6 +70,7 @@ const scripts = [
   { name: 'merge-tracker.mjs', expectExit: 0 },
   { name: 'update-system.mjs check', expectExit: 0 },
   { name: 'loop.mjs --self-check', expectExit: 0 }, // review/draft queue selection invariant
+  { name: 'scan.mjs --self-check', expectExit: 0 }, // discovery host-parsing + title-filter invariant
 ];
 
 for (const { name, allowFail } of scripts) {
