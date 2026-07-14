@@ -2483,14 +2483,27 @@
       "why": "REMOTE-ID • Perfect location BUT distributed-systems/architect stretch",
       "fitScore": "4.0",
       "deadline": "",
-      "decision": "saved",
+      "decision": "apply",
       "hide": false,
       "notes": "Fully remote from Indonesia, $35M ARR GenAI. Asks 5+yr (fits). GAP: role core = Kafka/queues/distributed workers/Go — not her product-fullstack/Web3 depth. Apply IF she has real async/systems story. Report 014.",
       "role": "Senior Backend Engineer / Architect",
       "company": {
         "company": "ImagineArt"
       },
-      "preparation": null,
+      "preparation": {
+        "date": "2026-07-14",
+        "jobUrl": "https://jobs.ashbyhq.com/imagineart/be92b6af-3442-4a9e-b26e-7760882664d0",
+        "cvPath": "",
+        "coverLetterPath": "",
+        "qa": "",
+        "videoRequired": "no",
+        "videoNotes": "",
+        "videoStatus": "",
+        "aiDisclaimer": "no",
+        "submissionStatus": "pending",
+        "notes": "",
+        "hide": ""
+      },
       "application": null,
       "appNum": 16,
       "report": "reports/014-imagineart-2026-07-11.md"
