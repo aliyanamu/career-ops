@@ -14,7 +14,9 @@ These files contain your personal data, customizations, and work product. Update
 | `article-digest.md` | Your proof points from portfolio |
 | `interview-prep/story-bank.md` | Your accumulated STAR+R stories |
 | `portals.yml` | Your customized company list |
-| `data/applications.md` | Your application tracker |
+| `data/applications.md` | Your application tracker (batch/eval pipeline) |
+| `data/jobs.json` | React dashboard source of truth (nested: each job embeds its `preparation` + `application`) |
+| `data/companies.json` | React dashboard company list |
 | `data/pipeline.md` | Your URL inbox |
 | `data/scan-history.tsv` | Your scan history |
 | `data/follow-ups.md` | Your follow-up history |
@@ -62,6 +64,10 @@ These files contain system logic, scripts, templates, and instructions that impr
 | `docs/*` | Documentation |
 | `VERSION` | Current version number |
 | `DATA_CONTRACT.md` | This file |
+
+## Note — tracker storage (this fork)
+
+The React tracker in `tracker/` reads and writes `data/jobs.json` + `data/companies.json` directly via the GitHub API. `Job_Hunting_Progress.xlsx` and the xlsx-derived scripts (`extract-to-json.mjs`, `sync-tracker.mjs`) were removed; `data/jobs.json` is the tracker's source of truth. The batch/eval pipeline still uses `data/applications.md`. Unifying the two (generate `applications.md` from `jobs.json`, or repoint the batch scripts) is tracked in `docs/plans/2026-07-14-refactor-finish-json-tracker-retire-xlsx-plan.md`.
 
 ## The Rule
 
