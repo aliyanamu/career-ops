@@ -1,7 +1,7 @@
 ---
 title: Broad Web Discovery + Unattended End-to-End Loop + Cover Letters
 type: feat
-status: active
+status: completed
 date: 2026-07-14
 ---
 
@@ -169,10 +169,11 @@ Integration rules (the make-or-break for signal quality):
 - [x] `loop.md` composes `modes/pipeline.md` rather than re-specifying JD extraction / report numbering / PDF
 
 ### Phase 3 — Discovery
-- [ ] `discovery.enabled:false` → `scan.mjs` output byte-identical to today (no new npm dependency in package.json)
-- [ ] Enabled → Firecrawl `v2` results pass `titleFilter`, get `source:'firecrawl'` + host-derived company, appended to pipeline.md, deduped via scan-history.tsv
-- [ ] Total results capped at `discovery.max_results` across all queries
-- [ ] Missing key / 429 / HTTP error → warn + skip, scan completes
+- [x] `discovery.enabled:false` (default) → `scan.mjs` output unchanged (discovery call + summary line both gated); no new npm dependency
+- [x] Enabled → Firecrawl `v2` results pass `titleFilter`, get `source:'firecrawl'` + host-derived company, flow into `newOffers` → same liveness gate + pipeline.md/scan-history.tsv writers
+- [x] Total results capped at `discovery.max_results` across all queries (per-query budget = max/len)
+- [x] Missing key / 429 / HTTP error → warn + skip, scan completes (graceful in `firecrawlSearch`/`discoverViaFirecrawl`)
+- [x] Config scaffolded (disabled) in `portals.yml` + `templates/portals.example.yml`; host-parsing/filter invariant pinned via `scan.mjs --self-check` in test-all.mjs (71/71)
 
 ## Testing
 
