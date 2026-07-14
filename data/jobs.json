@@ -2642,27 +2642,6 @@
       "deadline": ""
     },
     {
-      "url": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4919950101",
-      "role": "Software Engineer, Treasury",
-      "source": "career-ops scan",
-      "elig": "✅ Jakarta, no visa",
-      "why": "Stablecoin treasury/reconciliation ~ Nespay payments",
-      "fitScore": "3.6",
-      "decision": "recommended",
-      "notes": "Evaluated 3.6/5 — reports/018-straitsx-treasury-2026-07-13.md. Jakarta-local; JD scoped entry-level",
-      "num": 148,
-      "dateAdded": "2026-07-13",
-      "company": {
-        "company": "StraitsX"
-      },
-      "preparation": null,
-      "application": null,
-      "hide": false,
-      "deadline": "",
-      "appNum": 22,
-      "report": "reports/018-straitsx-treasury-2026-07-13.md"
-    },
-    {
       "url": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4925745101",
       "role": "Backend Engineer, Card Issuing",
       "source": "career-ops scan",
@@ -2694,31 +2673,10 @@
         "company": "StraitsX"
       },
       "preparation": null,
-      "hide": false,
+      "hide": true,
       "deadline": "",
       "appNum": 23,
       "report": "reports/019-straitsx-card-issuing-2026-07-13.md"
-    },
-    {
-      "url": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4905659101",
-      "role": "Software Engineer, Engineering Excellence",
-      "source": "career-ops scan",
-      "elig": "⚠️ Singapore — confirm Jakarta seat/visa",
-      "why": "Platform/dev-productivity + CI-CD fit",
-      "fitScore": "3.9",
-      "decision": "recommended",
-      "notes": "Evaluated 3.9/5 — reports/020-straitsx-eng-excellence-2026-07-13.md. Singapore visa flag",
-      "num": 150,
-      "dateAdded": "2026-07-13",
-      "company": {
-        "company": "StraitsX"
-      },
-      "preparation": null,
-      "application": null,
-      "hide": false,
-      "deadline": "",
-      "appNum": 20,
-      "report": "reports/020-straitsx-eng-excellence-2026-07-13.md"
     },
     {
       "url": "https://job-boards.greenhouse.io/okx/jobs/7774178003",
@@ -2843,7 +2801,7 @@
         "company": "Hercules"
       },
       "application": null,
-      "hide": false,
+      "hide": true,
       "deadline": ""
     },
     {
@@ -2874,7 +2832,7 @@
         "company": "Hercules"
       },
       "application": null,
-      "hide": false,
+      "hide": true,
       "deadline": ""
     },
     {
@@ -2905,8 +2863,50 @@
         "company": "Hercules"
       },
       "application": null,
-      "hide": false,
+      "hide": true,
       "deadline": ""
+    },
+    {
+      "url": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4919950101",
+      "role": "Software Engineer, Treasury",
+      "source": "career-ops scan",
+      "elig": "✅ Jakarta, no visa",
+      "why": "Stablecoin treasury/reconciliation ~ Nespay payments",
+      "fitScore": "3.6",
+      "decision": "recommended",
+      "notes": "Evaluated 3.6/5 — reports/018-straitsx-treasury-2026-07-13.md. Jakarta-local; JD scoped entry-level",
+      "num": 148,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "StraitsX"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": "",
+      "appNum": 22,
+      "report": "reports/018-straitsx-treasury-2026-07-13.md"
+    },
+    {
+      "url": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4905659101",
+      "role": "Software Engineer, Engineering Excellence",
+      "source": "career-ops scan",
+      "elig": "⚠️ Singapore — confirm Jakarta seat/visa",
+      "why": "Platform/dev-productivity + CI-CD fit",
+      "fitScore": "3.9",
+      "decision": "recommended",
+      "notes": "Evaluated 3.9/5 — reports/020-straitsx-eng-excellence-2026-07-13.md. Singapore visa flag",
+      "num": 150,
+      "dateAdded": "2026-07-13",
+      "company": {
+        "company": "StraitsX"
+      },
+      "preparation": null,
+      "application": null,
+      "hide": false,
+      "deadline": "",
+      "appNum": 20,
+      "report": "reports/020-straitsx-eng-excellence-2026-07-13.md"
     },
     {
       "num": 159,
