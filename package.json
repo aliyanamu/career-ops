@@ -15,7 +15,7 @@
     "update": "node update-system.mjs apply",
     "rollback": "node update-system.mjs rollback",
     "liveness": "node check-liveness.mjs",
-    "scan": "node scan.mjs",
+    "scan": "node -r dotenv/config scan.mjs",
     "loop": "node loop.mjs",
     "gemini:eval": "node gemini-eval.mjs"
   },
