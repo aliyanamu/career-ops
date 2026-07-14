@@ -2928,6 +2928,51 @@
       },
       "preparation": null,
       "application": null
+    },
+    {
+      "num": 160,
+      "dateAdded": "2026-07-14",
+      "url": "",
+      "source": "career-ops",
+      "elig": "⚠️ Location list excludes Indonesia — verify eligibility",
+      "why": "Strong Node.js/backend stack fit; contractor 5-week gig",
+      "fitScore": "",
+      "deadline": "",
+      "decision": "apply",
+      "hide": false,
+      "appNum": 24,
+      "report": "",
+      "notes": "Turing platform (no public URL). Node.js backend contractor, remote, 5 weeks, 20/30/40 hrs/wk, 4hr PST overlap. Location list excludes Indonesia — check eligibility. Prep Q&A saved.",
+      "role": "Node.js Developer",
+      "company": {
+        "company": "Turing"
+      },
+      "preparation": {
+        "date": "2026-07-14",
+        "jobUrl": "",
+        "cvPath": "",
+        "qa": "prep/turing-nodejs-developer-2026-07-14.md",
+        "notes": "Backend Node.js contractor. Prep Q&A grounded in cv.md.",
+        "submissionStatus": "submitted",
+        "submissionDate": "2026-07-14"
+      },
+      "application": {
+        "dateApplied": "2026-07-14",
+        "location": "",
+        "source": "Turing platform",
+        "jobUrl": "",
+        "status": "applied",
+        "lastUpdate": "2026-07-14",
+        "cvUsed": "",
+        "coverLetter": "",
+        "appLink": "",
+        "salary": "",
+        "contact": "",
+        "nextAction": "Wait for recruiter response",
+        "followUpDate": "",
+        "notes": "",
+        "hide": ""
+      }
     }
   ]
 }
