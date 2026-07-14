@@ -2822,7 +2822,7 @@
         "company": "Hercules"
       },
       "application": null,
-      "hide": false,
+      "hide": true,
       "deadline": ""
     },
     {
@@ -2853,7 +2853,7 @@
         "company": "Hercules"
       },
       "application": null,
-      "hide": false,
+      "hide": true,
       "deadline": ""
     },
     {
