@@ -6,6 +6,9 @@ export default defineConfig({
   base: '/career-ops/',
   build: {
     outDir: '../docs',
-    emptyOutDir: true,
+    // docs/ also holds project documentation + images, so DO NOT wipe it on build.
+    // Only the app's index.html + assets/ get overwritten; stale hashed assets are
+    // pruned manually.
+    emptyOutDir: false,
   },
 })

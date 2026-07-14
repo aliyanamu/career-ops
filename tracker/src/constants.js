@@ -1,8 +1,6 @@
 export const REPO_OWNER = 'aliyanamu'
 export const REPO_NAME = 'career-ops'
 export const BRANCH = 'main'
-export const FILE_PATH = 'Job_Hunting_Progress.xlsx'
-export const API_BASE = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${encodeURIComponent(FILE_PATH)}`
 
 export const SCHEMA = {
   Jobs: {

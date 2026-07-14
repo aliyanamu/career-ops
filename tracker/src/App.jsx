@@ -3,6 +3,7 @@ import { Routes, Route, NavLink, Navigate, useLocation } from 'react-router-dom'
 import { AppBar, Toolbar, Typography, Button, Box, Tabs, Tab, Chip } from '@mui/material'
 import SaveIcon   from '@mui/icons-material/Save'
 import LogoutIcon from '@mui/icons-material/Logout'
+import DownloadIcon from '@mui/icons-material/CloudDownload'
 import { useWorkbookContext } from './WorkbookContext'
 import { SheetDataGrid } from './SheetDataGrid'
 
@@ -28,7 +29,7 @@ function StatusChip({ status, message }) {
 }
 
 export default function App() {
-  const { dirtyCount, status, statusMessage, loadWorkbook, saveWorkbook, logout } = useWorkbookContext()
+  const { dirtyCount, status, statusMessage, loadWorkbook, saveWorkbook, importFromPipeline, logout } = useWorkbookContext()
   const location = useLocation()
 
   useEffect(() => { loadWorkbook() }, [loadWorkbook])
@@ -46,6 +47,13 @@ export default function App() {
             <Typography variant="caption" sx={{ mr: 1, color: 'warning.light' }}>
               {dirtyCount} unsaved change{dirtyCount !== 1 ? 's' : ''}
             </Typography>
+          )}
+          {location.pathname === '/jobs' && (
+            <Button color="inherit" startIcon={<DownloadIcon />} onClick={importFromPipeline}
+              disabled={status === 'saving' || status === 'loading'}
+              size="small" sx={{ mr: 1 }}>
+              Import scan
+            </Button>
           )}
           <Button color="inherit" startIcon={<SaveIcon />} onClick={saveWorkbook}
             disabled={status === 'saving' || status === 'loading' || dirtyCount === 0}
