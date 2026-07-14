@@ -138,6 +138,28 @@ function buildTitleFilter(titleFilter) {
   };
 }
 
+// Location pre-filter: drop on-site-elsewhere and region-locked-remote roles
+// before they reach the pipeline. A job passes if its location matches an
+// `allow` term (remote / APAC / the active career-direction market) AND matches
+// no `block` term (region-locked remote not open from Indonesia). Empty/unknown
+// location is KEPT — the API often omits it; let evaluation decide.
+// Returns null when location_filter is absent (no filtering, backward-compatible).
+// ponytail: keyword heuristic, not geocoding. Evaluation still scores location
+// finely; this just cuts the obvious noise. Tune the lists in portals.yml.
+function buildLocationFilter(locationFilter) {
+  if (!locationFilter) return null;
+  const allow = (locationFilter.allow || []).map(k => k.toLowerCase());
+  const block = (locationFilter.block || []).map(k => k.toLowerCase());
+  if (allow.length === 0 && block.length === 0) return null;
+
+  return (location) => {
+    const lower = (location || '').toLowerCase().trim();
+    if (!lower) return true; // unknown location — keep, evaluation decides
+    if (block.some(k => lower.includes(k))) return false;
+    return allow.length === 0 || allow.some(k => lower.includes(k));
+  };
+}
+
 // ── Liveness gate ───────────────────────────────────────────────────
 // Greenhouse/Ashby/Lever APIs can list roles whose PUBLIC posting was
 // already pulled (404 / redirect-to-dead). Fetch the real URL and drop
@@ -375,6 +397,19 @@ function runSelfCheck() {
   }
   assert(filter('Senior Engineer') && !filter('Engineer Intern') && !filter('Designer'),
     'title filter applies to discovery results');
+
+  const locFilter = buildLocationFilter({
+    allow: ['remote', 'japan', 'tokyo', 'apac'],
+    block: ['remote - us', 'remote - canada', 'us only'],
+  });
+  assert(buildLocationFilter(null) === null, 'no location_filter → null (disabled)');
+  assert(locFilter('Remote'), 'plain remote passes');
+  assert(locFilter('Tokyo, Japan'), 'Japan location passes');
+  assert(locFilter(''), 'unknown/empty location kept');
+  assert(!locFilter('San Francisco, CA'), 'on-site elsewhere dropped');
+  assert(!locFilter('Berlin, Germany'), 'on-site elsewhere dropped (2)');
+  assert(!locFilter('Remote - Canada'), 'region-locked remote dropped');
+  assert(!locFilter('Remote - US'), 'US-region-locked remote dropped despite "remote"');
   console.log('scan.mjs self-check ok');
 }
 
@@ -394,6 +429,7 @@ async function main() {
   const config = parseYaml(readFileSync(PORTALS_PATH, 'utf-8'));
   const companies = config.tracked_companies || [];
   const titleFilter = buildTitleFilter(config.title_filter);
+  const locationFilter = buildLocationFilter(config.location_filter);
 
   // Age gate: only keep jobs posted within max_age_days (default 30).
   // Jobs with no posted date are kept (can't age-check them).
@@ -423,6 +459,7 @@ async function main() {
   const date = new Date().toISOString().slice(0, 10);
   let totalFound = 0;
   let totalFiltered = 0;
+  let totalLocationFiltered = 0;
   let totalStale = 0;
   let totalDupes = 0;
   const newOffers = [];
@@ -438,6 +475,10 @@ async function main() {
       for (const job of jobs) {
         if (!titleFilter(job.title)) {
           totalFiltered++;
+          continue;
+        }
+        if (locationFilter && !locationFilter(job.location)) {
+          totalLocationFiltered++;
           continue;
         }
         if (job.posted && new Date(job.posted).getTime() < cutoffMs) {
@@ -505,6 +546,7 @@ async function main() {
   console.log(`Companies scanned:     ${targets.length}`);
   console.log(`Total jobs found:      ${totalFound}`);
   console.log(`Filtered by title:     ${totalFiltered} removed`);
+  if (locationFilter) console.log(`Filtered by location:  ${totalLocationFiltered} removed`);
   console.log(`Older than ${maxAgeDays}d:         ${totalStale} skipped`);
   console.log(`Duplicates:            ${totalDupes} skipped`);
   if (config.discovery?.enabled) console.log(`Broad discovery:       ${totalDiscovered} found (Firecrawl)`);
