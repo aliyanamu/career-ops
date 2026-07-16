@@ -2977,6 +2977,49 @@
       "company": {
         "company": "Hopper"
       }
+    },
+    {
+      "num": 164,
+      "dateAdded": "2026-07-16",
+      "url": "linkedin-post:rana-azizah/peoplyee-56598",
+      "source": "LinkedIn post (Rana Azizah / Peoplyee)",
+      "elig": "Indonesian only • Remote",
+      "why": "Backend/Infra • Go+AWS match • Remote • same TZ",
+      "fitScore": "3.5",
+      "deadline": "",
+      "decision": "apply",
+      "hide": false,
+      "report": "",
+      "appNum": 25,
+      "notes": "Email apply to rana@peoplyee.com, subj: Backend Engineer (Remote) - 56598 - Name. E-commerce backend + SRE/Infra. Gaps: PHP/Laravel, Terraform, Datadog. Max JPY 600k/mo.",
+      "role": "Backend Engineer (Remote) — req 56598",
+      "company": {
+        "company": "Peoplyee"
+      },
+      "preparation": {
+        "date": "2026-07-16",
+        "jobUrl": "linkedin-post:rana-azizah/peoplyee-56598",
+        "cvPath": "output/cv-hana-aliyah-mufidah-peoplyee-2026-07-16.pdf",
+        "qa": "prep/peoplyee-backend-engineer-remote-2026-07-16.md",
+        "notes": "Tailored CV + email template ready. Apply by email — user to send."
+      },
+      "application": {
+        "dateApplied": "2026-07-16",
+        "location": "Remote (Indonesia)",
+        "source": "LinkedIn post (Peoplyee)",
+        "jobUrl": "linkedin-post:rana-azizah/peoplyee-56598",
+        "status": "applied",
+        "lastUpdate": "2026-07-16",
+        "cvUsed": "cv-hana-aliyah-mufidah-peoplyee-2026-07-16.pdf",
+        "coverLetter": "prep/peoplyee-backend-engineer-remote-2026-07-16.md",
+        "appLink": "",
+        "salary": "Max JPY 600,000/mo",
+        "contact": "rana@peoplyee.com",
+        "nextAction": "Send email from prep template (user)",
+        "followUpDate": "2026-07-23",
+        "notes": "Email application drafted; send from prep template.",
+        "hide": ""
+      }
     }
   ]
 }
