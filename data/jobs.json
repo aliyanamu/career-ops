@@ -3004,7 +3004,7 @@
       "fitScore": "3.5",
       "deadline": "",
       "decision": "apply",
-      "hide": false,
+      "hide": true,
       "report": "",
       "appNum": 25,
       "notes": "Email apply to rana@peoplyee.com, subj: Backend Engineer (Remote) - 56598 - Name. E-commerce backend + SRE/Infra. Gaps: PHP/Laravel, Terraform, Datadog. Max JPY 600k/mo.",
