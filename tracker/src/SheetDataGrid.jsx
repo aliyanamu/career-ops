@@ -1,22 +1,13 @@
 import { useMemo, useState, useCallback, useRef } from 'react'
 import { AgGridReact } from 'ag-grid-react'
-import { themeQuartz } from 'ag-grid-community'
 import { Box, Typography, Switch, FormControlLabel } from '@mui/material'
 import { useWorkbookContext } from './WorkbookContext'
+import { useSettings, agGridTheme, useT } from './settings'
 import { SCHEMA, DROPDOWN_OPTIONS, HEADER_NAMES, REPO_OWNER, REPO_NAME, BRANCH } from './constants'
+import { isFieldEditable, jobToRow, prepToRow, appToRow, companyToRow } from './rows'
 import { CvSummaryView } from './CvSummaryView'
 import { DashboardView } from './DashboardView'
-
-const gridTheme = themeQuartz.withParams({
-  fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
-  fontSize: 13,
-  accentColor: '#1976d2',
-  selectedRowBackgroundColor: 'rgba(25,118,210,0.08)',
-  rowHoverColor: 'rgba(0,0,0,0.04)',
-  headerBackgroundColor: '#f5f5f5',
-  borderColor: '#e0e0e0',
-  cellHorizontalBorderColor: 'transparent',
-})
+import { GridToolbar } from './GridToolbar'
 
 const GITHUB_BLOB = `https://github.com/${REPO_OWNER}/${REPO_NAME}/blob/${BRANCH}/`
 
@@ -24,34 +15,9 @@ const URL_FIELDS         = new Set(['url', 'jobUrl', 'appLink'])
 const GITHUB_PATH_FIELDS = new Set(['qa', 'cvPath', 'coverLetterPath', 'cvUsed', 'coverLetter'])
 const BOOLEAN_FIELDS     = new Set(['hide'])
 
-// Editability policy. Locked columns are either derived or identity fields that,
-// if hand-edited, break the pipeline or write orphan data:
-//   - num: derived row number (not stored).
-//   - url: the job's dedup / update-in-place key (scan + eval match on it). Editing
-//          it silently detaches the job from its scanned/evaluated identity.
-//   - num: derived. url: dedup / update-in-place key. company / role: the job's
-//     identity, set from the posting at scan/eval time (edit these in the source data,
-//     not the dashboard).
-const READONLY_ALWAYS = new Set(['num', 'url', 'company', 'role'])
-//   - dateAdded / source are set at scan (or manual add) time — provenance, not for
-//     dashboard users to edit. (fitScore / decision stay editable: those are eval
-//     outputs you may legitimately want to override by hand.)
-const READONLY_ON_JOBS = new Set(['dateAdded', 'source'])
-//   - jobUrl on Preparations & Applications is a copy of job.url set when the
-//     sub-record is created — editing it just desyncs from the canonical URL.
-const READONLY_MIRRORS = new Set(['jobUrl'])
-const MIRROR_SHEETS    = new Set(['Preparations', 'Applications'])
-
-function isFieldEditable(field, sheetName) {
-  if (READONLY_ALWAYS.has(field)) return false
-  if (sheetName === 'Jobs' && READONLY_ON_JOBS.has(field)) return false
-  if (READONLY_MIRRORS.has(field) && MIRROR_SHEETS.has(sheetName)) return false
-  return true
-}
+// isFieldEditable + the row builders live in ./rows (pure, unit-tested).
 
 const colStateKey = (sheetName) => `career-ops-col-state-${sheetName}`
-
-const toHideBool = (v) => v === true || v === 'Hidden' || v === 'Yes' || v === 'yes'
 
 // ---------------------------------------------------------------------------
 // Cell renderers
@@ -66,7 +32,7 @@ function LinkCellRenderer({ value }) {
   } catch { display = String(value).slice(0, 45) }
   return (
     <a href={value} target="_blank" rel="noreferrer" onClick={e => e.stopPropagation()}
-       style={{ color: '#1976d2', textDecoration: 'none' }}>
+       style={{ color: 'var(--link-color)', textDecoration: 'none' }}>
       {display}
     </a>
   )
@@ -78,7 +44,7 @@ function GithubPathCellRenderer({ value }) {
   const filename = value.split('/').pop()
   return (
     <a href={href} target="_blank" rel="noreferrer" onClick={e => e.stopPropagation()}
-       style={{ color: '#1976d2', textDecoration: 'none', fontSize: '0.78rem' }}>
+       style={{ color: 'var(--link-color)', textDecoration: 'none', fontSize: '0.78rem' }}>
       {filename}
     </a>
   )
@@ -96,7 +62,8 @@ function DropdownCellEditor({ value: initialValue, onValueChange, stopEditing, o
       defaultValue={initialValue}
       onChange={e => { onValueChange(e.target.value); stopEditing?.() }}
       autoFocus
-      style={{ width: '100%', height: '100%', padding: '0 4px', fontSize: 13, border: 'none', outline: 'none', background: 'white' }}
+      style={{ width: '100%', height: '100%', padding: '0 4px', fontSize: 13, border: 'none', outline: 'none',
+               background: 'var(--ag-background-color)', color: 'var(--ag-foreground-color)' }}
     >
       {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
     </select>
@@ -122,101 +89,16 @@ const MIN_WIDTHS = {
 const WIDE_FIELDS = new Set(['notes', 'qa', 'why', 'videoNotes', 'elig'])
 
 // ---------------------------------------------------------------------------
-// Row builders
-// ---------------------------------------------------------------------------
-function jobToRow(job, idx) {
-  return {
-    id: idx, _entity: 'jobs', _idx: idx,
-    num: idx + 1,
-    dateAdded: job.dateAdded ?? '',
-    company:   job.company?.company ?? '',
-    role:      job.role ?? '',
-    url:       job.url ?? '',
-    source:    job.source ?? '',
-    elig:      job.elig ?? '',
-    why:       job.why ?? '',
-    fitScore:  job.fitScore ?? '',
-    deadline:  job.deadline ?? '',
-    decision:  job.decision ?? '',
-    hide:      toHideBool(job.hide),
-    notes:     job.notes ?? '',
-  }
-}
-
-// Normalize legacy submissionStatus values to the two-option canonical set
-const normalizeSubmissionStatus = (v) => {
-  if (!v) return 'not_submitted'
-  const l = String(v).toLowerCase()
-  if (l === 'submitted') return 'submitted'
-  return 'not_submitted'
-}
-
-function prepToRow(job, jobIdx) {
-  const p = job.preparation
-  return {
-    id: jobIdx, _entity: 'preparations', _idx: jobIdx,
-    num: jobIdx + 1,
-    date:             p.date ?? '',
-    company:          job.company?.company ?? '',
-    role:             job.role ?? '',
-    jobUrl:           p.jobUrl ?? '',
-    cvPath:           p.cvPath ?? '',
-    coverLetterPath:  p.coverLetterPath ?? '',
-    qa:               p.qa ?? '',
-    videoRequired:    p.videoRequired ?? '',
-    videoNotes:       p.videoNotes ?? '',
-    videoStatus:      p.videoStatus ?? '',
-    aiDisclaimer:     p.aiDisclaimer ?? '',
-    submissionStatus: normalizeSubmissionStatus(p.submissionStatus),
-    notes:            p.notes ?? '',
-    hide:             toHideBool(p.hide),
-  }
-}
-
-function appToRow(job, jobIdx) {
-  const a = job.application
-  return {
-    id: jobIdx, _entity: 'applications', _idx: jobIdx,
-    num: jobIdx + 1,
-    dateApplied:  a.dateApplied ?? '',
-    company:      job.company?.company ?? '',
-    role:         job.role ?? '',
-    location:     a.location ?? '',
-    source:       a.source ?? '',
-    jobUrl:       a.jobUrl ?? '',
-    status:       a.status ?? '',
-    lastUpdate:   a.lastUpdate ?? '',
-    cvUsed:       a.cvUsed ?? '',
-    coverLetter:  a.coverLetter ?? '',
-    appLink:      a.appLink ?? '',
-    salary:       a.salary ?? '',
-    contact:      a.contact ?? '',
-    nextAction:   a.nextAction ?? '',
-    followUpDate: a.followUpDate ?? '',
-    notes:        a.notes ?? '',
-    hide:         toHideBool(a.hide),
-  }
-}
-
-function companyToRow(company, idx) {
-  return {
-    id: idx, _entity: 'companies', _idx: idx,
-    num:        idx + 1,
-    company:    company.company ?? '',
-    careersUrl: company.careersUrl ?? '',
-    enabled:    company.enabled ?? '',
-    notes:      company.notes ?? '',
-    status:     company.status ?? '',
-  }
-}
-
-// ---------------------------------------------------------------------------
 // Main component
 // ---------------------------------------------------------------------------
 export function SheetDataGrid({ sheetName }) {
   const { jobs, companies, updateField, dirtyCount } = useWorkbookContext()
+  const { mode, density } = useSettings()
+  const t = useT()
   const [showHidden, setShowHidden] = useState(false)
   const gridRef = useRef(null)
+
+  const gridTheme = useMemo(() => agGridTheme(mode, density), [mode, density])
 
   const schema       = SCHEMA[sheetName]
   const dropdownOpts = DROPDOWN_OPTIONS[sheetName] || {}
@@ -318,6 +200,10 @@ export function SheetDataGrid({ sheetName }) {
     if (params.finished) saveColState(params)
   }, [saveColState])
 
+  const persistColState = useCallback(() => {
+    if (gridRef.current?.api) saveColState({ api: gridRef.current.api })
+  }, [saveColState])
+
   const onCellValueChanged = useCallback((params) => {
     const { data, colDef, newValue, oldValue } = params
     const field  = colDef.field
@@ -344,12 +230,14 @@ export function SheetDataGrid({ sheetName }) {
   if (sheetName === 'Dashboard')  return <DashboardView />
 
   if (!jobs || !companies)
-    return <Box sx={{ p: 2 }}><Typography color="text.secondary">Loading…</Typography></Box>
+    return <Box sx={{ p: 2 }}><Typography color="text.secondary">{t('grid.loading')}</Typography></Box>
   if (!schema)
-    return <Box sx={{ p: 2 }}><Typography color="text.secondary">No schema for "{sheetName}".</Typography></Box>
+    return <Box sx={{ p: 2 }}><Typography color="text.secondary">{t('grid.noSchema', { sheet: sheetName })}</Typography></Box>
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 130px)' }}>
+      <GridToolbar gridRef={gridRef} sheetName={sheetName} onColStateChanged={persistColState} />
+
       {hiddenCount > 0 && (
         <Box sx={{ px: 2, py: 0.5, borderBottom: 1, borderColor: 'divider', display: 'flex', alignItems: 'center' }}>
           <FormControlLabel
@@ -357,8 +245,8 @@ export function SheetDataGrid({ sheetName }) {
             label={
               <Typography variant="caption" color="text.secondary">
                 {showHidden
-                  ? `Showing ${hiddenCount} hidden row(s) — click to hide`
-                  : `${hiddenCount} hidden row(s)`}
+                  ? t('grid.hiddenShowing', { count: hiddenCount })
+                  : t('grid.hiddenCount', { count: hiddenCount })}
               </Typography>
             }
           />
@@ -381,14 +269,14 @@ export function SheetDataGrid({ sheetName }) {
           suppressPaginationPanel
           enableCellTextSelection
           ensureDomOrder
-          defaultColDef={{ resizable: true, sortable: true }}
+          defaultColDef={{ resizable: true, sortable: true, filter: true, floatingFilter: true }}
         />
       </Box>
 
       <Box sx={{ px: 2, py: 0.75, borderTop: 1, borderColor: 'divider' }}>
         <Typography variant="caption" color="text.secondary">
-          {rows.length} row{rows.length !== 1 ? 's' : ''}
-          {hiddenCount > 0 && !showHidden ? ` · ${hiddenCount} hidden` : ''}
+          {t('grid.rows', { count: rows.length })}
+          {hiddenCount > 0 && !showHidden ? t('grid.rowsHiddenSuffix', { count: hiddenCount }) : ''}
         </Typography>
       </Box>
     </Box>

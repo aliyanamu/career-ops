@@ -1,5 +1,9 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { REPO_OWNER, REPO_NAME, BRANCH } from './constants'
+import { DEMO } from './demo'
+import { useSettings } from './settings'
+import { t } from './i18n'
+import { applyFieldUpdate } from './rows'
 
 const JOBS_PATH      = 'data/jobs.json'
 const COMPANIES_PATH = 'data/companies.json'
@@ -88,19 +92,48 @@ export function useTracker() {
   const [statusMessage,  setStatusMessage]  = useState('')
   const [dirtyCount,     setDirtyCount]     = useState(0)
 
-  const markDirty = () => setDirtyCount(c => c + 1)
+  // Live language ref so the async callbacks below translate status messages without
+  // taking `lang` as a useCallback dep (which would rebuild loadWorkbook and re-fire the load effect).
+  const { lang } = useSettings()
+  const langRef = useRef(lang)
+  useEffect(() => { langRef.current = lang }, [lang])   // keep ref in sync after commit
+  // Stable translator (reads the live lang ref) so it can sit in callback deps without churn.
+  const tr = useCallback((key, params) => t(langRef.current, key, params), [])
+
+  const markDirty = () => { if (!DEMO) setDirtyCount(c => c + 1) }   // no phantom unsaved count in demo
 
   // -------------------------------------------------------------------------
   // Load
   // -------------------------------------------------------------------------
   const loadWorkbook = useCallback(async () => {
+    // Demo mode: load bundled sample data, no PAT, no GitHub. BASE_URL matters —
+    // the app is served under /career-ops/, so a bare relative path would break.
+    if (DEMO) {
+      setStatus('loading'); setStatusMessage(tr('status.loadingDemo'))
+      try {
+        const base = import.meta.env.BASE_URL
+        const [j, c] = await Promise.all([
+          fetch(base + 'sample-jobs.json').then(r => r.json()),
+          fetch(base + 'sample-companies.json').then(r => r.json()),
+        ])
+        setJobs(j.jobs)
+        setCompanies(c.companies)
+        setDirtyCount(0)
+        setStatus('idle')
+        setStatusMessage(tr('status.demoLoaded', { count: j.jobs.length }))
+      } catch (err) {
+        setStatus('error'); setStatusMessage(tr('status.demoFailed', { error: err.message }))
+      }
+      return
+    }
+
     let pat = getPat()
     if (!pat) {
       pat = promptForPat()
-      if (!pat) { setStatus('error'); setStatusMessage('No PAT provided.'); return }
+      if (!pat) { setStatus('error'); setStatusMessage(tr('status.noPat')); return }
     }
 
-    setStatus('loading'); setStatusMessage('Loading…')
+    setStatus('loading'); setStatusMessage(tr('status.loading'))
     try {
       const [jobsRes, companiesRes] = await Promise.all([
         fetchJsonFile(JOBS_PATH, pat),
@@ -111,33 +144,34 @@ export function useTracker() {
       setCompanies(companiesRes.content.companies)
       setDirtyCount(0)
       setStatus('idle')
-      setStatusMessage(`Loaded ${jobsRes.content.jobs.length} jobs, ${companiesRes.content.companies.length} companies.`)
+      setStatusMessage(tr('status.loaded', { jobs: jobsRes.content.jobs.length, companies: companiesRes.content.companies.length }))
     } catch (err) {
       if (err.message.includes('401')) localStorage.removeItem('gh_pat')
-      setStatus('error'); setStatusMessage(`Load failed: ${err.message}`)
+      setStatus('error'); setStatusMessage(tr('status.loadFailed', { error: err.message }))
     }
-  }, [])
+  }, [tr])
 
   // -------------------------------------------------------------------------
   // Save
   // -------------------------------------------------------------------------
   const saveWorkbook = useCallback(async () => {
-    if (!jobs || !companies) { setStatusMessage('Nothing to save.'); return }
+    if (DEMO) return   // read-only demo: never write, never hit the skip-delete confirm
+    if (!jobs || !companies) { setStatusMessage(tr('status.nothingToSave')); return }
     let pat = getPat()
     if (!pat) {
       pat = promptForPat()
-      if (!pat) { setStatus('error'); setStatusMessage('No PAT provided.'); return }
+      if (!pat) { setStatus('error'); setStatusMessage(tr('status.noPat')); return }
     }
 
     // Skip rows are permanently deleted on save
     const skipRows = jobs.filter(j => j.decision === 'skip')
     if (skipRows.length > 0) {
-      const ok = window.confirm(`${skipRows.length} row(s) marked Skip will be permanently deleted. Proceed?`)
-      if (!ok) { setStatus('idle'); setStatusMessage('Save cancelled.'); return }
+      const ok = window.confirm(tr('confirm.deleteSkip', { count: skipRows.length }))
+      if (!ok) { setStatus('idle'); setStatusMessage(tr('status.saveCancelled')); return }
     }
     const jobsToSave = jobs.filter(j => j.decision !== 'skip')
 
-    setStatus('saving'); setStatusMessage('Saving…')
+    setStatus('saving'); setStatusMessage(tr('status.saving'))
     try {
       const [newJobsSha, newCompaniesSha] = await Promise.all([
         pushJsonFile(JOBS_PATH,      pat, shaRef.current.jobs,      { jobs: jobsToSave }, 'chore: update jobs.json via tracker'),
@@ -146,22 +180,17 @@ export function useTracker() {
       shaRef.current = { jobs: newJobsSha, companies: newCompaniesSha }
       if (skipRows.length > 0) setJobs(jobsToSave)
       setDirtyCount(0)
-      setStatus('saved'); setStatusMessage('Saved successfully.')
+      setStatus('saved'); setStatusMessage(tr('status.saved'))
     } catch (err) {
-      setStatus('error'); setStatusMessage(`Save failed: ${err.message}`)
+      setStatus('error'); setStatusMessage(tr('status.saveFailed', { error: err.message }))
     }
-  }, [jobs, companies])
+  }, [jobs, companies, tr])
 
   // -------------------------------------------------------------------------
   // updateField(entity, idx, field, value)
   //   entity: 'jobs' | 'preparations' | 'applications' | 'companies'
   //   idx:    index into jobs[] or companies[]
   // -------------------------------------------------------------------------
-  const markDirtyAndUpdate = useCallback((updater) => {
-    updater()
-    markDirty()
-  }, [])
-
   const updateField = useCallback((entity, idx, field, value) => {
     if (entity === 'companies') {
       setCompanies(prev => {
@@ -170,70 +199,9 @@ export function useTracker() {
         return next
       })
     } else {
-      setJobs(prev => {
-        const next = [...prev]
-        if (entity === 'jobs') {
-          // company is an embedded object — only update the name string within it
-          if (field === 'company') {
-            next[idx] = { ...next[idx], company: { ...(next[idx].company ?? {}), company: value } }
-          } else {
-            next[idx] = { ...next[idx], [field]: value }
-          }
-
-          // Decision side-effects: auto-create sub-records on first promotion
-          if (field === 'decision') {
-            const today = new Date().toISOString().slice(0, 10)
-            const job = next[idx]
-            if (value === 'apply' && !job.preparation) {
-              next[idx] = {
-                ...next[idx],
-                preparation: {
-                  date: today, jobUrl: job.url ?? '',
-                  cvPath: '', coverLetterPath: '',
-                  qa: '', videoRequired: 'no', videoNotes: '',
-                  videoStatus: '', aiDisclaimer: 'no',
-                  submissionStatus: 'pending', notes: '', hide: '',
-                },
-              }
-            } else if (value === 'easy_apply' && !job.application) {
-              next[idx] = {
-                ...next[idx],
-                application: {
-                  dateApplied: today, location: '',
-                  source: job.source ?? '', jobUrl: job.url ?? '',
-                  status: 'applied', lastUpdate: today,
-                  cvUsed: 'cv-default.pdf',
-                  coverLetter: '', appLink: '', salary: '',
-                  contact: '', nextAction: '', followUpDate: '',
-                  notes: '', hide: '',
-                },
-              }
-            }
-          }
-        } else if (entity === 'preparations') {
-          next[idx] = { ...next[idx], preparation: { ...(next[idx].preparation ?? {}), [field]: value } }
-          // Submitting a preparation auto-creates an application record if one doesn't exist
-          if (field === 'submissionStatus' && value === 'submitted' && !next[idx].application) {
-            const today = new Date().toISOString().slice(0, 10)
-            const job = next[idx]
-            next[idx] = {
-              ...next[idx],
-              application: {
-                dateApplied: today, location: '',
-                source: job.source ?? '', jobUrl: job.url ?? '',
-                status: 'applied', lastUpdate: today,
-                cvUsed: job.preparation?.cvPath || 'cv-default.pdf',
-                coverLetter: job.preparation?.coverLetterPath || '', appLink: '', salary: '',
-                contact: '', nextAction: '', followUpDate: '',
-                notes: 'Promoted from Preparations', hide: '',
-              },
-            }
-          }
-        } else if (entity === 'applications') {
-          next[idx] = { ...next[idx], application: { ...(next[idx].application ?? {}), [field]: value } }
-        }
-        return next
-      })
+      // Decision side-effects (auto-creating prep/application records) live in the
+      // pure applyFieldUpdate reducer so they're unit-tested. See rows.js / rows.test.js.
+      setJobs(prev => applyFieldUpdate(prev, entity, idx, field, value))
     }
     markDirty()
   }, [])
@@ -246,8 +214,8 @@ export function useTracker() {
     setJobs(null); setCompanies(null)
     shaRef.current = { jobs: null, companies: null }
     setDirtyCount(0)
-    setStatus('idle'); setStatusMessage('Logged out.')
-  }, [])
+    setStatus('idle'); setStatusMessage(tr('status.loggedOut'))
+  }, [tr])
 
   // Expose a workbook-like object so SheetDataGrid can check if data is loaded
   const workbook = (jobs && companies) ? { jobs, companies } : null
