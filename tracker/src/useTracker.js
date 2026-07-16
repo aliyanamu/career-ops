@@ -1,6 +1,8 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { REPO_OWNER, REPO_NAME, BRANCH } from './constants'
 import { DEMO } from './demo'
+import { useSettings } from './settings'
+import { t } from './i18n'
 
 const JOBS_PATH      = 'data/jobs.json'
 const COMPANIES_PATH = 'data/companies.json'
@@ -89,6 +91,14 @@ export function useTracker() {
   const [statusMessage,  setStatusMessage]  = useState('')
   const [dirtyCount,     setDirtyCount]     = useState(0)
 
+  // Live language ref so the async callbacks below translate status messages without
+  // taking `lang` as a useCallback dep (which would rebuild loadWorkbook and re-fire the load effect).
+  const { lang } = useSettings()
+  const langRef = useRef(lang)
+  useEffect(() => { langRef.current = lang }, [lang])   // keep ref in sync after commit
+  // Stable translator (reads the live lang ref) so it can sit in callback deps without churn.
+  const tr = useCallback((key, params) => t(langRef.current, key, params), [])
+
   const markDirty = () => { if (!DEMO) setDirtyCount(c => c + 1) }   // no phantom unsaved count in demo
 
   // -------------------------------------------------------------------------
@@ -98,7 +108,7 @@ export function useTracker() {
     // Demo mode: load bundled sample data, no PAT, no GitHub. BASE_URL matters —
     // the app is served under /career-ops/, so a bare relative path would break.
     if (DEMO) {
-      setStatus('loading'); setStatusMessage('Loading demo…')
+      setStatus('loading'); setStatusMessage(tr('status.loadingDemo'))
       try {
         const base = import.meta.env.BASE_URL
         const [j, c] = await Promise.all([
@@ -109,9 +119,9 @@ export function useTracker() {
         setCompanies(c.companies)
         setDirtyCount(0)
         setStatus('idle')
-        setStatusMessage(`Demo — ${j.jobs.length} sample jobs (read-only).`)
+        setStatusMessage(tr('status.demoLoaded', { count: j.jobs.length }))
       } catch (err) {
-        setStatus('error'); setStatusMessage(`Demo load failed: ${err.message}`)
+        setStatus('error'); setStatusMessage(tr('status.demoFailed', { error: err.message }))
       }
       return
     }
@@ -119,10 +129,10 @@ export function useTracker() {
     let pat = getPat()
     if (!pat) {
       pat = promptForPat()
-      if (!pat) { setStatus('error'); setStatusMessage('No PAT provided.'); return }
+      if (!pat) { setStatus('error'); setStatusMessage(tr('status.noPat')); return }
     }
 
-    setStatus('loading'); setStatusMessage('Loading…')
+    setStatus('loading'); setStatusMessage(tr('status.loading'))
     try {
       const [jobsRes, companiesRes] = await Promise.all([
         fetchJsonFile(JOBS_PATH, pat),
@@ -133,34 +143,34 @@ export function useTracker() {
       setCompanies(companiesRes.content.companies)
       setDirtyCount(0)
       setStatus('idle')
-      setStatusMessage(`Loaded ${jobsRes.content.jobs.length} jobs, ${companiesRes.content.companies.length} companies.`)
+      setStatusMessage(tr('status.loaded', { jobs: jobsRes.content.jobs.length, companies: companiesRes.content.companies.length }))
     } catch (err) {
       if (err.message.includes('401')) localStorage.removeItem('gh_pat')
-      setStatus('error'); setStatusMessage(`Load failed: ${err.message}`)
+      setStatus('error'); setStatusMessage(tr('status.loadFailed', { error: err.message }))
     }
-  }, [])
+  }, [tr])
 
   // -------------------------------------------------------------------------
   // Save
   // -------------------------------------------------------------------------
   const saveWorkbook = useCallback(async () => {
     if (DEMO) return   // read-only demo: never write, never hit the skip-delete confirm
-    if (!jobs || !companies) { setStatusMessage('Nothing to save.'); return }
+    if (!jobs || !companies) { setStatusMessage(tr('status.nothingToSave')); return }
     let pat = getPat()
     if (!pat) {
       pat = promptForPat()
-      if (!pat) { setStatus('error'); setStatusMessage('No PAT provided.'); return }
+      if (!pat) { setStatus('error'); setStatusMessage(tr('status.noPat')); return }
     }
 
     // Skip rows are permanently deleted on save
     const skipRows = jobs.filter(j => j.decision === 'skip')
     if (skipRows.length > 0) {
-      const ok = window.confirm(`${skipRows.length} row(s) marked Skip will be permanently deleted. Proceed?`)
-      if (!ok) { setStatus('idle'); setStatusMessage('Save cancelled.'); return }
+      const ok = window.confirm(tr('confirm.deleteSkip', { count: skipRows.length }))
+      if (!ok) { setStatus('idle'); setStatusMessage(tr('status.saveCancelled')); return }
     }
     const jobsToSave = jobs.filter(j => j.decision !== 'skip')
 
-    setStatus('saving'); setStatusMessage('Saving…')
+    setStatus('saving'); setStatusMessage(tr('status.saving'))
     try {
       const [newJobsSha, newCompaniesSha] = await Promise.all([
         pushJsonFile(JOBS_PATH,      pat, shaRef.current.jobs,      { jobs: jobsToSave }, 'chore: update jobs.json via tracker'),
@@ -169,11 +179,11 @@ export function useTracker() {
       shaRef.current = { jobs: newJobsSha, companies: newCompaniesSha }
       if (skipRows.length > 0) setJobs(jobsToSave)
       setDirtyCount(0)
-      setStatus('saved'); setStatusMessage('Saved successfully.')
+      setStatus('saved'); setStatusMessage(tr('status.saved'))
     } catch (err) {
-      setStatus('error'); setStatusMessage(`Save failed: ${err.message}`)
+      setStatus('error'); setStatusMessage(tr('status.saveFailed', { error: err.message }))
     }
-  }, [jobs, companies])
+  }, [jobs, companies, tr])
 
   // -------------------------------------------------------------------------
   // updateField(entity, idx, field, value)
@@ -269,8 +279,8 @@ export function useTracker() {
     setJobs(null); setCompanies(null)
     shaRef.current = { jobs: null, companies: null }
     setDirtyCount(0)
-    setStatus('idle'); setStatusMessage('Logged out.')
-  }, [])
+    setStatus('idle'); setStatusMessage(tr('status.loggedOut'))
+  }, [tr])
 
   // Expose a workbook-like object so SheetDataGrid can check if data is loaded
   const workbook = (jobs && companies) ? { jobs, companies } : null

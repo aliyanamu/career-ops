@@ -8,6 +8,7 @@ import ViewColumnIcon     from '@mui/icons-material/ViewColumn'
 import FileDownloadIcon   from '@mui/icons-material/FileDownload'
 import PushPinIcon        from '@mui/icons-material/PushPin'
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined'
+import { useT } from './settings'
 
 const today = () => new Date().toISOString().slice(0, 10)
 
@@ -15,6 +16,7 @@ const today = () => new Date().toISOString().slice(0, 10)
 // All features use AG Grid Community APIs (quickFilterText, setColumnsVisible,
 // applyColumnState, exportDataAsCsv) — no Enterprise license.
 export function GridToolbar({ gridRef, sheetName, onColStateChanged }) {
+  const t = useT()
   const [search, setSearch] = useState('')
   const [anchor, setAnchor] = useState(null)
   const [cols, setCols]     = useState([])   // [{ colId, header, visible, pinned }]
@@ -62,7 +64,7 @@ export function GridToolbar({ gridRef, sheetName, onColStateChanged }) {
     <Box sx={{ px: 2, py: 0.75, display: 'flex', alignItems: 'center', gap: 1,
                borderBottom: 1, borderColor: 'divider' }}>
       <TextField
-        size="small" placeholder="Search…" value={search} onChange={onSearch}
+        size="small" placeholder={t('toolbar.search')} value={search} onChange={onSearch}
         sx={{ width: 260 }}
         slotProps={{ input: { startAdornment: (
           <InputAdornment position="start"><SearchIcon fontSize="small" /></InputAdornment>
@@ -72,15 +74,15 @@ export function GridToolbar({ gridRef, sheetName, onColStateChanged }) {
       <Box sx={{ flexGrow: 1 }} />
 
       <Button size="small" startIcon={<ViewColumnIcon />} onClick={openColumns}>
-        Columns
+        {t('toolbar.columns')}
       </Button>
       <Button size="small" startIcon={<FileDownloadIcon />} onClick={exportCsv}>
-        Export CSV
+        {t('toolbar.exportCsv')}
       </Button>
 
       <Menu anchorEl={anchor} open={Boolean(anchor)} onClose={() => setAnchor(null)}
             slotProps={{ paper: { sx: { maxHeight: 420 } } }}>
-        <MenuItem disabled dense sx={{ opacity: 0.7 }}>Show / hide · pin</MenuItem>
+        <MenuItem disabled dense sx={{ opacity: 0.7 }}>{t('toolbar.showHidePin')}</MenuItem>
         <Divider />
         {cols.map(c => (
           <MenuItem key={c.colId} dense disableRipple sx={{ pr: 1 }}>
@@ -89,7 +91,7 @@ export function GridToolbar({ gridRef, sheetName, onColStateChanged }) {
                         onChange={e => toggleVisible(c.colId, e.target.checked)} />
             </ListItemIcon>
             <ListItemText primary={c.header} />
-            <Tooltip title={c.pinned ? 'Unpin' : 'Pin left'}>
+            <Tooltip title={c.pinned ? t('toolbar.unpin') : t('toolbar.pin')}>
               <IconButton size="small" onClick={() => togglePin(c.colId, c.pinned)}>
                 {c.pinned ? <PushPinIcon fontSize="small" color="primary" />
                           : <PushPinOutlinedIcon fontSize="small" />}

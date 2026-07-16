@@ -2,7 +2,7 @@ import { useMemo, useState, useCallback, useRef } from 'react'
 import { AgGridReact } from 'ag-grid-react'
 import { Box, Typography, Switch, FormControlLabel } from '@mui/material'
 import { useWorkbookContext } from './WorkbookContext'
-import { useSettings, agGridTheme } from './settings'
+import { useSettings, agGridTheme, useT } from './settings'
 import { SCHEMA, DROPDOWN_OPTIONS, HEADER_NAMES, REPO_OWNER, REPO_NAME, BRANCH } from './constants'
 import { CvSummaryView } from './CvSummaryView'
 import { DashboardView } from './DashboardView'
@@ -207,6 +207,7 @@ function companyToRow(company, idx) {
 export function SheetDataGrid({ sheetName }) {
   const { jobs, companies, updateField, dirtyCount } = useWorkbookContext()
   const { mode, density } = useSettings()
+  const t = useT()
   const [showHidden, setShowHidden] = useState(false)
   const gridRef = useRef(null)
 
@@ -342,9 +343,9 @@ export function SheetDataGrid({ sheetName }) {
   if (sheetName === 'Dashboard')  return <DashboardView />
 
   if (!jobs || !companies)
-    return <Box sx={{ p: 2 }}><Typography color="text.secondary">Loading…</Typography></Box>
+    return <Box sx={{ p: 2 }}><Typography color="text.secondary">{t('grid.loading')}</Typography></Box>
   if (!schema)
-    return <Box sx={{ p: 2 }}><Typography color="text.secondary">No schema for "{sheetName}".</Typography></Box>
+    return <Box sx={{ p: 2 }}><Typography color="text.secondary">{t('grid.noSchema', { sheet: sheetName })}</Typography></Box>
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 130px)' }}>
@@ -357,8 +358,8 @@ export function SheetDataGrid({ sheetName }) {
             label={
               <Typography variant="caption" color="text.secondary">
                 {showHidden
-                  ? `Showing ${hiddenCount} hidden row(s) — click to hide`
-                  : `${hiddenCount} hidden row(s)`}
+                  ? t('grid.hiddenShowing', { count: hiddenCount })
+                  : t('grid.hiddenCount', { count: hiddenCount })}
               </Typography>
             }
           />
@@ -387,8 +388,8 @@ export function SheetDataGrid({ sheetName }) {
 
       <Box sx={{ px: 2, py: 0.75, borderTop: 1, borderColor: 'divider' }}>
         <Typography variant="caption" color="text.secondary">
-          {rows.length} row{rows.length !== 1 ? 's' : ''}
-          {hiddenCount > 0 && !showHidden ? ` · ${hiddenCount} hidden` : ''}
+          {t('grid.rows', { count: rows.length })}
+          {hiddenCount > 0 && !showHidden ? t('grid.rowsHiddenSuffix', { count: hiddenCount }) : ''}
         </Typography>
       </Box>
     </Box>

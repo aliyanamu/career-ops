@@ -92,7 +92,7 @@ Seven phases, ordered cheapest-first so value ships incrementally. Phases 1–2 
 - **Settings drawer:** MUI `Drawer` from a gear icon in the AppBar; controls Theme (Light/Dark/System), Language (EN/ID), Density (Comfortable/Compact).
 
 **Acceptance:**
-- [x] Gear → Settings drawer with Theme/**Density**. (Language row deferred to Phase 4 — the `lang` state ships now but the selector waits for i18n so it isn't dead UI.)
+- [x] Gear → Settings drawer with Theme/**Density**/**Language** (Language selector lit up in Phase 4).
 - [x] Toggling theme restyles **MUI chrome, the AG Grid grid, the row-tint colors, the dropdown editor, and links** together; choice persists; System follows OS.
 - [ ] Row tints + all cell text meet contrast in **both** modes (the non-functional "theme contrast" gate). *Code-complete (per-theme alphas in `index.css`); needs a browser eyeball via `npm run dev` → `?demo=1` → toggle Dark.*
 
@@ -105,8 +105,8 @@ Seven phases, ordered cheapest-first so value ships incrementally. Phases 1–2 
 - **Out of scope v1:** column headers (domain/schema terms, keep English + 🔒 convention) and cell data. Structure `locales/` so JA/KO/ZH drop in later with no code change.
 
 **Acceptance:**
-- [ ] Switching to ID translates tabs, buttons, status chips, and Settings labels.
-- [ ] Adding a new locale file requires no component edits (only registering the key).
+- [x] Switching to ID translates tabs, buttons, status chips, and Settings labels. (Also translates toolbar, grid states/counts, the save-delete confirm, and status toasts. Out of scope, as planned: column headers, cell data, dropdown option labels, and the one-time PAT setup prompt.)
+- [x] Adding a new locale file requires no component edits (only registering the key). (Add a JSON + one `LOCALES` entry + one `LANGUAGES` row in `i18n.js`.)
 
 ### Phase 5: Demo mode — zero-setup live app
 
@@ -169,7 +169,7 @@ Seven phases, ordered cheapest-first so value ships incrementally. Phases 1–2 
 ### Functional
 - [ ] Filter, quick-search, column show/hide/pin, CSV export on every sheet.
 - [x] Light/dark/system theme + density, persisted; MUI + AG Grid switch together.
-- [ ] EN/ID UI language, persisted; extensible to more locales.
+- [x] EN/ID UI language, persisted; extensible to more locales.
 - [ ] `?demo=1` runs read-only with bundled anonymized data, no PAT.
 
 ### Non-Functional

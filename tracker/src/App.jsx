@@ -6,16 +6,16 @@ import LogoutIcon   from '@mui/icons-material/Logout'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { useWorkbookContext } from './WorkbookContext'
 import { SheetDataGrid } from './SheetDataGrid'
-import { SettingsDrawer } from './settings'
+import { SettingsDrawer, useT } from './settings'
 import { DEMO } from './demo'
 
 const TABS = [
-  { label: 'CV Summary',   path: '/cv-summary',   sheet: 'CV Summary'   },
-  { label: 'Dashboard',    path: '/dashboard',     sheet: 'Dashboard'    },
-  { label: 'Jobs',         path: '/jobs',          sheet: 'Jobs'         },
-  { label: 'Preparations', path: '/preparations',  sheet: 'Preparations' },
-  { label: 'Applications', path: '/applications',  sheet: 'Applications' },
-  { label: 'Companies',    path: '/companies',     sheet: 'Companies'    },
+  { key: 'tab.cvSummary',    path: '/cv-summary',   sheet: 'CV Summary'   },
+  { key: 'tab.dashboard',    path: '/dashboard',     sheet: 'Dashboard'    },
+  { key: 'tab.jobs',         path: '/jobs',          sheet: 'Jobs'         },
+  { key: 'tab.preparations', path: '/preparations',  sheet: 'Preparations' },
+  { key: 'tab.applications', path: '/applications',  sheet: 'Applications' },
+  { key: 'tab.companies',    path: '/companies',     sheet: 'Companies'    },
 ]
 
 function StatusChip({ status, message }) {
@@ -34,6 +34,7 @@ export default function App() {
   const { dirtyCount, status, statusMessage, loadWorkbook, saveWorkbook, logout } = useWorkbookContext()
   const location = useLocation()
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const t = useT()
 
   useEffect(() => { loadWorkbook() }, [loadWorkbook])
 
@@ -43,28 +44,28 @@ export default function App() {
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <AppBar position="static" color="primary">
         <Toolbar variant="dense">
-          <Typography variant="h6" sx={{ flexGrow: 0, mr: 2 }}>Career Ops Tracker</Typography>
-          {DEMO && <Chip label="Demo · read-only" color="secondary" size="small" sx={{ mr: 1 }} />}
+          <Typography variant="h6" sx={{ flexGrow: 0, mr: 2 }}>{t('app.title')}</Typography>
+          {DEMO && <Chip label={t('app.demo')} color="secondary" size="small" sx={{ mr: 1 }} />}
           <StatusChip status={status} message={statusMessage} />
           <Box sx={{ flexGrow: 1 }} />
           {!DEMO && dirtyCount > 0 && (
             <Typography variant="caption" sx={{ mr: 1, color: 'warning.light' }}>
-              {dirtyCount} unsaved change{dirtyCount !== 1 ? 's' : ''}
+              {t('app.unsaved', { count: dirtyCount })}
             </Typography>
           )}
           {!DEMO && (
             <Button color="inherit" startIcon={<SaveIcon />} onClick={saveWorkbook}
               disabled={status === 'saving' || status === 'loading' || dirtyCount === 0}
               size="small" sx={{ mr: 1 }}>
-              Save
+              {t('app.save')}
             </Button>
           )}
           {!DEMO && (
             <Button color="inherit" startIcon={<LogoutIcon />} onClick={logout} size="small">
-              Logout
+              {t('app.logout')}
             </Button>
           )}
-          <Tooltip title="Settings">
+          <Tooltip title={t('app.settings')}>
             <IconButton color="inherit" size="small" sx={{ ml: 0.5 }} onClick={() => setSettingsOpen(true)}>
               <SettingsIcon fontSize="small" />
             </IconButton>
@@ -77,7 +78,7 @@ export default function App() {
       <Box sx={{ borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper' }}>
         <Tabs value={activeTabIndex === -1 ? false : activeTabIndex} variant="scrollable" scrollButtons="auto">
           {TABS.map(tab => (
-            <Tab key={tab.path} label={tab.label} component={NavLink} to={tab.path} />
+            <Tab key={tab.path} label={t(tab.key)} component={NavLink} to={tab.path} />
           ))}
         </Tabs>
       </Box>
