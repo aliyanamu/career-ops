@@ -3,6 +3,7 @@ import { REPO_OWNER, REPO_NAME, BRANCH } from './constants'
 import { DEMO } from './demo'
 import { useSettings } from './settings'
 import { t } from './i18n'
+import { applyFieldUpdate } from './rows'
 
 const JOBS_PATH      = 'data/jobs.json'
 const COMPANIES_PATH = 'data/companies.json'
@@ -190,11 +191,6 @@ export function useTracker() {
   //   entity: 'jobs' | 'preparations' | 'applications' | 'companies'
   //   idx:    index into jobs[] or companies[]
   // -------------------------------------------------------------------------
-  const markDirtyAndUpdate = useCallback((updater) => {
-    updater()
-    markDirty()
-  }, [])
-
   const updateField = useCallback((entity, idx, field, value) => {
     if (entity === 'companies') {
       setCompanies(prev => {
@@ -203,70 +199,9 @@ export function useTracker() {
         return next
       })
     } else {
-      setJobs(prev => {
-        const next = [...prev]
-        if (entity === 'jobs') {
-          // company is an embedded object — only update the name string within it
-          if (field === 'company') {
-            next[idx] = { ...next[idx], company: { ...(next[idx].company ?? {}), company: value } }
-          } else {
-            next[idx] = { ...next[idx], [field]: value }
-          }
-
-          // Decision side-effects: auto-create sub-records on first promotion
-          if (field === 'decision') {
-            const today = new Date().toISOString().slice(0, 10)
-            const job = next[idx]
-            if (value === 'apply' && !job.preparation) {
-              next[idx] = {
-                ...next[idx],
-                preparation: {
-                  date: today, jobUrl: job.url ?? '',
-                  cvPath: '', coverLetterPath: '',
-                  qa: '', videoRequired: 'no', videoNotes: '',
-                  videoStatus: '', aiDisclaimer: 'no',
-                  submissionStatus: 'pending', notes: '', hide: '',
-                },
-              }
-            } else if (value === 'easy_apply' && !job.application) {
-              next[idx] = {
-                ...next[idx],
-                application: {
-                  dateApplied: today, location: '',
-                  source: job.source ?? '', jobUrl: job.url ?? '',
-                  status: 'applied', lastUpdate: today,
-                  cvUsed: 'cv-default.pdf',
-                  coverLetter: '', appLink: '', salary: '',
-                  contact: '', nextAction: '', followUpDate: '',
-                  notes: '', hide: '',
-                },
-              }
-            }
-          }
-        } else if (entity === 'preparations') {
-          next[idx] = { ...next[idx], preparation: { ...(next[idx].preparation ?? {}), [field]: value } }
-          // Submitting a preparation auto-creates an application record if one doesn't exist
-          if (field === 'submissionStatus' && value === 'submitted' && !next[idx].application) {
-            const today = new Date().toISOString().slice(0, 10)
-            const job = next[idx]
-            next[idx] = {
-              ...next[idx],
-              application: {
-                dateApplied: today, location: '',
-                source: job.source ?? '', jobUrl: job.url ?? '',
-                status: 'applied', lastUpdate: today,
-                cvUsed: job.preparation?.cvPath || 'cv-default.pdf',
-                coverLetter: job.preparation?.coverLetterPath || '', appLink: '', salary: '',
-                contact: '', nextAction: '', followUpDate: '',
-                notes: 'Promoted from Preparations', hide: '',
-              },
-            }
-          }
-        } else if (entity === 'applications') {
-          next[idx] = { ...next[idx], application: { ...(next[idx].application ?? {}), [field]: value } }
-        }
-        return next
-      })
+      // Decision side-effects (auto-creating prep/application records) live in the
+      // pure applyFieldUpdate reducer so they're unit-tested. See rows.js / rows.test.js.
+      setJobs(prev => applyFieldUpdate(prev, entity, idx, field, value))
     }
     markDirty()
   }, [])

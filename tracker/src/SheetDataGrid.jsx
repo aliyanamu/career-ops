@@ -4,6 +4,7 @@ import { Box, Typography, Switch, FormControlLabel } from '@mui/material'
 import { useWorkbookContext } from './WorkbookContext'
 import { useSettings, agGridTheme, useT } from './settings'
 import { SCHEMA, DROPDOWN_OPTIONS, HEADER_NAMES, REPO_OWNER, REPO_NAME, BRANCH } from './constants'
+import { isFieldEditable, jobToRow, prepToRow, appToRow, companyToRow } from './rows'
 import { CvSummaryView } from './CvSummaryView'
 import { DashboardView } from './DashboardView'
 import { GridToolbar } from './GridToolbar'
@@ -14,34 +15,9 @@ const URL_FIELDS         = new Set(['url', 'jobUrl', 'appLink'])
 const GITHUB_PATH_FIELDS = new Set(['qa', 'cvPath', 'coverLetterPath', 'cvUsed', 'coverLetter'])
 const BOOLEAN_FIELDS     = new Set(['hide'])
 
-// Editability policy. Locked columns are either derived or identity fields that,
-// if hand-edited, break the pipeline or write orphan data:
-//   - num: derived row number (not stored).
-//   - url: the job's dedup / update-in-place key (scan + eval match on it). Editing
-//          it silently detaches the job from its scanned/evaluated identity.
-//   - num: derived. url: dedup / update-in-place key. company / role: the job's
-//     identity, set from the posting at scan/eval time (edit these in the source data,
-//     not the dashboard).
-const READONLY_ALWAYS = new Set(['num', 'url', 'company', 'role'])
-//   - dateAdded / source are set at scan (or manual add) time — provenance, not for
-//     dashboard users to edit. (fitScore / decision stay editable: those are eval
-//     outputs you may legitimately want to override by hand.)
-const READONLY_ON_JOBS = new Set(['dateAdded', 'source'])
-//   - jobUrl on Preparations & Applications is a copy of job.url set when the
-//     sub-record is created — editing it just desyncs from the canonical URL.
-const READONLY_MIRRORS = new Set(['jobUrl'])
-const MIRROR_SHEETS    = new Set(['Preparations', 'Applications'])
-
-function isFieldEditable(field, sheetName) {
-  if (READONLY_ALWAYS.has(field)) return false
-  if (sheetName === 'Jobs' && READONLY_ON_JOBS.has(field)) return false
-  if (READONLY_MIRRORS.has(field) && MIRROR_SHEETS.has(sheetName)) return false
-  return true
-}
+// isFieldEditable + the row builders live in ./rows (pure, unit-tested).
 
 const colStateKey = (sheetName) => `career-ops-col-state-${sheetName}`
-
-const toHideBool = (v) => v === true || v === 'Hidden' || v === 'Yes' || v === 'yes'
 
 // ---------------------------------------------------------------------------
 // Cell renderers
@@ -111,95 +87,6 @@ const MIN_WIDTHS = {
 }
 
 const WIDE_FIELDS = new Set(['notes', 'qa', 'why', 'videoNotes', 'elig'])
-
-// ---------------------------------------------------------------------------
-// Row builders
-// ---------------------------------------------------------------------------
-function jobToRow(job, idx) {
-  return {
-    id: idx, _entity: 'jobs', _idx: idx,
-    num: idx + 1,
-    dateAdded: job.dateAdded ?? '',
-    company:   job.company?.company ?? '',
-    role:      job.role ?? '',
-    url:       job.url ?? '',
-    source:    job.source ?? '',
-    elig:      job.elig ?? '',
-    why:       job.why ?? '',
-    fitScore:  job.fitScore ?? '',
-    deadline:  job.deadline ?? '',
-    decision:  job.decision ?? '',
-    hide:      toHideBool(job.hide),
-    notes:     job.notes ?? '',
-  }
-}
-
-// Normalize legacy submissionStatus values to the two-option canonical set
-const normalizeSubmissionStatus = (v) => {
-  if (!v) return 'not_submitted'
-  const l = String(v).toLowerCase()
-  if (l === 'submitted') return 'submitted'
-  return 'not_submitted'
-}
-
-function prepToRow(job, jobIdx) {
-  const p = job.preparation
-  return {
-    id: jobIdx, _entity: 'preparations', _idx: jobIdx,
-    num: jobIdx + 1,
-    date:             p.date ?? '',
-    company:          job.company?.company ?? '',
-    role:             job.role ?? '',
-    jobUrl:           p.jobUrl ?? '',
-    cvPath:           p.cvPath ?? '',
-    coverLetterPath:  p.coverLetterPath ?? '',
-    qa:               p.qa ?? '',
-    videoRequired:    p.videoRequired ?? '',
-    videoNotes:       p.videoNotes ?? '',
-    videoStatus:      p.videoStatus ?? '',
-    aiDisclaimer:     p.aiDisclaimer ?? '',
-    submissionStatus: normalizeSubmissionStatus(p.submissionStatus),
-    notes:            p.notes ?? '',
-    hide:             toHideBool(p.hide),
-  }
-}
-
-function appToRow(job, jobIdx) {
-  const a = job.application
-  return {
-    id: jobIdx, _entity: 'applications', _idx: jobIdx,
-    num: jobIdx + 1,
-    dateApplied:  a.dateApplied ?? '',
-    company:      job.company?.company ?? '',
-    role:         job.role ?? '',
-    location:     a.location ?? '',
-    source:       a.source ?? '',
-    jobUrl:       a.jobUrl ?? '',
-    status:       a.status ?? '',
-    lastUpdate:   a.lastUpdate ?? '',
-    cvUsed:       a.cvUsed ?? '',
-    coverLetter:  a.coverLetter ?? '',
-    appLink:      a.appLink ?? '',
-    salary:       a.salary ?? '',
-    contact:      a.contact ?? '',
-    nextAction:   a.nextAction ?? '',
-    followUpDate: a.followUpDate ?? '',
-    notes:        a.notes ?? '',
-    hide:         toHideBool(a.hide),
-  }
-}
-
-function companyToRow(company, idx) {
-  return {
-    id: idx, _entity: 'companies', _idx: idx,
-    num:        idx + 1,
-    company:    company.company ?? '',
-    careersUrl: company.careersUrl ?? '',
-    enabled:    company.enabled ?? '',
-    notes:      company.notes ?? '',
-    status:     company.status ?? '',
-  }
-}
 
 // ---------------------------------------------------------------------------
 // Main component
