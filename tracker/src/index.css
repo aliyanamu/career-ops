@@ -13,12 +13,41 @@ body {
   width: 100%;
 }
 
+/* Theme-driven colours. Defaults are light; [data-theme="dark"] overrides.
+   The root is stamped with data-theme by SettingsProvider. */
+:root {
+  --link-color:        #1976d2;
+  --row-recommended:   rgba(255, 193,   7, 0.18);
+  --row-apply:         rgba( 76, 175,  80, 0.10);
+  --row-saved:         rgba( 33, 150, 243, 0.08);
+  --row-skip-bg:       rgba(  0,   0,   0, 0.04);
+  --row-skip-fg:       rgba(  0,   0,   0, 0.38);
+  --row-offer:         rgba(255, 193,   7, 0.20);
+  --row-interview:     rgba( 76, 175,  80, 0.15);
+  --row-applied:       rgba( 33, 150, 243, 0.10);
+  --row-rejected-bg:   rgba(244,  67,  54, 0.08);
+  --row-rejected-fg:   rgba(  0,   0,   0, 0.38);
+}
+:root[data-theme="dark"] {
+  --link-color:        #90caf9;
+  --row-recommended:   rgba(255, 193,   7, 0.22);
+  --row-apply:         rgba( 76, 175,  80, 0.20);
+  --row-saved:         rgba( 33, 150, 243, 0.20);
+  --row-skip-bg:       rgba(255, 255, 255, 0.06);
+  --row-skip-fg:       rgba(255, 255, 255, 0.45);
+  --row-offer:         rgba(255, 193,   7, 0.28);
+  --row-interview:     rgba( 76, 175,  80, 0.28);
+  --row-applied:       rgba( 33, 150, 243, 0.26);
+  --row-rejected-bg:   rgba(244,  67,  54, 0.24);
+  --row-rejected-fg:   rgba(255, 255, 255, 0.45);
+}
+
 /* AG Grid row colours */
-.row-recommended .ag-cell { background-color: rgba(255, 193,   7, 0.18); }
-.row-apply       .ag-cell { background-color: rgba( 76, 175,  80, 0.10); }
-.row-saved       .ag-cell { background-color: rgba( 33, 150, 243, 0.08); }
-.row-skip        .ag-cell { background-color: rgba(  0,   0,   0, 0.04); color: rgba(0,0,0,0.38); }
-.row-offer       .ag-cell { background-color: rgba(255, 193,   7, 0.20); }
-.row-interview   .ag-cell { background-color: rgba( 76, 175,  80, 0.15); }
-.row-applied     .ag-cell { background-color: rgba( 33, 150, 243, 0.10); }
-.row-rejected    .ag-cell { background-color: rgba(244,  67,  54, 0.08); color: rgba(0,0,0,0.38); }
+.row-recommended .ag-cell { background-color: var(--row-recommended); }
+.row-apply       .ag-cell { background-color: var(--row-apply); }
+.row-saved       .ag-cell { background-color: var(--row-saved); }
+.row-skip        .ag-cell { background-color: var(--row-skip-bg); color: var(--row-skip-fg); }
+.row-offer       .ag-cell { background-color: var(--row-offer); }
+.row-interview   .ag-cell { background-color: var(--row-interview); }
+.row-applied     .ag-cell { background-color: var(--row-applied); }
+.row-rejected    .ag-cell { background-color: var(--row-rejected-bg); color: var(--row-rejected-fg); }

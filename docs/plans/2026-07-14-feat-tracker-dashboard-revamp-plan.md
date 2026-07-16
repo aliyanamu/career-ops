@@ -92,9 +92,9 @@ Seven phases, ordered cheapest-first so value ships incrementally. Phases 1–2 
 - **Settings drawer:** MUI `Drawer` from a gear icon in the AppBar; controls Theme (Light/Dark/System), Language (EN/ID), Density (Comfortable/Compact).
 
 **Acceptance:**
-- [ ] Gear → Settings drawer with Theme/Language/Density.
-- [ ] Toggling theme restyles **MUI chrome, the AG Grid grid, the row-tint colors, the dropdown editor, and links** together; choice persists; System follows OS.
-- [ ] Row tints + all cell text meet contrast in **both** modes (the non-functional "theme contrast" gate).
+- [x] Gear → Settings drawer with Theme/**Density**. (Language row deferred to Phase 4 — the `lang` state ships now but the selector waits for i18n so it isn't dead UI.)
+- [x] Toggling theme restyles **MUI chrome, the AG Grid grid, the row-tint colors, the dropdown editor, and links** together; choice persists; System follows OS.
+- [ ] Row tints + all cell text meet contrast in **both** modes (the non-functional "theme contrast" gate). *Code-complete (per-theme alphas in `index.css`); needs a browser eyeball via `npm run dev` → `?demo=1` → toggle Dark.*
 
 ### Phase 4: i18n — EN + ID (extensible)
 
@@ -168,7 +168,7 @@ Seven phases, ordered cheapest-first so value ships incrementally. Phases 1–2 
 
 ### Functional
 - [ ] Filter, quick-search, column show/hide/pin, CSV export on every sheet.
-- [ ] Light/dark/system theme + density, persisted; MUI + AG Grid switch together.
+- [x] Light/dark/system theme + density, persisted; MUI + AG Grid switch together.
 - [ ] EN/ID UI language, persisted; extensible to more locales.
 - [ ] `?demo=1` runs read-only with bundled anonymized data, no PAT.
 

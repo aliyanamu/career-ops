@@ -1,23 +1,12 @@
 import { useMemo, useState, useCallback, useRef } from 'react'
 import { AgGridReact } from 'ag-grid-react'
-import { themeQuartz } from 'ag-grid-community'
 import { Box, Typography, Switch, FormControlLabel } from '@mui/material'
 import { useWorkbookContext } from './WorkbookContext'
+import { useSettings, agGridTheme } from './settings'
 import { SCHEMA, DROPDOWN_OPTIONS, HEADER_NAMES, REPO_OWNER, REPO_NAME, BRANCH } from './constants'
 import { CvSummaryView } from './CvSummaryView'
 import { DashboardView } from './DashboardView'
 import { GridToolbar } from './GridToolbar'
-
-const gridTheme = themeQuartz.withParams({
-  fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
-  fontSize: 13,
-  accentColor: '#1976d2',
-  selectedRowBackgroundColor: 'rgba(25,118,210,0.08)',
-  rowHoverColor: 'rgba(0,0,0,0.04)',
-  headerBackgroundColor: '#f5f5f5',
-  borderColor: '#e0e0e0',
-  cellHorizontalBorderColor: 'transparent',
-})
 
 const GITHUB_BLOB = `https://github.com/${REPO_OWNER}/${REPO_NAME}/blob/${BRANCH}/`
 
@@ -67,7 +56,7 @@ function LinkCellRenderer({ value }) {
   } catch { display = String(value).slice(0, 45) }
   return (
     <a href={value} target="_blank" rel="noreferrer" onClick={e => e.stopPropagation()}
-       style={{ color: '#1976d2', textDecoration: 'none' }}>
+       style={{ color: 'var(--link-color)', textDecoration: 'none' }}>
       {display}
     </a>
   )
@@ -79,7 +68,7 @@ function GithubPathCellRenderer({ value }) {
   const filename = value.split('/').pop()
   return (
     <a href={href} target="_blank" rel="noreferrer" onClick={e => e.stopPropagation()}
-       style={{ color: '#1976d2', textDecoration: 'none', fontSize: '0.78rem' }}>
+       style={{ color: 'var(--link-color)', textDecoration: 'none', fontSize: '0.78rem' }}>
       {filename}
     </a>
   )
@@ -97,7 +86,8 @@ function DropdownCellEditor({ value: initialValue, onValueChange, stopEditing, o
       defaultValue={initialValue}
       onChange={e => { onValueChange(e.target.value); stopEditing?.() }}
       autoFocus
-      style={{ width: '100%', height: '100%', padding: '0 4px', fontSize: 13, border: 'none', outline: 'none', background: 'white' }}
+      style={{ width: '100%', height: '100%', padding: '0 4px', fontSize: 13, border: 'none', outline: 'none',
+               background: 'var(--ag-background-color)', color: 'var(--ag-foreground-color)' }}
     >
       {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
     </select>
@@ -216,8 +206,11 @@ function companyToRow(company, idx) {
 // ---------------------------------------------------------------------------
 export function SheetDataGrid({ sheetName }) {
   const { jobs, companies, updateField, dirtyCount } = useWorkbookContext()
+  const { mode, density } = useSettings()
   const [showHidden, setShowHidden] = useState(false)
   const gridRef = useRef(null)
+
+  const gridTheme = useMemo(() => agGridTheme(mode, density), [mode, density])
 
   const schema       = SCHEMA[sheetName]
   const dropdownOpts = DROPDOWN_OPTIONS[sheetName] || {}

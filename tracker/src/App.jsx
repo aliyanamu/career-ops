@@ -1,10 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Routes, Route, NavLink, Navigate, useLocation } from 'react-router-dom'
-import { AppBar, Toolbar, Typography, Button, Box, Tabs, Tab, Chip } from '@mui/material'
-import SaveIcon   from '@mui/icons-material/Save'
-import LogoutIcon from '@mui/icons-material/Logout'
+import { AppBar, Toolbar, Typography, Button, Box, Tabs, Tab, Chip, IconButton, Tooltip } from '@mui/material'
+import SaveIcon     from '@mui/icons-material/Save'
+import LogoutIcon   from '@mui/icons-material/Logout'
+import SettingsIcon from '@mui/icons-material/Settings'
 import { useWorkbookContext } from './WorkbookContext'
 import { SheetDataGrid } from './SheetDataGrid'
+import { SettingsDrawer } from './settings'
 import { DEMO } from './demo'
 
 const TABS = [
@@ -31,6 +33,7 @@ function StatusChip({ status, message }) {
 export default function App() {
   const { dirtyCount, status, statusMessage, loadWorkbook, saveWorkbook, logout } = useWorkbookContext()
   const location = useLocation()
+  const [settingsOpen, setSettingsOpen] = useState(false)
 
   useEffect(() => { loadWorkbook() }, [loadWorkbook])
 
@@ -61,8 +64,15 @@ export default function App() {
               Logout
             </Button>
           )}
+          <Tooltip title="Settings">
+            <IconButton color="inherit" size="small" sx={{ ml: 0.5 }} onClick={() => setSettingsOpen(true)}>
+              <SettingsIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
+
+      <SettingsDrawer open={settingsOpen} onClose={() => setSettingsOpen(false)} />
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper' }}>
         <Tabs value={activeTabIndex === -1 ? false : activeTabIndex} variant="scrollable" scrollButtons="auto">
