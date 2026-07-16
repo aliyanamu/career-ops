@@ -2678,7 +2678,7 @@
         "nextAction": "Wait for recruiter response",
         "followUpDate": "2026-07-27",
         "notes": "Applied via Greenhouse (app 63920375). Report 019",
-        "hide": ""
+        "hide": true
       },
       "num": 149,
       "dateAdded": "2026-07-13",
