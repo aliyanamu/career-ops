@@ -3020,6 +3020,49 @@
         "notes": "Email application drafted; send from prep template.",
         "hide": ""
       }
+    },
+    {
+      "num": 165,
+      "dateAdded": "2026-07-16",
+      "url": "linkedin-post:codetact-recruit/senior-frontend-engineer-remote",
+      "source": "LinkedIn post (CodeTact Recruit)",
+      "elig": "Worldwide • Remote",
+      "why": "Front-end • React+TypeScript+Next.js match • Remote worldwide • same TZ ok",
+      "fitScore": "3.5",
+      "deadline": "",
+      "decision": "apply",
+      "hide": false,
+      "report": "prep/codetact-senior-frontend-engineer-remote-2026-07-16.md",
+      "appNum": 26,
+      "notes": "Email apply to talent@codetactrecruit.com, subj: Senior Front-End Engineer - Application - Remote (Worldwide). Germany SaaS client via recruiter. Salary EUR 3,200-3,500/mo. Gaps: Redux/Zustand, Jest/Cypress, Tailwind not named. Legitimacy caution: unnamed client, email-only, send CV only (no ID/bank/payment).",
+      "role": "Senior Front-End Engineer (Remote, Worldwide)",
+      "company": {
+        "company": "CodeTact Recruit"
+      },
+      "preparation": {
+        "date": "2026-07-16",
+        "jobUrl": "linkedin-post:codetact-recruit/senior-frontend-engineer-remote",
+        "cvPath": "output/cv-hana-aliyah-mufidah-codetact-2026-07-16.pdf",
+        "qa": "prep/codetact-senior-frontend-engineer-remote-2026-07-16.md",
+        "notes": "Tailored front-end CV + email template ready. Apply by email - user to send."
+      },
+      "application": {
+        "dateApplied": "2026-07-16",
+        "location": "Remote (Worldwide)",
+        "source": "LinkedIn post (CodeTact Recruit)",
+        "jobUrl": "linkedin-post:codetact-recruit/senior-frontend-engineer-remote",
+        "status": "applied",
+        "lastUpdate": "2026-07-16",
+        "cvUsed": "cv-hana-aliyah-mufidah-codetact-2026-07-16.pdf",
+        "coverLetter": "prep/codetact-senior-frontend-engineer-remote-2026-07-16.md",
+        "appLink": "",
+        "salary": "EUR 3,200-3,500/mo",
+        "contact": "talent@codetactrecruit.com",
+        "nextAction": "Send email from prep template (user)",
+        "followUpDate": "2026-07-23",
+        "notes": "Email application drafted; send from prep template. Legitimacy caution - CV only.",
+        "hide": ""
+      }
     }
   ]
 }
