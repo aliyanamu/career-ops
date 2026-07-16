@@ -2161,7 +2161,7 @@
         "location": "Jakarta, Indonesia (home)",
         "source": "Greenhouse (LinkedIn redirect)",
         "jobUrl": "https://job-boards.eu.greenhouse.io/straitsx/jobs/4839243101",
-        "status": "applied",
+        "status": "rejected",
         "lastUpdate": "2026-05-07",
         "cvUsed": "cv-default.pdf",
         "coverLetter": "Optional draft in prep/straitsx-mid-software-engineer-blockchain-2026-05-07.md",
@@ -2171,7 +2171,7 @@
         "nextAction": "Wait for recruiter response",
         "followUpDate": "2026-05-21",
         "notes": "Easy Apply path; user opted out of full prep flow. Go gap noted.",
-        "hide": ""
+        "hide": true
       }
     },
     {
