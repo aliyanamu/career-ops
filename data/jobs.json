@@ -2484,7 +2484,7 @@
       "fitScore": "4.0",
       "deadline": "",
       "decision": "apply",
-      "hide": false,
+      "hide": true,
       "notes": "Fully remote from Indonesia, $35M ARR GenAI. Asks 5+yr (fits). GAP: role core = Kafka/queues/distributed workers/Go — not her product-fullstack/Web3 depth. Apply IF she has real async/systems story. Report 014.",
       "role": "Senior Backend Engineer / Architect",
       "company": {
@@ -2534,7 +2534,7 @@
       "fitScore": "2.5",
       "deadline": "",
       "decision": "saved",
-      "hide": false,
+      "hide": true,
       "notes": "Vyro/ImagineArt Go role. Same location as #141 but REQUIRES strong Go (she: 6mo) + C/C++ systems (she: none), 2-4yr = under-leveled/lower pay. Senior Backend (#141) is the better target here. Report 015.",
       "role": "Go Lang Developer",
       "company": {
