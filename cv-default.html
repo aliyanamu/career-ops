@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hana Aliyah Mufidah — CV</title>
+<style>
+  @font-face {
+    font-family: 'Space Grotesk';
+    src: url('./fonts/space-grotesk-latin.woff2') format('woff2');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  @font-face {
+    font-family: 'Space Grotesk';
+    src: url('./fonts/space-grotesk-latin-ext.woff2') format('woff2');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+
+  @font-face {
+    font-family: 'DM Sans';
+    src: url('./fonts/dm-sans-latin.woff2') format('woff2');
+    font-weight: 100 1000;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  @font-face {
+    font-family: 'DM Sans';
+    src: url('./fonts/dm-sans-latin-ext.woff2') format('woff2');
+    font-weight: 100 1000;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #1a1a2e;
+    background: #ffffff;
+    padding: 0;
+    margin: 0;
+  }
+
+  .page {
+    width: 100%;
+    max-width: {{PAGE_WIDTH}};
+    margin: 0 auto;
+    padding: 2px 0;
+  }
+
+  /* === HEADER === */
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+
+  .header-gradient {
+    height: 2px;
+    background: linear-gradient(to right, hsl(187, 74%, 32%), hsl(270, 70%, 45%));
+    border-radius: 1px;
+    margin-bottom: 10px;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10.5px;
+    line-height: 1.4;
+    color: #555;
+  }
+
+  .contact-row a {
+    color: #555;
+    text-decoration: none;
+  }
+
+  .contact-row .separator {
+    color: #ccc;
+  }
+
+  /* === SECTIONS === */
+  .section {
+    margin-bottom: 18px;
+  }
+
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: hsl(187, 74%, 32%);
+    border-bottom: 1.5px solid #e2e2e2;
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  /* === PROFESSIONAL SUMMARY === */
+  .summary-text {
+    font-size: 11px;
+    line-height: 1.7;
+    color: #2f2f2f;
+  }
+
+  /* Links must never break across lines */
+  a {
+    white-space: nowrap;
+  }
+
+  /* === CORE COMPETENCIES === */
+  .competencies-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .competency-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: hsl(187, 74%, 28%);
+    background: hsl(187, 40%, 95%);
+    padding: 4px 10px;
+    border-radius: 3px;
+    border: 1px solid hsl(187, 40%, 88%);
+  }
+
+  /* === WORK EXPERIENCE === */
+  .job {
+    margin-bottom: 14px;
+  }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+
+  .job-company {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: hsl(270, 70%, 45%);
+  }
+
+  .job-period {
+    font-size: 10.5px;
+    color: #777;
+    white-space: nowrap;
+  }
+
+  .job-role {
+    font-size: 11px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+  }
+
+  .job-location {
+    font-size: 10px;
+    color: #888;
+  }
+
+  .job ul {
+    padding-left: 18px;
+    margin-top: 6px;
+  }
+
+  .job li {
+    font-size: 10.5px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  .job li strong {
+    font-weight: 600;
+  }
+
+  /* === PROJECTS === */
+  .project {
+    margin-bottom: 12px;
+  }
+
+  .project-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: hsl(270, 70%, 45%);
+  }
+
+  .project-badge {
+    font-size: 9px;
+    font-weight: 500;
+    color: hsl(187, 74%, 32%);
+    background: hsl(187, 40%, 95%);
+    padding: 1px 6px;
+    border-radius: 2px;
+    margin-left: 6px;
+  }
+
+  .project-desc {
+    font-size: 10.5px;
+    color: #444;
+    margin-top: 3px;
+    line-height: 1.55;
+  }
+
+  .project-tech {
+    font-size: 9.5px;
+    color: #888;
+    margin-top: 3px;
+  }
+
+  /* === EDUCATION === */
+  .edu-item {
+    margin-bottom: 8px;
+  }
+
+  .edu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .edu-title {
+    font-weight: 600;
+    font-size: 11px;
+    color: #333;
+  }
+
+  .edu-org {
+    color: hsl(270, 70%, 45%);
+    font-weight: 500;
+  }
+
+  .edu-year {
+    font-size: 10px;
+    color: #777;
+    white-space: nowrap;
+  }
+
+  .edu-desc {
+    font-size: 10px;
+    color: #666;
+    margin-top: 2px;
+    line-height: 1.5;
+  }
+
+  /* === CERTIFICATIONS === */
+  .cert-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .cert-title {
+    font-size: 10.5px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .cert-org {
+    color: hsl(270, 70%, 45%);
+  }
+
+  .cert-year {
+    font-size: 10px;
+    color: #777;
+    white-space: nowrap;
+  }
+
+  /* === SKILLS === */
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+  }
+
+  .skill-item {
+    font-size: 10.5px;
+    color: #444;
+  }
+
+  .skill-category {
+    font-weight: 600;
+    color: #333;
+    font-size: 10.5px;
+  }
+
+  /* === PRINT === */
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      padding: 0;
+    }
+  }
+
+  /* === PAGE BREAK CONTROL === */
+  .avoid-break,
+  .job,
+  .project,
+  .edu-item,
+  .cert-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* === cv-default overrides === */
+  .header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 20px; margin-bottom: 0; }
+  .header h1 { margin-bottom: 0; }
+  .header .contact-row { flex: 1; justify-content: flex-end; }
+  .role-line { font-family: 'Space Grotesk', sans-serif; font-size: 12.5px; font-weight: 600;
+               color: hsl(270, 70%, 45%); margin: 2px 0 0; }
+  .header-gradient { margin: 8px 0 18px; }
+  .skill-line { font-size: 10.5px; color: #444; margin-bottom: 3px; }
+  .simple-row { display: flex; justify-content: space-between; align-items: baseline;
+                gap: 12px; margin-bottom: 6px; font-size: 10.5px; color: #333; }
+  .simple-row .muted { font-size: 10px; color: #777; white-space: nowrap; }
+  .link { color: hsl(270, 70%, 45%); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="header avoid-break">
+    <div>
+      <h1>Hana Aliyah Mufidah</h1>
+      <div class="role-line">Full-Stack Engineer</div>
+    </div>
+    <div class="contact-row">
+      <span>Yogyakarta, ID</span>
+      <span class="separator">|</span>
+      <span>+62 858-1099-4772</span>
+      <span class="separator">|</span>
+      <span>mufidah.hanaaliyah@gmail.com</span>
+      <span class="separator">|</span>
+      <a class="link" href="https://www.linkedin.com/in/hana-aliyah-mufidah/">linkedin.com/in/hana-aliyah-mufidah</a>
+      <span class="separator">|</span>
+      <a class="link" href="https://github.com/aliyanamu">github.com/aliyanamu</a>
+    </div>
+  </div>
+  <div class="header-gradient"></div>
+
+  <div class="section avoid-break">
+    <div class="section-title">Professional Summary</div>
+    <div class="summary-text">
+      Full-stack engineer with 6+ years shipping secure, reliable production systems for work management
+      and B2B payment platforms (Web 2.5). Deep in the JavaScript/TypeScript ecosystem (React.js, Next.js,
+      Node.js, NestJS) on PostgreSQL and AWS with CI/CD (GitHub Actions). Experienced integrating
+      traditional and blockchain-based payment systems, with a focus on crypto-to-fiat on-/off-ramp
+      solutions. Most recently helped build and now operate a multi-chain block indexer in Go that relays
+      on-chain payment data to a NestJS backend, using forward and configurable backward indexers,
+      periodic cleanup jobs to keep the database lean, and Redis dedup so each transaction reports once.
+      Strong at designing automation and integration workflows while maintaining high code quality.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Professional Experience</div>
+
+    <div class="job">
+      <div class="job-header">
+        <div class="job-company">Nespay <span class="job-location">(PT Webtiga Teknologi Utama)</span></div>
+        <div class="job-period">April 2025 - July 2026</div>
+      </div>
+      <div class="job-role">Mid-level Software Developer &middot; <span class="job-location">team of 7</span></div>
+      <div class="project-desc" style="margin:0 0 4px;">B2B multi-chain crypto-to-fiat payment platform: wallet transactions, invoice management, and external wallet integrations, letting businesses move value across chains and settle in fiat with KYC compliance built in, without running blockchain infrastructure themselves.</div>
+      <ul>
+        <li>Contributed to and operate the team's multi-chain block indexer in Go that relays on-chain payment data to the backend: a forward indexer for real-time block scanning, a configurable backward indexer for gap backfill and outage recovery, and periodic cleanup jobs that prune stale data to keep PostgreSQL lean; Redis dedup so each transaction reports once.</li>
+        <li>Developed core application architecture and set up AWS authorization and CI/CD pipelines (GitHub Actions on EC2).</li>
+        <li>Led the development of the Backoffice Dashboard (React.js/Next.js) and the NestJS backend that consumes the indexer webhooks, for both user and admin interfaces.</li>
+        <li>Delivered key features including wallet transactions, invoice management, and external wallet integrations (Xellar, Privy).</li>
+        <li>Integrated RPC services and KYC compliance (Sumsub, Kredibel).</li>
+        <li>Conducted peer code reviews to maintain high-quality, scalable code.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <div class="job-company">ION</div>
+        <div class="job-period">February 2020 - December 2024</div>
+      </div>
+      <div class="job-role">Full Stack Software Engineer</div>
+      <div class="project-desc" style="margin:0 0 2px;"><strong>ConnectX</strong> (Jan 2023 - Dec 2024, team of 10) &mdash; multi-tenant rebuild of the work management platform; companies register and manage their own users, with tiered permissions at app, company, and user level.</div>
+      <ul>
+        <li>Built a natural-language people search, similar to LinkedIn search: free text such as "who excels in web design with Framer and Base44 in London" returns relevance-ranked results.</li>
+        <li>Enhanced praise and skill features, connecting praise with static data to enable department/division filters and leaderboards, aggregating skill scores, and linking skills with praise to power skill-matched people search.</li>
+        <li>Stabilized form component behavior and validation; conducted peer code reviews.</li>
+      </ul>
+      <div class="project-desc" style="margin:6px 0 2px;"><strong>Connection</strong> (Feb 2020 - Dec 2022, team of 12) &mdash; internal work management app covering department and division workflows, employee tasks, team collaboration, and time tracking.</div>
+      <ul>
+        <li>Built an idempotent HRIS to platform integration sync (pull, diff against current state, apply only real changes), replacing manual reconciliation and handling edge cases such as partial records, field mismatches, and ordering.</li>
+        <li>Improved the employee time-off system and work timeline, simplifying bulk approvals and integrating time-off data with public holidays and employee work days for better project timeline tracking.</li>
+        <li>Maintained a large legacy codebase.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <div class="job-company">Ultra Voucher <span class="job-location">(PT Trimegah Karya Pratama Tbk)</span></div>
+        <div class="job-period">November 2018 - January 2020</div>
+      </div>
+      <div class="job-role">Full Stack Web Developer &middot; <span class="job-location">team of 15</span></div>
+      <ul>
+        <li>Built the CG Voucher Generator (code generation, status tracking, reporting), replacing a manual process where provider-supplied vouchers were tracked by hand across separate Excel sheets with no status visibility.</li>
+        <li>Developed various dashboard applications to answer business needs.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section avoid-break">
+    <div class="section-title">Projects</div>
+    <div class="project">
+      <div>
+        <span class="project-title">Multi-chain Block Indexer</span><span class="project-badge">Systems &amp; Reliability</span>
+      </div>
+      <div class="project-desc">
+        A Go relay service that watches the chain and tells the NestJS backend when a transaction has been
+        paid. Forward indexer for real-time scanning, a configurable backward indexer for gap backfill and
+        outage recovery, periodic cleanup to avoid database bloat, and Redis dedup so nothing
+        double-reports. Built to stay lean and cheap to run. The service predates me; I took it over,
+        extended it, and run it in production.
+      </div>
+      <div class="project-tech">Go &middot; Node.js &middot; Redis &middot; PostgreSQL &middot; RPC</div>
+    </div>
+  </div>
+
+  <div class="section avoid-break">
+    <div class="section-title">Education</div>
+    <div class="edu-item">
+      <div class="edu-header">
+        <div class="edu-title">Bachelor of Science (B.S.) in Geophysical Engineering &mdash; <span class="edu-org">Bandung Institute of Technology</span></div>
+        <div class="edu-year">August 2011 - September 2015</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-header">
+        <div class="edu-title">JavaScript Fullstack Immersive Program &mdash; <span class="edu-org">Hacktiv8</span></div>
+        <div class="edu-year">November 2018</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section avoid-break">
+    <div class="section-title">Key Skills</div>
+    <div class="skill-line"><span class="skill-category">Languages:</span> JavaScript, TypeScript, Go</div>
+    <div class="skill-line"><span class="skill-category">Full-stack JavaScript/TypeScript:</span> Nest.js, Next.js, Node.js, React.js</div>
+    <div class="skill-line"><span class="skill-category">Backend:</span> Go, REST APIs, webhooks, worker/queue design, async pipelines</div>
+    <div class="skill-line"><span class="skill-category">Databases:</span> MySQL, PostgreSQL, MongoDB, Neo4j, Elasticsearch, Redis</div>
+    <div class="skill-line"><span class="skill-category">Cloud &amp; DevOps:</span> AWS (EC2, IAM), Docker, Ansible, CI/CD (GitHub Actions)</div>
+    <div class="skill-line"><span class="skill-category">Web3:</span> wallet integrations (Xellar, Privy), RPC/indexing, crypto-to-fiat on/off-ramp, KYC (Sumsub)</div>
+    <div class="skill-line"><span class="skill-category">Testing &amp; Monitoring:</span> Playwright, Selenium, Mocha, Grafana</div>
+    <div class="skill-line"><span class="skill-category">Experience (years):</span> JavaScript 8 &middot; Node.js 6+ &middot; SQL/NoSQL 5+ &middot; Docker 5+ &middot; NestJS 3+ &middot; React.js 3+ &middot; Next.js 1+</div>
+  </div>
+
+  <div class="section avoid-break">
+    <div class="section-title">Accomplishments</div>
+    <div class="simple-row">
+      <div>3rd place, DeFi Track &mdash; <a class="link" href="https://educhain.xyz">EDU Chain Hackathon</a></div>
+      <div class="muted">May 2025</div>
+    </div>
+  </div>
+
+  <div class="section avoid-break">
+    <div class="section-title">Certifications</div>
+    <div class="simple-row">
+      <div>AWS Certified Cloud Practitioner &mdash; <a class="link" href="https://aws.amazon.com/certification/">AWS</a> &middot; credly.com/badges/8be2576a-b003</div>
+      <div class="muted">September 2024</div>
+    </div>
+  </div>
+
+  <div class="section avoid-break">
+    <div class="section-title">Languages</div>
+    <div class="skill-line">English (Professional, IELTS 7.5), Korean (Conversational), Indonesian (Native)</div>
+  </div>
+
+
+</div>
+
+</body>
+</html>

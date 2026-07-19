@@ -23,7 +23,7 @@ Hi Rana,
 
 I saw your post for the remote Backend Engineer role (56598) and I would like to put my name in.
 
-I am a backend and infrastructure-minded engineer with 6+ years of experience, currently at Nespay where I set up our AWS authorization and CI/CD pipelines (GitHub Actions deploying to EC2) and build and operate a multi-chain block indexer in Go. That indexer runs a forward indexer for real-time scanning, a backward indexer for gap backfilling and outage recovery, and cleanup jobs that keep PostgreSQL lean, with Redis dedup so every transaction is reported once. Day to day I work across TypeScript and Node.js on the backend and Next.js and React on the front end, backed by MySQL and Redis.
+I am a backend and infrastructure-minded engineer with 6+ years of experience, currently at Nespay where I set up our AWS authorization and CI/CD pipelines (GitHub Actions deploying to EC2) and help build and operate our multi-chain block indexer in Go. That indexer runs a forward indexer for real-time scanning, a backward indexer for gap backfilling and outage recovery, and cleanup jobs that keep PostgreSQL lean, with Redis dedup so every transaction is reported once. Day to day I work across TypeScript and Node.js on the backend and Next.js and React on the front end, backed by MySQL and Redis.
 
 I am Indonesia-based and available for a fully remote role. My CV is attached. Happy to walk through any of the above or answer questions.
 

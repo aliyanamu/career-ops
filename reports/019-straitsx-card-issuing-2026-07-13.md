@@ -51,7 +51,7 @@ No hard blockers. Location is a clean match (local Jakarta, no visa).
 
 - **JD level:** mid-level, minimum 3 years. Hana at 6.5 years is comfortably at or above the bar — this is a match per `_profile.md` seniority policy (accept 3+ yrs), not a stretch.
 - **Sell without overselling:** Position as a payments engineer who has already lived the integration-heavy, reliability-sensitive side of fintech. Concrete anchors: the multi-chain indexer (systems + reliability), Xellar/Privy/RPC/Sumsub integrations (third-party payment + KYC plumbing), AWS CI/CD ownership. The zero-to-one framing of the role rewards someone who has built from the ground up — her Nespay core architecture and Ultra Voucher greenfield voucher-generation app both show that.
-- **On Golang:** be direct. "My primary is TypeScript/NestJS. My production Go is the indexer relay I built and run — forward and backward scanning, Redis dedup, cleanup jobs. I'm effective in Go and ready to make it my main language here." Honest, and it matches the real record.
+- **On Golang:** be direct. "My primary is TypeScript/NestJS. My production Go is the indexer relay I extended and run — forward and backward scanning, Redis dedup, cleanup jobs. I'm effective in Go and ready to make it my main language here." Honest, and it matches the real record.
 - **If down-leveled or comp is light:** accept mid-level title, negotiate a written 6-month review with clear criteria, given she exceeds the stated YoE.
 
 ## D) Comp & Demand
@@ -99,7 +99,7 @@ Sources: [Glassdoor Jakarta backend engineer](https://www.glassdoor.com/Salaries
 **Recommended case study:** the Go indexer relay. It is the single strongest artifact for this role — it is Go, it is a payments-adjacent reliability system, and it shows scoping judgment. Present the architecture diagram and the three components.
 
 **Red-flag questions to expect + handling:**
-- *"Is Go your main language?"* → Honest: "TypeScript/NestJS is my longest, but I built and operate a production Go service. I'm effective in Go and want it as my primary here." (Do not say she is "learning" it — she ships it.)
+- *"Is Go your main language?"* → Honest: "TypeScript/NestJS is my longest, but I extend and operate a production Go service. I'm effective in Go and want it as my primary here." (Do not say she is "learning" it — she ships it.)
 - *"Have you worked on card issuing specifically?"* → "Not card rails yet, but integrating third-party payment providers and KYC into live flows is exactly what I do. Card issuing is the same integration muscle on new rails."
 - *"On-call comfort?"* → Yes; she operates the indexer's outage-recovery path in production already.
 
