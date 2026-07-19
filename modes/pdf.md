@@ -57,9 +57,13 @@
 Examples of legitimate rewording:
 - JD dice "RAG pipelines" y CV dice "LLM workflows with retrieval" → cambiar a "RAG pipeline design and LLM orchestration workflows"
 - JD dice "MLOps" y CV dice "observability, evals, error handling" → cambiar a "MLOps and observability: evals, error handling, cost monitoring"
-- JD dice "stakeholder management" y CV dice "collaborated with team" → cambiar a "stakeholder management across engineering, operations, and business"
+- JD dice "stakeholder management" y CV dice "collaborated with designers and product owners" → cambiar a "stakeholder management with design and product"
+
+Counter-example (NOT legitimate): CV dice "collaborated with team" → "stakeholder management across engineering, operations, and business". The reword invents which groups existed and how wide the scope was. Only name a group the CV already names.
 
 **NEVER add skills the candidate doesn't have. Only reword real experience with the JD's exact vocabulary.**
+
+**NEVER invent org structure.** Teams, departments, and roles that the source CV does not mention (QA, compliance, stakeholders, product owners) must not appear, even to satisfy a "tie every bullet to an outcome" instruction. An invented outcome is worse than no outcome: it is unverifiable on paper and collapses in the first interview question. If the source states a plain fact with no measurable result, ship the plain fact.
 
 ## HTML template
 

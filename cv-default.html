@@ -432,7 +432,7 @@
       </ul>
       <div class="project-desc" style="margin:6px 0 2px;"><strong>Connection</strong> (Feb 2020 - Dec 2022, team of 12) &mdash; internal work management app covering department and division workflows, employee tasks, team collaboration, and time tracking.</div>
       <ul>
-        <li>Built an idempotent HRIS to platform integration sync (pull, diff against current state, apply only real changes), replacing manual reconciliation and handling edge cases such as partial records, field mismatches, and ordering.</li>
+        <li>Built an integration app to sync data from HRIS to the platform.</li>
         <li>Improved the employee time-off system and work timeline, simplifying bulk approvals and integrating time-off data with public holidays and employee work days for better project timeline tracking.</li>
         <li>Maintained a large legacy codebase.</li>
       </ul>
@@ -461,8 +461,7 @@
         A Go relay service that watches the chain and tells the NestJS backend when a transaction has been
         paid. Forward indexer for real-time scanning, a configurable backward indexer for gap backfill and
         outage recovery, periodic cleanup to avoid database bloat, and Redis dedup so nothing
-        double-reports. Built to stay lean and cheap to run. The service predates me; I took it over,
-        extended it, and run it in production.
+        double-reports. The service predates me; I contribute to it and operate it in production.
       </div>
       <div class="project-tech">Go &middot; Node.js &middot; Redis &middot; PostgreSQL &middot; RPC</div>
     </div>
