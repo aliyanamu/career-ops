@@ -3,7 +3,12 @@ import { Box, Typography, IconButton, CircularProgress, Divider, Tooltip } from 
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { REPO_OWNER, REPO_NAME, BRANCH } from './constants'
 
-const DEFAULT_FILE = { name: 'cv-default.pdf', path: 'cv-default.pdf' }
+// Base CVs live in the repo root (not output/), so they're listed explicitly.
+const BASE_FILES   = [
+  { name: 'cv-default.pdf', path: 'cv-default.pdf' },
+  { name: 'cv-japan.pdf',   path: 'cv-japan.pdf'   },
+]
+const DEFAULT_FILE = BASE_FILES[0]
 
 function authHeaders() {
   const pat = localStorage.getItem('gh_pat')
@@ -136,30 +141,36 @@ export function CvSummaryView() {
           </IconButton>
         </Box>
 
-        {/* Default CV entry */}
-        <Box
-          onClick={selectDefault}
-          sx={{
-            display: 'flex', alignItems: 'center', px: 2, py: 0.75,
-            cursor: 'pointer', flexShrink: 0,
-            bgcolor: isDefault ? 'action.selected' : 'transparent',
-            borderBottom: 1, borderColor: 'divider',
-            '&:hover': { bgcolor: isDefault ? 'action.selected' : 'action.hover' },
-          }}
-        >
-          <Typography variant="body2" fontWeight={isDefault ? 700 : 400} sx={{ flex: 1, fontSize: '0.78rem' }}>
-            cv-default.pdf
-          </Typography>
-          <IconButton
-            size="small"
-            href={`https://github.com/${REPO_OWNER}/${REPO_NAME}/blob/${BRANCH}/cv-default.pdf`}
-            target="_blank"
-            onClick={e => e.stopPropagation()}
-            sx={{ flexShrink: 0 }}
-          >
-            <OpenInNewIcon fontSize="small" />
-          </IconButton>
-        </Box>
+        {/* Base CVs (repo root) */}
+        {BASE_FILES.map(base => {
+          const isSelected = selected.path === base.path
+          return (
+            <Box
+              key={base.path}
+              onClick={() => selectFile(base)}
+              sx={{
+                display: 'flex', alignItems: 'center', px: 2, py: 0.75,
+                cursor: 'pointer', flexShrink: 0,
+                bgcolor: isSelected ? 'action.selected' : 'transparent',
+                borderBottom: 1, borderColor: 'divider',
+                '&:hover': { bgcolor: isSelected ? 'action.selected' : 'action.hover' },
+              }}
+            >
+              <Typography variant="body2" fontWeight={isSelected ? 700 : 400} sx={{ flex: 1, fontSize: '0.78rem' }}>
+                {base.name}
+              </Typography>
+              <IconButton
+                size="small"
+                href={`https://github.com/${REPO_OWNER}/${REPO_NAME}/blob/${BRANCH}/${base.path}`}
+                target="_blank"
+                onClick={e => e.stopPropagation()}
+                sx={{ flexShrink: 0 }}
+              >
+                <OpenInNewIcon fontSize="small" />
+              </IconButton>
+            </Box>
+          )
+        })}
 
         <Box sx={{ flex: 1, overflow: 'auto' }}>
           {files.length === 0 ? (
