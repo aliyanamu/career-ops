@@ -3079,6 +3079,32 @@
         "notes": "Email application drafted; send from prep template. Legitimacy caution - CV only.",
         "hide": ""
       }
+    },
+    {
+      "num": 166,
+      "dateAdded": "2026-07-19",
+      "url": "https://jobs.ashbyhq.com/somnia/6809fbd3-836a-4a83-9faf-1a075394f0f5",
+      "source": "User-added (Ashby)",
+      "elig": "",
+      "why": "WEB3 • USER PICK • Remote",
+      "fitScore": "4.3",
+      "deadline": "",
+      "decision": "apply",
+      "notes": "Remote (Europe/Asia preferred) — TS core + Go bonus + wallet/RPC = near 1:1 stack match. Must-haves all covered; gaps are nice-to-haves (SDK/CLI, Solidity). SOMI down ~95% from ATH — get base number before investing.",
+      "role": "Full-Stack Engineer",
+      "company": {
+        "company": "Somnia"
+      },
+      "preparation": {
+        "date": "2026-07-19",
+        "jobUrl": "https://jobs.ashbyhq.com/somnia/6809fbd3-836a-4a83-9faf-1a075394f0f5",
+        "cvPath": "output/cv-hana-aliyah-mufidah-somnia-2026-07-19.pdf",
+        "qa": "prep/somnia-full-stack-engineer-2026-07-19.md",
+        "notes": "Tailored CV + Ashby form answers ready. Apply via Ashby form — user to submit."
+      },
+      "application": null,
+      "report": "reports/022-somnia-2026-07-19.md",
+      "appNum": 27
     }
   ]
 }
