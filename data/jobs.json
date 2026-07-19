@@ -3100,11 +3100,29 @@
         "jobUrl": "https://jobs.ashbyhq.com/somnia/6809fbd3-836a-4a83-9faf-1a075394f0f5",
         "cvPath": "output/cv-hana-aliyah-mufidah-somnia-2026-07-19.pdf",
         "qa": "prep/somnia-full-stack-engineer-2026-07-19.md",
-        "notes": "Tailored CV + Ashby form answers ready. Apply via Ashby form — user to submit."
+        "notes": "Tailored CV + Ashby form answers ready. Apply via Ashby form — user to submit.",
+        "submissionStatus": "submitted"
       },
-      "application": null,
+      "application": {
+        "dateApplied": "2026-07-19",
+        "location": "",
+        "source": "User-added (Ashby)",
+        "jobUrl": "https://jobs.ashbyhq.com/somnia/6809fbd3-836a-4a83-9faf-1a075394f0f5",
+        "status": "applied",
+        "lastUpdate": "2026-07-19",
+        "cvUsed": "output/cv-hana-aliyah-mufidah-somnia-2026-07-19.pdf",
+        "coverLetter": "",
+        "appLink": "",
+        "salary": "",
+        "contact": "",
+        "nextAction": "",
+        "followUpDate": "",
+        "notes": "Promoted from Preparations",
+        "hide": ""
+      },
       "report": "reports/022-somnia-2026-07-19.md",
-      "appNum": 27
+      "appNum": 27,
+      "hide": true
     }
   ]
 }
