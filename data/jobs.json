@@ -3018,7 +3018,9 @@
         "jobUrl": "linkedin-post:rana-azizah/peoplyee-56598",
         "cvPath": "output/cv-hana-aliyah-mufidah-peoplyee-2026-07-16.pdf",
         "qa": "prep/peoplyee-backend-engineer-remote-2026-07-16.md",
-        "notes": "Tailored CV + email template ready. Apply by email — user to send."
+        "notes": "Tailored CV + email template ready. Apply by email — user to send.",
+        "submissionStatus": "submitted",
+        "hide": true
       },
       "application": {
         "dateApplied": "2026-07-16",
