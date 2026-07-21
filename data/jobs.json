@@ -2920,7 +2920,8 @@
         "qa": "prep/turing-nodejs-developer-2026-07-14.md",
         "notes": "Backend Node.js contractor. Prep Q&A grounded in cv.md.",
         "submissionStatus": "submitted",
-        "submissionDate": "2026-07-14"
+        "submissionDate": "2026-07-14",
+        "hide": true
       },
       "application": {
         "dateApplied": "2026-07-14",
@@ -3101,7 +3102,8 @@
         "cvPath": "output/cv-hana-aliyah-mufidah-somnia-2026-07-19.pdf",
         "qa": "prep/somnia-full-stack-engineer-2026-07-19.md",
         "notes": "Tailored CV + Ashby form answers ready. Apply via Ashby form — user to submit.",
-        "submissionStatus": "submitted"
+        "submissionStatus": "submitted",
+        "hide": true
       },
       "application": {
         "dateApplied": "2026-07-19",
