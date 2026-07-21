@@ -84,8 +84,8 @@
 
   <table class="id-table">
     <tr><th>氏名 Name</th><td>Hana Aliyah Mufidah</td></tr>
-    <tr><th>職種 Title</th><td>Full-Stack Engineer (6+ years)</td></tr>
-    <tr><th>現住所 Address</th><td>Yogyakarta, Indonesia</td></tr>
+    <tr><th>職種 Title</th><td>Full-Stack Engineer (7+ years)</td></tr>
+    <tr><th>現住所 Address</th><td>Yogyakarta, Indonesia ／ Seeking relocation to Japan with visa sponsorship; also open to fully remote (GMT+7)</td></tr>
     <tr><th>連絡先 Contact</th><td>+62 858-1099-4772 ／ <a href="mailto:mufidah.hanaaliyah@gmail.com">mufidah.hanaaliyah@gmail.com</a><br><a href="https://www.linkedin.com/in/hana-aliyah-mufidah/">linkedin.com/in/hana-aliyah-mufidah</a> ／ <a href="https://github.com/aliyanamu">github.com/aliyanamu</a></td></tr>
     <tr><th>語学 Language</th><td>English (IELTS 7.5, Professional) ／ Korean (Conversational) ／ Indonesian (Native)</td></tr>
   </table>
@@ -93,11 +93,7 @@
   <div class="section">
     <div class="section-title">職務要約<span class="en">Career Summary</span></div>
     <p>
-      Full-stack engineer with 6+ years building scalable applications for work
-      management and B2B payment systems (Web 2.5), including a five-year tenure at ION. Works across
-      front-end and back-end (React.js, Next.js, Node.js, Go, AWS), and has integrated both traditional
-      and blockchain-based payment systems with a focus on crypto-to-fiat on-/off-ramp solutions.
-      Focused on reliable, secure delivery and high code quality.
+      Full-stack engineer, 7+ years, who carries features end to end from the data layer through to the interface. The last 15 months on a B2B multi-chain crypto-to-fiat payment platform: wallet infrastructure, a Go block indexer relaying payments across five networks, and the CI/CD move that took the team from weekly releases to daily. Before that, five years at ION through a full product rebuild, because I would rather see a product mature than move on quickly. TypeScript is the core, with Go and AWS around it. Now seeking a long-term role in payments or platform infrastructure with a team in Japan.
     </p>
   </div>
 
@@ -108,18 +104,20 @@
       <table class="job-table">
         <tr class="period"><th>在籍期間</th><td>April 2025 – July 2026</td></tr>
         <tr><th>企業名</th><td>Nespay (PT Webtiga Teknologi Utama) — B2B multi-chain crypto-to-fiat payment platform: businesses settle on-chain payments in fiat with KYC built in. Team of 7.</td></tr>
-        <tr><th>役職</th><td>Mid-level Software Developer</td></tr>
-        <tr><th>使用技術</th><td>Go, NestJS, Node.js, React.js, Next.js, PostgreSQL, Redis, AWS (EC2, IAM), Docker, GitHub Actions</td></tr>
+        <tr><th>役職</th><td>Software Developer</td></tr>
+        <tr><th>使用技術</th><td>TypeScript, NestJS, Node.js, React.js, Next.js, Go, PostgreSQL, Redis, AWS (EC2, IAM), Docker, GitHub Actions</td></tr>
       </table>
       <div class="duties-label">担当業務 / Responsibilities</div>
       <ul class="duties">
-        <li>Established the core application architecture together with the engineering team, and set up AWS authorization and CI/CD pipelines (GitHub Actions on EC2).</li>
-        <li>Led development of the Backoffice Dashboard (React.js / Next.js) and the backend server behind the user and admin interfaces.</li>
-        <li>Delivered wallet transactions, invoice management, and external wallet integrations (Xellar, Privy).</li>
-        <li>Integrated RPC services and KYC compliance providers (Sumsub, Kredibel).</li>
-        <li>Contributed to and operated the team's multi-chain block indexer in Go, which relays on-chain payment data to the backend: a forward indexer for real-time block scanning, a configurable backward indexer for gap backfilling and outage recovery, and periodic cleanup jobs that prune stale data to keep PostgreSQL lean, with Redis-based dedup so each transaction is reported once. The NestJS backend consumes its webhooks.</li>
-        <li>Conducted peer code reviews to maintain high-quality, scalable code.</li>
-      </ul>
+<li><strong>Contributed to and operated the team's multi-chain block indexer in Go</strong>, relaying on-chain payment data across five networks: a forward indexer for real-time block scanning, a configurable backward indexer for gap backfilling and outage recovery, and periodic cleanup jobs that keep PostgreSQL lean, with Redis-based dedup so each transaction is reported once. The NestJS backend consumes its webhooks.</li>
+<li><strong>Diagnosed and fixed production signing failures</strong> against the wallet provider's API, and closed a find-then-lock race condition in invoice-to-wallet assignment using amount-range locks.</li>
+<li><strong>Ran the migration between wallet infrastructure providers</strong> (Xellar to Privy), building the hand-written REST client behind it: wallet lifecycle, policies, key quorums, and signing.</li>
+<li><strong>Cut deploy time from 15 to 8 minutes</strong> by splitting the GitHub Actions pipeline into parallel jobs ordered by priority; set up the AWS authorization and CI/CD pipelines.</li>
+<li><strong>Automated balance consolidation and gas funding</strong> across two chains, using per-wallet thresholds with fee-spike protection so refills never fire at a bad moment.</li>
+<li>Led development of the Backoffice Dashboard (React.js / Next.js) and the backend server behind the user and admin interfaces, and established the core application architecture with the engineering team.</li>
+<li>Integrated RPC services and KYC compliance providers (Sumsub, Kredibel).</li>
+<li>Conducted peer code reviews to maintain high-quality, scalable code.</li>
+</ul>
     </div>
 
     <div class="job">
@@ -131,13 +129,13 @@
       </table>
       <div class="duties-label">担当業務 / Responsibilities</div>
       <ul class="duties">
-        <li>Sustained and improved a large, long-lived legacy codebase.</li>
-        <li>Built an integration application that syncs HRIS data into the platform.</li>
-        <li>Built a natural-language people search on ConnectX, similar to LinkedIn search, where free text such as "who excels in web design with Framer and Base44 in London" returns relevance-ranked results.</li>
-        <li>Enhanced praise and skill features: department/division filters and leaderboards, aggregated skill scores, and skill-matched people search.</li>
-        <li>Streamlined the employee time-off system and work timeline, simplifying bulk approvals and integrating time-off with public holidays and employee work days for clearer project timeline tracking.</li>
-        <li>Stabilized form component behavior and validation across the application.</li>
-      </ul>
+<li><strong>Built a natural-language people search</strong> on ConnectX, similar to LinkedIn search, where free text such as "who excels in web design with Framer and Base44 in London" returns relevance-ranked results.</li>
+<li><strong>Built an integration application</strong> that syncs HRIS data into the platform, replacing manual reconciliation between the two systems.</li>
+<li><strong>Enhanced praise and skill features</strong>: department/division filters and leaderboards, aggregated skill scores, and skill-matched people search.</li>
+<li>Streamlined the employee time-off system and work timeline, simplifying bulk approvals and integrating time-off with public holidays and employee work days for clearer project timeline tracking.</li>
+<li>Stabilized form component behavior and validation across the application.</li>
+<li>Sustained and improved a large, long-lived legacy codebase across two products over five years.</li>
+</ul>
     </div>
 
     <div class="job">
@@ -149,9 +147,9 @@
       </table>
       <div class="duties-label">担当業務 / Responsibilities</div>
       <ul class="duties">
-        <li>Developed a range of dashboard applications to answer business needs.</li>
-        <li>Built a web application that generates digital voucher codes for affiliate providers, tracking issuance status and producing reports, replacing a manual and untracked Excel-based process.</li>
-      </ul>
+<li><strong>Built a web application that generates digital voucher codes</strong> for affiliate providers, tracking issuance status and producing reports, replacing a manual and untracked Excel-based process.</li>
+<li>Developed a range of dashboard applications to answer business needs.</li>
+</ul>
     </div>
   </div>
 
@@ -162,9 +160,9 @@
       <tr><th>Databases</th><td>MySQL, PostgreSQL, MongoDB, Neo4j, Elasticsearch, Redis</td></tr>
       <tr><th>Cloud</th><td>AWS (Certified Cloud Practitioner)</td></tr>
       <tr><th>DevOps</th><td>Docker, Ansible, CI/CD (GitHub Actions)</td></tr>
-      <tr><th>Web3</th><td>Wallet integrations (Xellar, Privy), RPC services, crypto-to-fiat on/off-ramp, KYC (Sumsub)</td></tr>
+      <tr><th>Web3</th><td>Wallet infrastructure via REST APIs (Privy, Xellar), EVM and TRON transaction signing, RPC services, crypto-to-fiat on/off-ramp, KYC (Sumsub)</td></tr>
       <tr><th>Testing / Monitoring</th><td>Playwright, Selenium, Mocha, Grafana</td></tr>
-      <tr><th>Experience (years)</th><td>JavaScript 8 ／ Node.js 6+ ／ SQL・NoSQL 5+ ／ Docker 5+ ／ NestJS 3+ ／ React.js 3+ ／ Next.js 1+</td></tr>
+      <tr><th>Experience (years)</th><td>JavaScript 7+ ／ Node.js 6+ ／ SQL・NoSQL 5+ ／ Docker 5+ ／ NestJS 3+ ／ React.js 3+ ／ Next.js 1+</td></tr>
     </table>
   </div>
 

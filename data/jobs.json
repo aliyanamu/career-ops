@@ -3123,6 +3123,44 @@
       "report": "reports/022-somnia-2026-07-19.md",
       "appNum": 27,
       "hide": true
+    },
+    {
+      "num": 167,
+      "company": {
+        "num": "",
+        "company": "Privy",
+        "enabled": "Yes",
+        "careersUrl": "https://www.privy.io/careers",
+        "status": "",
+        "notes": "Auth + crypto key management infra. Stripe subsidiary (acquired Jun 2025). NYC, ~25 people. 75M+ accounts, 1000+ dev teams. Hana integrated Privy in production at Nespay."
+      },
+      "role": "Developer Support Engineer (contractor)",
+      "url": "https://www.privy.io/careers",
+      "source": "Privy dev Slack announcement (John Dempsey)",
+      "dateAdded": "2026-07-21",
+      "deadline": "",
+      "decision": "apply",
+      "fitScore": "4.6",
+      "elig": "",
+      "hide": false,
+      "why": "WEB3 • Production Privy integrator applying to support Privy ⭐",
+      "notes": "Loc: Remote, EU/Africa hours (risk from GMT+7) | 40h/wk contractor | JD accepts SWE path for 3+ yrs | apply by direct email to john.dempsey@privy.io",
+      "preparation": {
+        "aiDisclaimer": "",
+        "cvPath": "output/cv-hana-aliyah-mufidah-privy-2026-07-21.pdf",
+        "date": "2026-07-21",
+        "hide": false,
+        "jobUrl": "https://www.privy.io/careers",
+        "notes": "Friction log (5 frictions, 7pp): output/privy-friction-log-hana-aliyah-mufidah.pdf. Email: output/privy-email-john-dempsey.md. Claims verified against real integration code 2026-07-21 (REST client not SDK; threshold consolidation not percentage; self-managed gas not manual). Interview prep deferred; TRON raw_sign story added to story-bank.",
+        "qa": "",
+        "submissionStatus": "ready-to-send",
+        "videoNotes": "",
+        "videoRequired": "",
+        "videoStatus": ""
+      },
+      "application": null,
+      "appNum": 28,
+      "report": "reports/023-privy-2026-07-21.md"
     }
   ]
 }
