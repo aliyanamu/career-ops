@@ -1,7 +1,7 @@
 # Privy — Developer Support Engineer (contractor)
 
 **Report:** `reports/023-privy-2026-07-21.md` (4.6/5) · **Contact:** John Dempsey, john.dempsey@privy.io
-**Applied with:** CV only. A friction log was drafted and deliberately dropped, see "Why the friction log was pulled" below.
+**Applied with:** CV and a direct email. Nothing else.
 
 ---
 
@@ -54,15 +54,15 @@ Developer plan: Core free, Scale $299/mo (500–2,499 MAU), Scale+ $499/mo (2,50
 
 ---
 
-## Why the friction log was pulled
+## Corrections to carry into any conversation
 
-A five-page friction log was drafted and then dropped before sending. Recording why, so it is not rebuilt on the same foundation:
+Errors caught while drafting, recorded so they are not repeated out loud:
 
-1. Three of the five original friction points were **generated narratives written in first person about things Hana never did**. Cut on 2026-07-21.
-2. The surviving gas sponsorship finding rested on the premise "I never found out this shipped." The **actual reason Nespay did not use sponsorship was cost.** That makes the whole discoverability framing false.
-3. Smaller errors caught along the way: an unverifiable launch date, a false "TRON has no sponsorship" claim, a claim that an assistant had "no way to discover" `sponsor: true` when it is documented on an indexed page, and an invented detail about Hana's CTO.
+- The reason Nespay did not use gas sponsorship was **cost**, not discoverability. Do not tell it as a "I never found out this shipped" story.
+- TRON **does** have a sponsorship route (Transatron recipe, May 2026). An earlier draft claimed it did not.
+- `sponsor: true` **is** documented on an indexed page. Do not claim it is undiscoverable.
 
-**The lesson, if it ever gets rebuilt:** anchor it on the TRON `raw_sign` recovery byte bug, which is real, hers, technically deep, and already written up in the story bank. Not on the gas sponsorship story.
+**The strong material is the TRON `raw_sign` recovery byte bug** — real, hers, technically deep, already written up in the story bank.
 
 ---
 
@@ -72,5 +72,6 @@ A five-page friction log was drafted and then dropped before sending. Recording 
 - **On the support-title gap:** eight years engineering, never held a support title; the process side, ticket queue and community, is what she would need to learn. State once, then move on.
 - **On timezone:** can commit 14:00–23:00 GMT+7, which is 09:00–18:00 CEST. Precedent: five years at ION on a distributed team with meetings regularly running 20:00–23:00 her time.
 - **Availability:** immediate. A paid trial on live tickets was offered in the email.
+- **Do not offer or reference a friction log.** None was sent.
 - **Current status:** laid off from Nespay 1 July 2026; freelancing on an AI annotation platform.
 - **If the docs research comes up:** frame it as one customer's view, acknowledge the MCP investment first, and re-verify any number before stating it.
