@@ -3200,7 +3200,7 @@
       "decision": "apply",
       "fitScore": "4.3",
       "elig": "",
-      "hide": false,
+      "hide": true,
       "why": "Stack is near one-to-one (Next.js/React/TS/Postgres) + auth/permissions/billing/data-integrity all have direct stories",
       "notes": "Loc: Remote, hours 10am-6pm GMT+8 = 9am-5pm GMT+7 | Singapore, NOT on blocked list | Team of 2-3, most senior technical person, founder-direct | Seed stage ~$1.7M | Band SGD 5,000-9,000/mo per beBee mirror (aggregator, unconfirmed) | Ask: SGD 6,500/mo negotiable | Gaps: Supabase/Tailwind/Vercel not on CV, no edtech domain | Applications close 2026-08-17",
       "preparation": {
