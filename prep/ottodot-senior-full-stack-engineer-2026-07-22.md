@@ -20,7 +20,7 @@ Country check requested: **Singapore. Not blocked.** No Israel tie, no US region
 | Messy real-world codebase | Five years maintaining a large legacy codebase at ION |
 | Cares about product quality | CG Voucher Generator replaced spreadsheet tracking with real status visibility |
 | Uses AI coding agents as leverage | Claude daily, with a real method (see Q2) |
-| Most senior technical person, 2–3 person team | Architecture, AWS auth, CI/CD, backend and dashboard on a flat team of 7 reporting to the CTO |
+| Most senior technical person, 2–3 person team | Architecture, AWS auth, CI/CD, backend and dashboard, all on a small team |
 | Interest in education, kids, games | **Honest gap.** No edtech, no games, no child-facing product. Bridge, do not fake. |
 
 **Named-tool gaps: Supabase, Tailwind, Vercel.** None are on cv.md, none are on the tailored CV, and none are hard. Say so plainly if asked. Postgres, Next.js and access-control models are the underlying things and those are daily work.
@@ -81,7 +81,7 @@ Also worth settling early: **employment or contractor.** A Singapore company hir
 
 ### 1. Tell us about a project you led or drove end to end, ideally with limited time, people, or budget. What did you cut, what did you protect, and what was the hardest part?
 
-Moving our wallet infrastructure from one provider to another, at a payments company with a flat team of seven. The old provider was slow to create wallets, failed intermittently, and had no coverage for one of the chains we needed. The decision to move was our CTO's. Running it was mine.
+Moving our wallet infrastructure from one provider to another, at a payments company with a small engineering team. The old provider was slow to create wallets, failed intermittently, and had no coverage for one of the chains we needed. The decision to move was not mine. Running it was.
 
 What I cut: their SDK. Writing our own REST client looked like more work and turned out to be less, because when a call failed we got the provider's actual message instead of a generic HTTP error, which mattered a lot at 2am. I also cut anything that was not on the path to working transactions on both chains. Nothing was rebuilt just because it was ugly.
 
@@ -103,7 +103,7 @@ That last one changed the most. It is the difference between an agent that produ
 
 Two reasons, one practical and one not.
 
-The practical one: the job is the work I am best at. Taking something a founder built quickly and making it trustworthy — login, account access, permissions, dashboards, data that is right the first time — is what I have spent most of seven years doing. I have maintained a large legacy codebase for five years and I have built a platform from nothing on a team of seven, so I know both ends of that. And a self-serve enrollment funnel is a money path, which is where I have been living for the last year. The failure I would worry about first is two parents booking the same seat, and that is a bug I have already fixed once in a different costume.
+The practical one: the job is the work I am best at. Taking something a founder built quickly and making it trustworthy — login, account access, permissions, dashboards, data that is right the first time — is what I have spent most of seven years doing. I have maintained a large legacy codebase for five years and I have built a platform from nothing on a small team, so I know both ends of that. And a self-serve enrollment funnel is a money path, which is where I have been living for the last year. The failure I would worry about first is two parents booking the same seat, and that is a bug I have already fixed once in a different costume.
 
 The other reason is the framing in your posting. You wrote that a lot of education software feels boring, punitive and disconnected from how children actually learn. I do not have edtech on my CV and I am not going to pretend otherwise. What I do have is a long habit of building for people who are not engineers and who did not choose to be there — internal tools, dashboards, approval flows — where the measure of the work is whether someone's day got easier, not whether the architecture was clever. Doing that for a nine-year-old and their parent is a better version of the same job.
 
