@@ -3181,6 +3181,44 @@
       },
       "appNum": 28,
       "report": "reports/023-privy-2026-07-21.md"
+    },
+    {
+      "num": 168,
+      "company": {
+        "num": "",
+        "company": "Ottodot",
+        "enabled": "Yes",
+        "careersUrl": "https://www.ottodot.com/",
+        "status": "",
+        "notes": "Singapore edtech, founded Apr 2019. Primary Math & Science tuition for kids ~5-12 built around 200+ MOE-aligned Roblox games. Founders Khor Le Yi (CEO) + Wong Lei Lei, Iterative W22. ~$1.7M raised (round Oct 2025). Backing/support: Enterprise Singapore, Temasek, IMDA. Learners in 4 countries. Legal entity: Ottodot PTE LTD."
+      },
+      "role": "Senior Full Stack Engineer, Product & Platform",
+      "url": "https://airtable.com/appytuR6ewIdKWEFA/paghONUKkNofMGqyJ/form",
+      "source": "Direct (Airtable application form); also mirrored on beBee/TheirStack",
+      "dateAdded": "2026-07-22",
+      "deadline": "2026-08-17",
+      "decision": "apply",
+      "fitScore": "4.3",
+      "elig": "",
+      "hide": false,
+      "why": "Stack is near one-to-one (Next.js/React/TS/Postgres) + auth/permissions/billing/data-integrity all have direct stories",
+      "notes": "Loc: Remote, hours 10am-6pm GMT+8 = 9am-5pm GMT+7 | Singapore, NOT on blocked list | Team of 2-3, most senior technical person, founder-direct | Seed stage ~$1.7M | Band SGD 5,000-9,000/mo per beBee mirror (aggregator, unconfirmed) | Ask: SGD 6,500/mo negotiable | Gaps: Supabase/Tailwind/Vercel not on CV, no edtech domain | Applications close 2026-08-17",
+      "preparation": {
+        "aiDisclaimer": "",
+        "cvPath": "output/cv-hana-aliyah-mufidah-ottodot-2026-07-22.pdf",
+        "date": "2026-07-22",
+        "hide": false,
+        "jobUrl": "https://airtable.com/appytuR6ewIdKWEFA/paghONUKkNofMGqyJ/form",
+        "notes": "Prep doc: prep/ottodot-senior-full-stack-engineer-2026-07-22.md. All 4 pre-interview answers drafted. Warm/plain-language CV (cv-ottodot.html) built for a kids-education audience; no Supabase/Tailwind/Vercel/edtech claims anywhere. Expected salary set to SGD 6,500/mo negotiable (mid-band). Open question: employment vs contractor.",
+        "qa": "",
+        "submissionStatus": "pending",
+        "videoNotes": "",
+        "videoRequired": "",
+        "videoStatus": ""
+      },
+      "application": null,
+      "appNum": 29,
+      "report": "reports/024-ottodot-2026-07-22.md"
     }
   ]
 }

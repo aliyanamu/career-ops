@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hana Aliyah Mufidah — CV</title>
+<style>
+  @font-face {
+    font-family: 'Space Grotesk';
+    src: url('./fonts/space-grotesk-latin.woff2') format('woff2');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  @font-face {
+    font-family: 'Space Grotesk';
+    src: url('./fonts/space-grotesk-latin-ext.woff2') format('woff2');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+
+  @font-face {
+    font-family: 'DM Sans';
+    src: url('./fonts/dm-sans-latin.woff2') format('woff2');
+    font-weight: 100 1000;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  @font-face {
+    font-family: 'DM Sans';
+    src: url('./fonts/dm-sans-latin-ext.woff2') format('woff2');
+    font-weight: 100 1000;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #1a1a2e;
+    background: #ffffff;
+    padding: 0;
+    margin: 0;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 8.5in;
+    margin: 0 auto;
+    padding: 2px 0;
+  }
+
+  /* === HEADER === */
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+
+  .header-gradient {
+    height: 2px;
+    background: linear-gradient(to right, hsl(22, 88%, 46%), hsl(199, 78%, 38%));
+    border-radius: 1px;
+    margin-bottom: 10px;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10.5px;
+    line-height: 1.4;
+    color: #555;
+  }
+
+  .contact-row a {
+    color: #555;
+    text-decoration: none;
+  }
+
+  .contact-row .separator {
+    color: #ccc;
+  }
+
+  /* === SECTIONS === */
+  .section {
+    margin-bottom: 18px;
+  }
+
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: hsl(22, 88%, 46%);
+    border-bottom: 1.5px solid #e2e2e2;
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  /* === PROFESSIONAL SUMMARY === */
+  .summary-text {
+    font-size: 11px;
+    line-height: 1.7;
+    color: #2f2f2f;
+  }
+
+  /* Links must never break across lines */
+  a {
+    white-space: nowrap;
+  }
+
+  /* === CORE COMPETENCIES === */
+  .competencies-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .competency-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: hsl(22, 88%, 38%);
+    background: hsl(34, 90%, 95%);
+    padding: 4px 10px;
+    border-radius: 3px;
+    border: 1px solid hsl(34, 75%, 86%);
+  }
+
+  /* === WORK EXPERIENCE === */
+  .job {
+    margin-bottom: 14px;
+  }
+
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+
+  .job-company {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: hsl(199, 78%, 38%);
+  }
+
+  .job-period {
+    font-size: 10.5px;
+    color: #777;
+    white-space: nowrap;
+  }
+
+  .job-role {
+    font-size: 11px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+  }
+
+  .job-location {
+    font-size: 10px;
+    color: #888;
+  }
+
+  .job ul {
+    padding-left: 18px;
+    margin-top: 6px;
+  }
+
+  .job li {
+    font-size: 10.5px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  .job li strong {
+    font-weight: 600;
+  }
+
+  /* === PROJECTS === */
+  .project {
+    margin-bottom: 12px;
+  }
+
+  .project-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: hsl(199, 78%, 38%);
+  }
+
+  .project-badge {
+    font-size: 9px;
+    font-weight: 500;
+    color: hsl(22, 88%, 46%);
+    background: hsl(34, 90%, 95%);
+    padding: 1px 6px;
+    border-radius: 2px;
+    margin-left: 6px;
+  }
+
+  .project-desc {
+    font-size: 10.5px;
+    color: #444;
+    margin-top: 3px;
+    line-height: 1.55;
+  }
+
+  .project-tech {
+    font-size: 9.5px;
+    color: #888;
+    margin-top: 3px;
+  }
+
+  /* === EDUCATION === */
+  .edu-item {
+    margin-bottom: 8px;
+  }
+
+  .edu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .edu-title {
+    font-weight: 600;
+    font-size: 11px;
+    color: #333;
+  }
+
+  .edu-org {
+    color: hsl(199, 78%, 38%);
+    font-weight: 500;
+  }
+
+  .edu-year {
+    font-size: 10px;
+    color: #777;
+    white-space: nowrap;
+  }
+
+  .edu-desc {
+    font-size: 10px;
+    color: #666;
+    margin-top: 2px;
+    line-height: 1.5;
+  }
+
+  /* === CERTIFICATIONS === */
+  .cert-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .cert-title {
+    font-size: 10.5px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .cert-org {
+    color: hsl(199, 78%, 38%);
+  }
+
+  .cert-year {
+    font-size: 10px;
+    color: #777;
+    white-space: nowrap;
+  }
+
+  /* === SKILLS === */
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+  }
+
+  .skill-item {
+    font-size: 10.5px;
+    color: #444;
+  }
+
+  .skill-category {
+    font-weight: 600;
+    color: #333;
+    font-size: 10.5px;
+  }
+
+  /* === PRINT === */
+  @media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      padding: 0;
+    }
+  }
+
+  /* === PAGE BREAK CONTROL === */
+  .avoid-break,
+  .job,
+  .project,
+  .edu-item,
+  .cert-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header avoid-break">
+    <h1>Hana Aliyah Mufidah</h1>
+    <div class="header-gradient"></div>
+    <div class="contact-row">
+      <span>+62 858-1099-4772</span>
+      <span class="separator">|</span>
+      <span>mufidah.hanaaliyah@gmail.com</span>
+      <span class="separator">|</span>
+      <a href="https://linkedin.com/in/hana-aliyah-mufidah">linkedin.com/in/hana-aliyah-mufidah</a>
+      <span class="separator">|</span>
+      <a href="https://github.com/aliyanamu">github.com/aliyanamu</a>
+      <span class="separator">|</span>
+      <span>Yogyakarta, Indonesia (GMT+7)</span>
+    </div>
+  </div>
+
+  <!-- PROFESSIONAL SUMMARY -->
+  <div class="section avoid-break">
+    <div class="section-title">About Me</div>
+    <div class="summary-text">Full-stack engineer with 7+ years of building the whole thing: the screens people click through, the APIs behind them, and the database underneath. Most of my work has been on products where the data has to be right the first time and where the people using it are not engineers, so login, accounts, permissions, dashboards, invoicing and payments are familiar ground. TypeScript end to end (React, Next.js, Node.js, NestJS) on PostgreSQL. AWS certified. I use Claude every day as part of how I plan and ship. I work remotely and I am one hour behind Singapore time.</div>
+  </div>
+
+  <!-- CORE COMPETENCIES -->
+  <div class="section">
+    <div class="section-title">What I Am Good At</div>
+    <div class="competencies-grid">
+      <span class="competency-tag">React &amp; Next.js</span>
+      <span class="competency-tag">TypeScript, front to back</span>
+      <span class="competency-tag">Node.js / NestJS APIs</span>
+      <span class="competency-tag">PostgreSQL &amp; data you can trust</span>
+      <span class="competency-tag">Login, accounts &amp; permissions</span>
+      <span class="competency-tag">Dashboards for non-technical users</span>
+      <span class="competency-tag">Invoicing &amp; payment flows</span>
+      <span class="competency-tag">AI coding agents, daily</span>
+      <span class="competency-tag">AWS &amp; CI/CD</span>
+      <span class="competency-tag">Comfortable in messy codebases</span>
+    </div>
+  </div>
+
+  <!-- WORK EXPERIENCE -->
+  <div class="section">
+    <div class="section-title">Where I Have Worked</div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="job-company">Nespay / PT Webtiga Teknologi Utama</span>
+        <span class="job-period">Apr 2025 - Jul 2026</span>
+      </div>
+      <div class="job-role">Software Developer</div>
+      <div class="job-location">A payments platform for businesses. Flat team of 7, reporting to the CTO.</div>
+      <ul>
+        <li>Built the product end to end in TypeScript: the React and Next.js dashboard that admins and customers actually use, and the NestJS services behind it. Owning both sides meant no waiting on someone else to change an API.</li>
+        <li>Set up how the application is put together, plus AWS access and the deployment pipeline (GitHub Actions on EC2). Splitting the pipeline into parallel jobs took deploys from 15 minutes down to 8.</li>
+        <li>Looked after the parts where being wrong costs real money: invoicing, assigning each invoice to the right wallet, and moving balances through to settlement. Fixed a race where two invoices could claim the same wallet by locking on the amount range instead of checking first and locking after.</li>
+        <li>Ran the migration to a new wallet provider and wrote our own REST client for it rather than using their SDK, so their real error message reached us instead of a generic failure. Tracked down a production signing failure on it end to end and shipped the fix, including a check that refuses to send a transaction when the signature does not verify.</li>
+        <li>Wired identity verification (KYC) into the flow so compliance was part of the product rather than bolted on afterwards.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="job-company">ION</span>
+        <span class="job-period">Feb 2020 - Dec 2024</span>
+      </div>
+      <div class="job-role">Full Stack Software Engineer (fully remote, 5 years)</div>
+      <div class="job-location">ConnectX (Jan 2023 - Dec 2024, team of 10), a multi-tenant rebuild of a work management platform. Connection (Feb 2020 - Dec 2022, team of 12), the internal version of it.</div>
+      <ul>
+        <li>Worked on the multi-tenant rebuild, where each company registers and manages its own users, with permissions layered at three levels: the app, the company, and the individual user.</li>
+        <li>Built praise, skills and leaderboard features: praise connected to department and division data, skill scores aggregated per person, and skills linked to praise so people could be matched by what they were actually recognised for.</li>
+        <li>Built a people search that takes plain English. Type something like "who excels in web design with Framer and Base44 in London" and it returns results ranked by how well they match.</li>
+        <li>Improved time off and project timelines: made bulk approvals simple, and taught the timeline about public holidays and each person's working days so plans matched reality.</li>
+        <li>Steadied form behaviour and validation across the app, and maintained a large legacy codebase for five years. Also built an integration that syncs employee data from an HRIS so nobody keyed it in twice.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="job-company">Ultra Voucher / PT Trimegah Karya Pratama Tbk</span>
+        <span class="job-period">Nov 2018 - Jan 2020</span>
+      </div>
+      <div class="job-role">Full Stack Web Developer</div>
+      <div class="job-location">Team of 15.</div>
+      <ul>
+        <li>Built the CG Voucher Generator, an internal web app that generates voucher codes for affiliate partners, tracks their status and produces reports. Before it, vouchers came from providers and lived in separate spreadsheets that nobody could see the status of.</li>
+        <li>Built several dashboards to answer questions the business kept asking by hand.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section avoid-break">
+    <div class="section-title">Things I Have Built</div>
+
+    <div class="project">
+      <span class="project-title">Backoffice Dashboard</span><span class="project-badge">TypeScript</span>
+      <div class="project-desc">The admin and customer side of a payments platform: transactions, invoicing and identity checks, built in React and Next.js against the NestJS APIs I wrote underneath.</div>
+      <div class="project-tech">TypeScript, React, Next.js, NestJS, PostgreSQL, REST</div>
+    </div>
+
+    <div class="project">
+      <span class="project-title">Data Indexing Service</span><span class="project-badge">Go</span>
+      <div class="project-desc">Keeps the backend in step with what happened on-chain. Live scanning for new activity, a backfill mode that catches up after an outage, cleanup jobs so the database does not grow forever, and deduplication so nothing is counted twice.</div>
+      <div class="project-tech">Go, PostgreSQL, Redis, webhooks</div>
+    </div>
+
+    <div class="project">
+      <span class="project-title">EDU Chain Hackathon, DeFi Track</span><span class="project-badge">3rd place</span>
+      <div class="project-desc">Third place in the DeFi track (May 2025), building and demoing a working project inside a fixed hackathon window. Good practice at deciding what not to build.</div>
+      <div class="project-tech">Web3 tooling, rapid prototyping</div>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="section avoid-break">
+    <div class="section-title">Education</div>
+    <div class="edu-item">
+      <div class="edu-header">
+        <span class="edu-title">B.S. Geophysical Engineering</span>
+        <span class="edu-year">Aug 2011 - Sep 2015</span>
+      </div>
+      <div class="edu-desc"><span class="edu-org">Bandung Institute of Technology</span></div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-header">
+        <span class="edu-title">JavaScript Fullstack Immersive Program</span>
+        <span class="edu-year">Nov 2018</span>
+      </div>
+      <div class="edu-desc"><span class="edu-org">Hacktiv8</span></div>
+    </div>
+  </div>
+
+  <!-- CERTIFICATIONS -->
+  <div class="section avoid-break">
+    <div class="section-title">Certifications</div>
+    <div class="edu-item">
+      <div class="edu-header">
+        <span class="edu-title">AWS Certified Cloud Practitioner</span>
+        <span class="edu-year">Sep 2024</span>
+      </div>
+      <div class="edu-desc"><span class="edu-org">Amazon Web Services</span></div>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="section avoid-break">
+    <div class="section-title">Tools I Use</div>
+    <div class="skills-grid">
+      <div class="skill-item"><span class="skill-category">Languages:</span> TypeScript, JavaScript (8 yrs), SQL, Go, Python (basic)</div>
+      <div class="skill-item"><span class="skill-category">Frontend:</span> React.js, Next.js, Angular, Vue</div>
+      <div class="skill-item"><span class="skill-category">Backend:</span> Node.js, NestJS, REST APIs, webhooks, background workers and queues</div>
+      <div class="skill-item"><span class="skill-category">Databases:</span> PostgreSQL, MySQL, MongoDB, Redis, Elasticsearch, Neo4j</div>
+      <div class="skill-item"><span class="skill-category">Cloud &amp; DevOps:</span> AWS (Certified Cloud Practitioner), Docker, GitHub Actions CI/CD, Ansible, Grafana</div>
+      <div class="skill-item"><span class="skill-category">Testing:</span> Playwright (3+ yrs), Selenium, Mocha</div>
+      <div class="skill-item"><span class="skill-category">AI:</span> Claude daily for planning, drafting and implementation</div>
+      <div class="skill-item"><span class="skill-category">Spoken:</span> English (Professional, IELTS 7.5), Korean (Conversational), Indonesian (Native)</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
