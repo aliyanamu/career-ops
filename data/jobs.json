@@ -2962,20 +2962,21 @@
     {
       "num": 162,
       "dateAdded": "2026-07-14",
-      "url": "https://hupocareers.teamtailor.com/jobs/7926194-full-stack-engineer",
-      "source": "User-added",
+      "url": "https://careers.hupo.co/jobs/7926194-full-stack-engineer",
+      "source": "Teamtailor (careers.hupo.co)",
       "elig": "Location unverified — confirm remote eligibility",
-      "why": "",
-      "fitScore": "",
+      "why": "Node/TS + multi-tenant enterprise SaaS is a near bullet-for-bullet match with ConnectX; blocked only on the production-AI-features must-have",
+      "fitScore": "3.7",
       "deadline": "",
       "decision": "pending",
       "hide": false,
-      "report": "",
-      "notes": "Teamtailor ATS (not auto-scannable by scan.mjs). Full-stack role.",
-      "role": "Full Stack Engineer",
+      "report": "reports/025-hupo-2026-07-23.md",
+      "notes": "Loc: SEA remote (Indonesia OK, they hire QA in Jakarta), or Singapore hybrid | Series A $10M Jan 2026, $15M total, DST Global led, Meta-backed | Customers: Prudential, AXA, Manulife, HSBC, Bank of Ireland, Grab | Founder/CEO Justin Kim; pivoted from Ami (mental wellness, 2022) | Comp not stated; careers page says explicitly they cannot pay Google/GS money | Gap: no production AI/LLM feature on cv.md. OPEN QUESTION: was the ConnectX natural-language people search semantic/LLM-backed or keyword ranking? If semantic, score -> ~4.3 | Board title says Full Stack Engineer, JD body says Senior | Verified live via Playwright 2026-07-23",
+      "role": "Senior Full Stack Engineer, AI Products",
       "company": {
         "company": "Hupo"
-      }
+      },
+      "appNum": 30
     },
     {
       "num": 163,
@@ -2986,10 +2987,10 @@
       "why": "",
       "fitScore": "",
       "deadline": "",
-      "decision": "pending",
-      "hide": false,
+      "decision": "skip",
+      "hide": true,
       "report": "",
-      "notes": "Travel-tech (Hopper). 100% remote, Japan region. Commerce / Partner Success team.",
+      "notes": "CLOSED. Playwright 2026-07-23: Ashby returns \"Job not found\". Hopper job board now lists zero Japan/SEA/Indonesia locations, so the whole APAC Commerce/Partner Success push looks wound down. Also would have been a weak fit: stack is Scala/React on GCP, no Scala on cv.md. Sibling postings (Korea/Singapore/Malaysia) were region-locked and never included Indonesia.",
       "role": "Full-Stack Software Engineer - Commerce/Partner Success (100% Remote - Japan)",
       "company": {
         "company": "Hopper"

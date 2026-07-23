@@ -89,3 +89,31 @@ This file accumulates your best interview stories over time. Each evaluation (Bl
 **Reflection:** The honest reflection is that we chose to build it rather than buy it, on cost grounds, and then never revisited that decision as the vendor's offering changed underneath us. Toil does not raise an alarm the way an outage does, so nothing ever prompted a re-evaluation. If I ran it again I would put a calendar reminder on "re-check what the provider ships now" for anything we deliberately built around.
 **Best for:** automation, operational toil, build-vs-buy, multi-chain differences (EVM fees vs TRON energy/bandwidth), designing around a vendor gap, "what would you do differently".
 **Careful:** no measured metrics were recorded for this — do not invent a cost saving, uptime figure, or refill count. The reason sponsorship was ruled out was cost; the exact plan or pricing detail is not confirmed, so describe it as "we priced it and it did not make sense for us at the time" and do not name a plan or tier. Wallet pool context in memory `nespay-wallet-architecture`.
+
+### [Architecture] Multi-tenant rebuild with tiered permissions (ConnectX)
+**Source:** Report #025 — Hupo — Senior Full Stack Engineer, AI Products
+**S:** ION's work management platform served one organisation. It had to become a product many companies could sign up for independently.
+**T:** Rebuild it multi-tenant so companies register and manage their own users.
+**A:** Built tiered permissions at three levels — app, company, and user — so each tenant controlled its own membership without leaking across the boundary.
+**R:** Multi-tenant platform shipped and maintained across two years (Jan 2023 – Dec 2024).
+**Reflection:** Permission tiers are cheap to design up front and brutally expensive to retrofit. Model the tenant boundary before the first feature, not after the tenth.
+**Best for questions about:** multi-tenant SaaS, authorization models, enterprise architecture, large refactors, designing for a boundary you cannot change later
+
+### [Product / Search] Natural-language people search (ConnectX)
+**Source:** Report #025 — Hupo — Senior Full Stack Engineer, AI Products
+**S:** People needed to find colleagues by capability rather than by name — the org chart could not answer "who is good at this".
+**T:** Free-text query in, relevance-ranked people out.
+**A:** Built a search accepting queries like "who excels in web design with Framer and Base44 in London". Connected praise to static data for department and division filters, aggregated skill scores, and linked skills with praise so the signal feeding ranking was real usage, not self-reported tags.
+**R:** Feature shipped in the platform.
+**Reflection:** The hard part was the ranking signal, not the query parsing. Tying skills to praise meant the results reflected what colleagues actually endorsed.
+**Best for questions about:** search and relevance, product thinking, ranking signals, turning behavioural data into a feature
+**⚠️ Before using:** confirm what powered the search (semantic/embedding vs keyword ranking). Tell it accordingly — do not imply LLM or vector search unless that is what it was.
+
+### [Ownership] Running someone else's decision — Xellar to Privy migration
+**Source:** Report #025 — Hupo — Senior Full Stack Engineer, AI Products
+**S:** Nespay's wallet provider, Xellar, created wallets slowly, errored intermittently, and had no TRON coverage.
+**T:** Migrate wallet infrastructure to Privy mid-flight. The decision was made above her; the implementation was hers.
+**A:** Ran the migration and rebuilt the integration — a hand-written NestJS REST client covering wallet lifecycle, policies, rules, key quorums, and signing, rather than adopting the vendor SDK.
+**R:** Wallet infrastructure moved onto a provider covering the chains the product needed, with a failure surface the team could debug.
+**Reflection:** Being handed someone else's decision and executing it well is its own skill. Argue the decision once, then make the implementation good enough that the decision stops mattering.
+**Best for questions about:** disagreeing and committing, vendor migrations, working under decisions you did not make, build-vs-SDK trade-offs
